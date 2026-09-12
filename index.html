@@ -64,7 +64,6 @@
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen p-2.5 sm:p-5 transition-colors duration-200">
-
     <div class="max-w-6xl mx-auto bg-slate-900 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border border-slate-800 transition-colors duration-200">
         
         <header class="bg-gradient-to-r from-emerald-900 via-slate-900 to-teal-950 p-4 sm:p-7 border-b border-emerald-800/40 relative">
@@ -88,8 +87,26 @@
                     <button onclick="forceSyncLatest()" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-slate-700 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="立即從雲端拉取最新資料">
                         <span>🔄</span> <span>同步最新</span>
                     </button>
-                    <button onclick="toggleTheme()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-sm font-bold transition flex items-center gap-2 shadow-sm">
-                        <span id="theme-icon" class="text-base">☀️</span> <span id="theme-text">切換亮色</span>
+                    <button id="tab-records" onclick="switchTab('records')" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="首頁紀錄">
+                        <span>🏥</span> <span>首頁紀錄</span>
+                    </button>
+                    <button id="tab-hospital" onclick="switchTab('hospital')" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="住院排班">
+                        <span>🛌</span> <span>住院排班</span>
+                    </button>
+                    <button id="tab-notes" onclick="switchTab('notes')" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="注意事項">
+                        <span>📌</span> <span>注意事項</span>
+                    </button>
+                    <button id="tab-health_food" onclick="switchTab('health_food')" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="營養食材">
+                        <span>🌿</span> <span>營養食材</span>
+                    </button>
+                    <button id="tab-diet" onclick="switchTab('diet')" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="飲食紅綠燈">
+                        <span>🚦</span> <span>飲食紅綠燈</span>
+                    </button>
+                    <button id="tab-sop" onclick="switchTab('sop')" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="醫療 SOP">
+                        <span>📋</span> <span>醫療 SOP</span>
+                    </button>
+                    <button id="tab-history" onclick="switchTab('history')" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="資源回收桶">
+                        <span>🗑️</span> <span>回收桶</span>
                     </button>
                 </div>
             </div>
@@ -113,30 +130,6 @@
                 </div>
             </div>
         </header>
-
-        <nav class="flex border-b border-slate-800 bg-slate-900 text-slate-400 overflow-x-auto custom-scrollbar">
-            <button onclick="switchTab('records')" id="tab-records" class="tab-btn px-4 sm:px-6 py-4 font-bold border-b-4 border-emerald-500 text-emerald-400 bg-slate-800/60 whitespace-nowrap text-sm sm:text-base flex items-center gap-2">
-                <span>🏥</span> 就醫病歷時間軸
-            </button>
-            <button onclick="switchTab('hospital')" id="tab-hospital" class="tab-btn px-4 sm:px-6 py-4 font-bold border-b-4 border-transparent hover:text-emerald-300 hover:bg-slate-800/40 whitespace-nowrap text-sm sm:text-base flex items-center gap-2">
-                <span>🛌</span> 住院陪護清單
-            </button>
-            <button onclick="switchTab('notes')" id="tab-notes" class="tab-btn px-4 sm:px-6 py-4 font-bold border-b-4 border-transparent hover:text-emerald-300 hover:bg-slate-800/40 whitespace-nowrap text-sm sm:text-base flex items-center gap-2">
-                <span>📌</span> 圖文注意事項
-            </button>
-            <button onclick="switchTab('health_food')" id="tab-health_food" class="tab-btn px-4 sm:px-6 py-4 font-bold border-b-4 border-transparent hover:text-emerald-300 hover:bg-slate-800/40 whitespace-nowrap text-sm sm:text-base flex items-center gap-2">
-                <span>🌿</span> 健康食物區
-            </button>
-            <button onclick="switchTab('diet')" id="tab-diet" class="tab-btn px-4 sm:px-6 py-4 font-bold border-b-4 border-transparent hover:text-emerald-300 hover:bg-slate-800/40 whitespace-nowrap text-sm sm:text-base flex items-center gap-2">
-                <span>🚦</span> 飲食護理紅綠燈
-            </button>
-            <button onclick="switchTab('sop')" id="tab-sop" class="tab-btn px-4 sm:px-6 py-4 font-bold border-b-4 border-transparent hover:text-emerald-300 hover:bg-slate-800/40 whitespace-nowrap text-sm sm:text-base flex items-center gap-2">
-                <span>📋</span> 照護與打泥 SOP
-            </button>
-            <button onclick="switchTab('history')" id="tab-history" class="tab-btn px-4 sm:px-6 py-4 font-bold border-b-4 border-transparent hover:text-emerald-300 hover:bg-slate-800/40 whitespace-nowrap text-sm sm:text-base flex items-center gap-2">
-                <span>🗑️</span> 資源回收桶
-            </button>
-        </nav>
 
         <main class="p-3 sm:p-7 min-h-[600px]">
 
@@ -335,12 +328,32 @@
             </section>
 
             <section id="content-notes" class="hidden animate-fade-in">
-                <!-- 護理指南首圖區塊 -->
+                <!-- 注意事項頂部全局大圖區塊 -->
                 <div class="bg-slate-800/80 p-4 sm:p-6 rounded-2xl mb-7 border border-slate-700 shadow-md">
-                    <h2 class="text-xl sm:text-2xl font-black text-emerald-400 mb-4 border-l-4 border-emerald-500 pl-3">康復照護指南首圖</h2>
-                    <div class="flex justify-center mb-4">
-                        <img src="image_064b13.jpg" alt="康復照護指南與注意事項圖表" class="max-w-full h-auto rounded-xl shadow-lg border border-slate-600 cursor-pointer hover:opacity-90 transition" onclick="openLightbox('image_064b13.jpg')" onerror="this.src='https://placehold.co/800x400/1e293b/10b981?text=請將+image_064b13.jpg+放至同一資料夾'">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg sm:text-xl font-black text-emerald-400 border-l-4 border-emerald-500 pl-3">總覽首圖 / 照護指南</h2>
+                        <div id="global-note-header-actions" class="hidden flex items-center gap-2">
+                            <label for="global-note-header-upload" class="cursor-pointer px-3.5 py-1.5 bg-slate-700 hover:bg-slate-600 text-emerald-300 text-xs font-bold rounded-xl transition border border-slate-600">
+                                🔄 更換
+                            </label>
+                            <button onclick="deleteGlobalNoteHeader()" class="px-3.5 py-1.5 bg-rose-950/80 hover:bg-rose-900 text-rose-300 text-xs font-bold rounded-xl transition border border-rose-800">
+                                🗑️ 刪除
+                            </button>
+                        </div>
                     </div>
+
+                    <div id="global-note-header-empty" class="w-full h-32 sm:h-48 border-2 border-dashed border-slate-600 rounded-xl flex items-center justify-center hover:bg-slate-800/50 transition">
+                        <label for="global-note-header-upload" class="cursor-pointer flex flex-col items-center justify-center w-full h-full text-slate-400 hover:text-emerald-400 transition">
+                            <span class="text-4xl mb-3">🖼️</span>
+                            <span class="text-sm font-bold">點擊上傳放置於頂部的完整首圖</span>
+                        </label>
+                    </div>
+
+                    <div id="global-note-header-preview" class="hidden w-full overflow-hidden rounded-xl border border-slate-700 shadow-sm relative text-center bg-slate-900/50">
+                        <img id="global-note-header-img" src="" class="max-w-full max-h-[60vh] mx-auto object-contain cursor-pointer hover:opacity-90 transition" onclick="openLightbox(this.src)">
+                    </div>
+
+                    <input type="file" id="global-note-header-upload" accept="image/*" class="hidden" onchange="uploadGlobalNoteHeader(event)">
                 </div>
 
                 <!-- 新增注意事項表單 -->
@@ -826,15 +839,41 @@
         <span id="toast-text">已更新</span>
     </div>
 
+    <!-- 編輯注意事項 Modal -->
+    <div id="edit-note-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-3 animate-fade-in">
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl p-5 sm:p-7 w-full max-w-xl shadow-2xl text-left text-slate-100 max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <h3 class="text-xl font-black text-emerald-400 mb-4 border-l-4 border-emerald-500 pl-3">編輯注意事項</h3>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-300 font-bold mb-1.5">標題 / 重點</label>
+                    <input type="text" id="edit-note-title" class="bg-slate-800 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-300 font-bold mb-1.5">詳細說明</label>
+                    <textarea id="edit-note-content" class="bg-slate-800 border border-slate-700 p-3 rounded-xl w-full h-28 text-slate-100 font-normal outline-none resize-none leading-relaxed"></textarea>
+                </div>
+                
+                <div>
+                    <div class="flex items-center justify-between mb-1.5">
+                        <label class="block text-xs text-slate-300 font-bold">附加圖文解說</label>
+                        <label for="edit-note-images" class="cursor-pointer text-emerald-400 text-xs font-bold hover:text-emerald-300">
+                            + 新增附圖
+                        </label>
+                        <input type="file" id="edit-note-images" accept="image/*" multiple class="hidden" onchange="handleEditNoteImagesSelect(event)">
+                    </div>
+                    <div id="edit-note-images-preview" class="flex flex-wrap gap-2.5 mt-2"></div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-3 mt-6 pt-4 border-t border-slate-800">
+                <button type="button" onclick="closeEditNoteModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-bold rounded-xl transition">取消</button>
+                <button type="button" onclick="saveEditNoteModal()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-extrabold rounded-xl transition shadow">儲存修改至雲端</button>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
-        // =========================================================================
-        // 多方即時同步核心設定 (遵循 RULE 1 Strict Paths /artifacts/{appId}/public/data)
-        // =========================================================================
-        // 【修正重點】改用「動態載入」Firebase 模組，並用 try/catch 包住。
-        // 原本寫在檔案最上方的 static import 只要載入失敗（離線、防火牆擋住、
-        // 用雙擊本機檔案開啟等情況），整支 script 會直接停擺，導致所有頁籤、
-        // 清單、按鈕全部沒有反應、畫面卡在「載入中...」。改成動態載入後，
-        // 就算雲端連不上，其餘畫面與本機儲存功能仍會正常顯示與運作。
         let initializeApp, getAuth, signInAnonymously, signInWithCustomToken;
         let getFirestore, doc, setDoc, getDoc, getDocs, collection, onSnapshot, deleteDoc;
         let firebaseSdkLoaded = false;
@@ -862,9 +901,6 @@
             return JSON.parse(JSON.stringify(obj, (k, v) => (v === undefined ? null : v)));
         }
 
-        // ==========================================
-        // 種子資料庫（已包含所有最新行程、住院與注意事項）
-        // ==========================================
         const SEED_HOSPITAL_STAYS = [
             { id: 'h_20260426', date: '2026/04/26', weekday: '日', title: '媽媽住院', companion: '樺', note: '' },
             { id: 'h_20260427', date: '2026/04/27', weekday: '一', title: '媽媽住院', companion: '潔', note: '' },
@@ -1218,12 +1254,12 @@
             }
         ];
 
-        // 4. 注意事項預設種子
         const SEED_NOTES = [
             {
                 id: 'n_20260912_1',
                 title: '打泥與過濾標準示範',
                 content: '所有含纖維的青菜與肉類，打泥後「必須」使用極細濾網過篩，將粗糙渣渣濾除，以免刺激媽媽食道發炎處。',
+                coverImage: 'https://placehold.co/800x400/0f172a/10b981?text=%E6%89%93%E6%B3%A5%E8%88%87%E9%81%8E%E6%BF%BE%E7%A4%BA%E7%AF%84',
                 images: [],
                 createdAt: '2026-09-12T10:00:00Z'
             }
@@ -1250,10 +1286,11 @@
         let currentConfirmAction = null;
         let currentActiveTab = 'records';
 
-        // 注意事項狀態
+        let globalNoteHeaderImage = null;
         let pendingNoteImages = [];
+        let editingNoteId = null;
+        let editNotePendingImages = [];
 
-        // 月曆挑選器狀態
         let currentPickerTargetInputId = null;
         let dpYear = 2026;
         let dpMonth = 9;
@@ -1264,11 +1301,11 @@
         let currentUser = null;
         let isCloudActive = false;
 
-        // 本機備援 Key
         const STORAGE_KEY_HOSP = `care_stays_${appId}_v5`;
         const STORAGE_KEY_REC = `care_records_${appId}_v5`;
         const STORAGE_KEY_DEL = `care_trash_${appId}_v5`;
         const STORAGE_KEY_NOTES = `care_notes_${appId}_v5`;
+        const STORAGE_KEY_NOTE_HEADER = `care_notes_global_header_${appId}_v5`;
 
         function saveToLocal() {
             try {
@@ -1276,6 +1313,11 @@
                 localStorage.setItem(STORAGE_KEY_REC, JSON.stringify(records));
                 localStorage.setItem(STORAGE_KEY_DEL, JSON.stringify(deletedRecords));
                 localStorage.setItem(STORAGE_KEY_NOTES, JSON.stringify(notes));
+                if (globalNoteHeaderImage) {
+                    localStorage.setItem(STORAGE_KEY_NOTE_HEADER, globalNoteHeaderImage);
+                } else {
+                    localStorage.removeItem(STORAGE_KEY_NOTE_HEADER);
+                }
             } catch (e) {
                 console.warn('Local save warning:', e);
             }
@@ -1286,17 +1328,13 @@
                 const rawHosp = localStorage.getItem(STORAGE_KEY_HOSP);
                 if (rawHosp) {
                     const parsed = JSON.parse(rawHosp);
-                    if (Array.isArray(parsed) && parsed.length > 0) {
-                        hospitalStays = parsed;
-                    }
+                    if (Array.isArray(parsed) && parsed.length > 0) hospitalStays = parsed;
                 }
 
                 const rawRec = localStorage.getItem(STORAGE_KEY_REC);
                 if (rawRec) {
                     const parsed = JSON.parse(rawRec);
-                    if (Array.isArray(parsed) && parsed.length > 0) {
-                        records = parsed;
-                    }
+                    if (Array.isArray(parsed) && parsed.length > 0) records = parsed;
                 }
 
                 const rawDel = localStorage.getItem(STORAGE_KEY_DEL);
@@ -1314,6 +1352,9 @@
                         notes = [...parsed, ...missingSeeds].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
                     }
                 }
+
+                const rawHeader = localStorage.getItem(STORAGE_KEY_NOTE_HEADER);
+                if (rawHeader) globalNoteHeaderImage = rawHeader;
             } catch (e) {
                 console.warn('Local fallback error:', e);
             }
@@ -1324,28 +1365,30 @@
             renderHospitalTable();
             renderHistoryList();
             renderNotes();
+            renderGlobalNoteHeaderUI();
         }
+
+        // ⚠️ 真實 Firebase 專案設定（已寫死，GitHub Pages 等任何靜態網域皆可正確初始化雲端連線）
+        const firebaseConfig = {
+            apiKey: "AIzaSyCfuMk_o3bteqa4i4Crezti56Vn8fsT4IQ",
+            authDomain: "mom-care-hub.firebaseapp.com",
+            projectId: "mom-care-hub",
+            storageBucket: "mom-care-hub.firebasestorage.app",
+            messagingSenderId: "456516199730",
+            appId: "1:456516199730:web:ea0bee6bf7d2afcebda32b"
+        };
 
         async function initCloudSync() {
             updateCloudStatusBadge('connecting', '連線家庭雲端...');
 
-            let firebaseConfig = null;
-            try {
-                if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-                    firebaseConfig = typeof __firebase_config === 'string' ? JSON.parse(__firebase_config) : __firebase_config;
-                }
-            } catch (e) {
-                console.warn('Firebase config error:', e);
-            }
-
-            if (!firebaseConfig) {
+            if (!firebaseConfig || !firebaseConfig.apiKey) {
                 updateCloudStatusBadge('local', '🟢 本機儲存已就緒 (獨立模式)');
                 return;
             }
 
             await loadFirebaseSdk();
             if (!firebaseSdkLoaded) {
-                updateCloudStatusBadge('local', '🟡 雲端 SDK 載入失敗，已切換本機儲存模式');
+                updateCloudStatusBadge('local', '🟡 雲端 SDK 載入失敗');
                 return;
             }
 
@@ -1354,31 +1397,15 @@
                 auth = getAuth(app);
                 db = getFirestore(app);
 
-                const token = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : undefined;
-                if (token) {
-                    try {
-                        const cred = await signInWithCustomToken(auth, token);
-                        currentUser = cred.user;
-                    } catch (e) {
-                        const cred = await signInAnonymously(auth);
-                        currentUser = cred.user;
-                    }
-                } else {
-                    const cred = await signInAnonymously(auth);
-                    currentUser = cred.user;
-                }
+                const cred = await signInAnonymously(auth);
+                currentUser = cred.user;
 
-                if (!currentUser) {
-                    updateCloudStatusBadge('local', '本機離線模式');
-                    return;
-                }
-
+                if (!currentUser) return;
                 isCloudActive = true;
                 updateCloudStatusBadge('synced', '🟢 多方即時連線中');
 
                 await ensureCloudSeededOnce();
                 startFirestoreRealtimeListeners();
-
             } catch (err) {
                 console.error('Firebase setup failed:', err);
                 updateCloudStatusBadge('local', '本機離線儲存');
@@ -1392,8 +1419,6 @@
                 const initSnap = await getDoc(initDocRef);
 
                 if (!initSnap.exists()) {
-                    updateCloudStatusBadge('connecting', '初始化家庭雲端資料庫...');
-                    
                     const batchOps = [];
                     for (const r of SEED_RECORDS) {
                         batchOps.push(setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clinic_records', String(r.id)), sanitizeData(r)));
@@ -1406,7 +1431,6 @@
                     }
                     batchOps.push(setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'deleted_records', String(PET_SCAN_RECORD.id)), sanitizeData(PET_SCAN_RECORD)));
                     batchOps.push(setDoc(initDocRef, { initialized: true, initAt: new Date().toISOString() }));
-                    
                     await Promise.all(batchOps);
                 }
             } catch (e) {
@@ -1417,8 +1441,7 @@
         function startFirestoreRealtimeListeners() {
             if (!db || !currentUser) return;
 
-            const recCol = collection(db, 'artifacts', appId, 'public', 'data', 'clinic_records');
-            onSnapshot(recCol, (snap) => {
+            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'clinic_records'), (snap) => {
                 const list = [];
                 snap.forEach(d => list.push(d.data()));
                 if (list.length > 0) {
@@ -1427,15 +1450,10 @@
                     updateDashboardStats();
                     renderRecords();
                 }
-                const nowTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-                updateCloudStatusBadge('synced', `🟢 雲端多方即時同步 (${nowTime})`);
-            }, (err) => {
-                console.error('Records sync error:', err);
-                updateCloudStatusBadge('error', '雲端同步重試中...');
-            });
+                updateCloudStatusBadge('synced', `🟢 雲端同步中`);
+            }, (err) => console.error(err));
 
-            const stayCol = collection(db, 'artifacts', appId, 'public', 'data', 'hospital_stays');
-            onSnapshot(stayCol, (snap) => {
+            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'hospital_stays'), (snap) => {
                 const list = [];
                 snap.forEach(d => list.push(d.data()));
                 if (list.length > 0) {
@@ -1445,52 +1463,46 @@
                     if (hospitalViewMode === 'calendar') renderHospitalCalendar();
                     else renderHospitalTable();
                 }
-            }, (err) => console.error('Stays sync error:', err));
+            }, (err) => console.error(err));
 
-            const delCol = collection(db, 'artifacts', appId, 'public', 'data', 'deleted_records');
-            onSnapshot(delCol, (snap) => {
+            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'deleted_records'), (snap) => {
                 const list = [];
                 snap.forEach(d => list.push(d.data()));
                 deletedRecords = list.sort((a, b) => (b.deletedAt || '').localeCompare(a.deletedAt || ''));
                 saveToLocal();
                 renderHistoryList();
-            }, (err) => console.error('Trash sync error:', err));
+            }, (err) => console.error(err));
             
-            // 4. 注意事項即時監聽
-            const noteCol = collection(db, 'artifacts', appId, 'public', 'data', 'care_notes');
-            onSnapshot(noteCol, (snap) => {
+            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'care_notes'), (snap) => {
                 const list = [];
                 snap.forEach(d => list.push(d.data()));
                 notes = list.sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
                 saveToLocal();
                 if (currentActiveTab === 'notes') renderNotes();
-            }, (err) => console.error('Note listener err:', err));
+            }, (err) => console.error(err));
+
+            onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'notes_config'), (snap) => {
+                if (snap.exists()) {
+                    globalNoteHeaderImage = snap.data().headerImage || null;
+                    saveToLocal();
+                    renderGlobalNoteHeaderUI();
+                }
+            }, (err) => console.error(err));
         }
 
         function updateCloudStatusBadge(state, text) {
-            const badge = document.getElementById('cloud-sync-badge');
             const dot = document.getElementById('cloud-sync-dot');
             const textEl = document.getElementById('cloud-sync-text');
-            if (!badge || !dot || !textEl) return;
-
+            if (!dot || !textEl) return;
             textEl.textContent = text;
-            if (state === 'synced') {
-                dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse';
-            } else if (state === 'connecting') {
-                dot.className = 'w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse';
-            } else if (state === 'error') {
-                dot.className = 'w-2.5 h-2.5 rounded-full bg-rose-500';
-            } else {
-                dot.className = 'w-2.5 h-2.5 rounded-full bg-slate-400';
-            }
+            dot.className = state === 'synced' ? 'w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse' : 'w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse';
         }
 
         function copyShareableSyncLink() {
             copyTextToClipboard(window.location.href);
-            showToast('🔗 已複製全家人同步網址！傳至 LINE 點開即可多方即時同步');
+            showToast('🔗 已複製全家人同步網址！');
         }
 
-        // 頁籤切換
         function switchTab(tabId) {
             currentActiveTab = tabId;
             const tabs = ['records', 'hospital', 'notes', 'health_food', 'diet', 'sop', 'history'];
@@ -1500,11 +1512,11 @@
                 if (el) el.classList.toggle('hidden', id !== tabId);
                 if (btn) {
                     if (id === tabId) {
-                        btn.classList.add('border-emerald-500', 'text-emerald-400', 'bg-slate-800/60');
-                        btn.classList.remove('border-transparent');
+                        btn.classList.add('bg-emerald-600', 'text-white');
+                        btn.classList.remove('bg-slate-800', 'text-slate-300');
                     } else {
-                        btn.classList.remove('border-emerald-500', 'text-emerald-400', 'bg-slate-800/60');
-                        btn.classList.add('border-transparent');
+                        btn.classList.remove('bg-emerald-600', 'text-white');
+                        btn.classList.add('bg-slate-800', 'text-slate-300');
                     }
                 }
             });
@@ -1517,19 +1529,6 @@
             }
         }
 
-        // 深淺主題切換
-        function toggleTheme() {
-            const html = document.documentElement;
-            const isDark = html.classList.toggle('dark');
-            const icon = document.getElementById('theme-icon');
-            const text = document.getElementById('theme-text');
-            if (icon && text) {
-                icon.textContent = isDark ? '☀️' : '🌙';
-                text.textContent = isDark ? '切換亮色' : '切換深色';
-            }
-        }
-
-        // 更新頂部儀表板統計
         function updateDashboardStats() {
             const totalRecEl = document.getElementById('stat-total-records');
             const totalStaysEl = document.getElementById('stat-total-stays');
@@ -1538,12 +1537,10 @@
 
             if (totalRecEl) totalRecEl.textContent = `${records.length} 筆`;
             if (totalStaysEl) totalStaysEl.textContent = `${hospitalStays.length} 天`;
-
             if (latestDateEl && records.length > 0) {
                 const sorted = [...records].sort((a, b) => b.date.localeCompare(a.date));
                 latestDateEl.textContent = sorted[0].date;
             }
-
             if (companionSumEl) {
                 let ying = 0, hua = 0, jie = 0;
                 hospitalStays.forEach(s => {
@@ -1555,7 +1552,6 @@
             }
         }
 
-        // 渲染病歷列表
         function renderRecords() {
             const listEl = document.getElementById('records-list');
             if (!listEl) return;
@@ -1577,12 +1573,7 @@
             });
 
             if (filtered.length === 0) {
-                listEl.innerHTML = `
-                    <div class="bg-slate-800/40 p-10 rounded-2xl border border-slate-700 text-center text-slate-400">
-                        <div class="text-4xl mb-2">🔍</div>
-                        <p class="font-bold">沒有符合條件的就醫紀錄</p>
-                    </div>
-                `;
+                listEl.innerHTML = `<div class="bg-slate-800/40 p-10 rounded-2xl border border-slate-700 text-center text-slate-400 font-bold">沒有符合條件的就醫紀錄</div>`;
                 return;
             }
 
@@ -1595,37 +1586,21 @@
                 else if (r.dept === '皮膚科') deptColor = 'bg-pink-900/80 text-pink-200 border border-pink-600/60';
                 else if (r.dept === '專科聯合') deptColor = 'bg-amber-900/80 text-amber-200 border border-amber-600/60';
 
-                let compBadge = '';
-                if (r.companion === '映') compBadge = 'bg-emerald-950 text-emerald-300 border-emerald-600/70';
-                else if (r.companion === '樺') compBadge = 'bg-teal-950 text-teal-300 border-teal-600/70';
-                else if (r.companion === '潔') compBadge = 'bg-cyan-950 text-cyan-300 border-cyan-600/70';
-                else compBadge = 'bg-amber-950 text-amber-300 border-amber-600/70';
-
-                const safeId = String(r.id);
-
                 return `
                     <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 shadow-md hover:border-emerald-600/70 transition relative">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-slate-700/80">
                             <div class="flex items-center gap-2 flex-wrap">
                                 <span class="px-3 py-1 rounded-xl text-xs font-black ${deptColor}">${r.dept}</span>
                                 <span class="text-sm sm:text-base font-bold text-slate-300">🗓️ ${r.date}</span>
-                                <span class="px-2.5 py-0.5 rounded-xl text-xs font-bold border ${compBadge}">👥 陪同：${r.companion || '未定'}</span>
+                                <span class="px-2.5 py-0.5 rounded-xl text-xs font-bold border bg-emerald-950 text-emerald-300 border-emerald-600/70">👥 陪同：${r.companion || '未定'}</span>
                                 ${r.category ? `<span class="px-2 py-0.5 bg-slate-900 text-slate-400 text-xs rounded-lg">${r.category}</span>` : ''}
                             </div>
-
                             <div class="flex items-center gap-1.5 ml-auto">
-                                <button onclick="copyLineReport('${safeId}')" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-emerald-300 text-xs font-bold rounded-lg transition border border-slate-600 flex items-center gap-1" title="複製排版發送至 LINE 群組">
-                                    💬 LINE 回報
-                                </button>
-                                <button onclick="openEditRecordModal('${safeId}')" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-bold rounded-lg transition border border-slate-600" title="編輯此筆紀錄">
-                                    ✏️ 編輯
-                                </button>
-                                <button onclick="promptDeleteRecord('${safeId}')" class="px-2.5 py-1 bg-rose-950/80 hover:bg-rose-900 text-rose-300 text-xs font-bold rounded-lg transition border border-rose-800" title="移至資源回收桶">
-                                    🗑️ 刪除
-                                </button>
+                                <button onclick="copyLineReport('${r.id}')" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-emerald-300 text-xs font-bold rounded-lg transition border border-slate-600">💬 LINE 回報</button>
+                                <button onclick="openEditRecordModal('${r.id}')" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-bold rounded-lg transition border border-slate-600">✏️ 編輯</button>
+                                <button onclick="promptDeleteRecord('${r.id}')" class="px-2.5 py-1 bg-rose-950/80 hover:bg-rose-900 text-rose-300 text-xs font-bold rounded-lg transition border border-rose-800">🗑️ 刪除</button>
                             </div>
                         </div>
-
                         <div class="mt-3">
                             <h4 class="text-lg font-black text-slate-100">${r.title}</h4>
                             <p class="mt-2 text-sm sm:text-base text-slate-300 leading-relaxed whitespace-pre-wrap">${r.detail || '無特別醫囑'}</p>
@@ -1649,10 +1624,7 @@
 
             const newRec = {
                 id: 'r_' + Date.now(),
-                date,
-                dept,
-                companion,
-                title,
+                date, dept, companion, title,
                 detail: detail || '',
                 category: dept === '放射科' && title.includes('斷層') ? '重大檢查' : '專科門診'
             };
@@ -1670,9 +1642,7 @@
             if (isCloudActive && db && currentUser) {
                 try {
                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clinic_records', newRec.id), sanitizeData(newRec));
-                } catch (e) {
-                    console.error('Cloud add record error:', e);
-                }
+                } catch (e) { console.error(e); }
             }
         }
 
@@ -1696,20 +1666,13 @@
                     try {
                         await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clinic_records', String(recordId)));
                         await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'deleted_records', String(recordId)), sanitizeData(target));
-                    } catch (e) {
-                        console.error('Cloud delete record error:', e);
-                    }
+                    } catch (e) { console.error(e); }
                 }
             };
-
-            const titleEl = document.getElementById('confirm-modal-title');
-            const descEl = document.getElementById('confirm-modal-desc');
-            if (titleEl) titleEl.textContent = `確認刪除「${target.title}」？`;
-            if (descEl) descEl.textContent = '紀錄將移至「資源回收桶」，您隨時可以前往復原或永久清除。';
+            document.getElementById('confirm-modal-title').textContent = `確認刪除「${target.title}」？`;
             document.getElementById('confirm-modal')?.classList.remove('hidden');
         }
 
-        // 住院月曆渲染
         function renderHospitalCalendar() {
             const gridEl = document.getElementById('hospital-calendar-grid');
             const monthLabel = document.getElementById('calendar-current-month-label');
@@ -1726,60 +1689,46 @@
             const stayMap = {};
             hospitalStays.forEach(s => {
                 if (compFilter && s.companion !== compFilter) return;
-                const norm = s.date.replace(/-/g, '/');
-                stayMap[norm] = s;
+                stayMap[s.date.replace(/-/g, '/')] = s;
             });
 
             for (let i = firstDay - 1; i >= 0; i--) {
-                const dayNum = prevMonthDays - i;
-                gridEl.innerHTML += `<div class="bg-slate-900/40 p-2 rounded-xl min-h-[90px] border border-slate-800/60 opacity-30 text-xs font-bold">${dayNum}</div>`;
+                gridEl.innerHTML += `<div class="bg-slate-900/40 p-2 rounded-xl min-h-[90px] border border-slate-800/60 opacity-30 text-xs font-bold">${prevMonthDays - i}</div>`;
             }
 
             for (let d = 1; d <= totalDays; d++) {
                 const dateKey = `${calYear}/${String(calMonth).padStart(2, '0')}/${String(d).padStart(2, '0')}`;
                 const stay = stayMap[dateKey];
 
-                let cellHtml = '';
                 if (stay) {
-                    let compBadgeColor = 'bg-emerald-900/80 text-emerald-300 border border-emerald-600/80';
-                    if (stay.companion === '樺') compBadgeColor = 'bg-teal-900/80 text-teal-300 border border-teal-600/80';
-                    else if (stay.companion === '潔') compBadgeColor = 'bg-cyan-900/80 text-cyan-300 border border-cyan-600/80';
-
                     const hasHighlight = stay.note && stay.note.length > 0;
-                    const cardBorder = hasHighlight ? 'border-amber-500/80 bg-slate-800' : 'border-slate-700 bg-slate-800/90';
-
-                    cellHtml = `
-                        <div onclick="openEditHospitalModal('${stay.id}')" class="bg-slate-800 p-2 sm:p-2.5 rounded-xl min-h-[95px] sm:min-h-[115px] border ${cardBorder} hover:border-emerald-500 transition cursor-pointer flex flex-col justify-between shadow-sm relative group">
+                    gridEl.innerHTML += `
+                        <div onclick="openEditHospitalModal('${stay.id}')" class="bg-slate-800 p-2 sm:p-2.5 rounded-xl min-h-[95px] sm:min-h-[115px] border ${hasHighlight ? 'border-amber-500/80 bg-slate-800' : 'border-slate-700 bg-slate-800/90'} hover:border-emerald-500 transition cursor-pointer flex flex-col justify-between shadow-sm relative group">
                             <div>
                                 <div class="flex items-center justify-between">
                                     <span class="text-sm sm:text-base font-black text-slate-100">${d}</span>
-                                    <span class="px-2 py-0.5 rounded-md text-[11px] font-black ${compBadgeColor}">${stay.companion}</span>
+                                    <span class="px-2 py-0.5 rounded-md text-[11px] font-black bg-emerald-900/80 text-emerald-300 border border-emerald-600/80">${stay.companion}</span>
                                 </div>
                                 <div class="text-xs font-bold text-slate-200 mt-1 line-clamp-1">${stay.title}</div>
                                 ${hasHighlight ? `<div class="text-[11px] text-amber-300 font-medium mt-1 line-clamp-2">⚠️ ${stay.note}</div>` : ''}
                             </div>
                             <div class="flex items-center justify-between pt-1.5 mt-1 border-t border-slate-700/60">
                                 <span class="text-[10px] text-slate-400">點擊編輯</span>
-                                <button onclick="event.stopPropagation(); promptDeleteHospitalStay('${stay.id}')" class="text-xs text-rose-400 hover:text-rose-200 font-bold px-1.5 py-0.5 rounded bg-rose-950/60 border border-rose-800" title="刪除此日程">
-                                    🗑️
-                                </button>
+                                <button onclick="event.stopPropagation(); promptDeleteHospitalStay('${stay.id}')" class="text-xs text-rose-400 hover:text-rose-200 font-bold px-1.5 py-0.5 rounded bg-rose-950/60 border border-rose-800">🗑️</button>
                             </div>
                         </div>
                     `;
                 } else {
-                    cellHtml = `
+                    gridEl.innerHTML += `
                         <div onclick="quickAddHospitalDay('${dateKey}')" class="bg-slate-900/60 p-2 sm:p-2.5 rounded-xl min-h-[95px] sm:min-h-[115px] border border-slate-800/70 hover:border-slate-600 transition cursor-pointer flex flex-col justify-between group">
                             <span class="text-xs sm:text-sm font-bold text-slate-400">${d}</span>
                             <span class="text-[10px] text-slate-400 opacity-0 group-hover:opacity-100 transition text-center">+ 排班</span>
                         </div>
                     `;
                 }
-
-                gridEl.innerHTML += cellHtml;
             }
         }
 
-        // 住院清單表格渲染
         function renderHospitalTable() {
             const tbody = document.getElementById('hospital-list-tbody');
             if (!tbody) return;
@@ -1788,61 +1737,31 @@
             const filtered = hospitalStays.filter(s => !compFilter || s.companion === compFilter);
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400">沒有符合條件的住院排班紀錄</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400 font-bold">沒有符合條件的住院排班紀錄</td></tr>`;
                 return;
             }
 
-            tbody.innerHTML = filtered.map(s => {
-                let compBadge = 'bg-emerald-950 text-emerald-300 border-emerald-600/70';
-                if (s.companion === '樺') compBadge = 'bg-teal-950 text-teal-300 border-teal-600/70';
-                else if (s.companion === '潔') compBadge = 'bg-cyan-950 text-cyan-300 border-cyan-600/70';
-
-                return `
-                    <tr class="hover:bg-slate-800/50 transition">
-                        <td class="p-3.5 font-bold text-slate-200 whitespace-nowrap">${s.date}</td>
-                        <td class="p-3.5 font-medium text-slate-400 whitespace-nowrap">${s.weekday || ''}</td>
-                        <td class="p-3.5 font-bold text-emerald-400">${s.title}</td>
-                        <td class="p-3.5 whitespace-nowrap">
-                            <span class="px-2.5 py-1 rounded-lg text-xs font-black border ${compBadge}">${s.companion}</span>
-                        </td>
-                        <td class="p-3.5 text-sm text-slate-300">
-                            ${s.note ? `<span class="text-amber-300 font-medium">⚠️ ${s.note}</span>` : '<span class="text-slate-400">--</span>'}
-                        </td>
-                        <td class="p-3.5 text-center whitespace-nowrap">
-                            <div class="flex items-center justify-center gap-1.5">
-                                <button onclick="openEditHospitalModal('${s.id}')" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-bold rounded-lg border border-slate-600 transition">✏️ 編輯</button>
-                                <button onclick="promptDeleteHospitalStay('${s.id}')" class="px-2.5 py-1 bg-rose-950/80 hover:bg-rose-900 text-rose-300 text-xs font-bold rounded-lg border border-rose-800 transition">🗑️ 刪除</button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
+            tbody.innerHTML = filtered.map(s => `
+                <tr class="hover:bg-slate-800/50 transition">
+                    <td class="p-3.5 font-bold text-slate-200 whitespace-nowrap">${s.date}</td>
+                    <td class="p-3.5 font-medium text-slate-400 whitespace-nowrap">${s.weekday || ''}</td>
+                    <td class="p-3.5 font-bold text-emerald-400">${s.title}</td>
+                    <td class="p-3.5 whitespace-nowrap"><span class="px-2.5 py-1 rounded-lg text-xs font-black border bg-emerald-950 text-emerald-300 border-emerald-600/70">${s.companion}</span></td>
+                    <td class="p-3.5 text-sm text-slate-300">${s.note ? `<span class="text-amber-300 font-medium">⚠️ ${s.note}</span>` : '--'}</td>
+                    <td class="p-3.5 text-center whitespace-nowrap">
+                        <button onclick="openEditHospitalModal('${s.id}')" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-bold rounded-lg border border-slate-600 transition">✏️ 編輯</button>
+                        <button onclick="promptDeleteHospitalStay('${s.id}')" class="px-2.5 py-1 bg-rose-950/80 hover:bg-rose-900 text-rose-300 text-xs font-bold rounded-lg border border-rose-800 transition">🗑️ 刪除</button>
+                    </td>
+                </tr>
+            `).join('');
         }
 
         function switchHospitalView(mode) {
             hospitalViewMode = mode;
-            const calCont = document.getElementById('hospital-calendar-container');
-            const listCont = document.getElementById('hospital-list-container');
-            const btnCal = document.getElementById('btn-hosp-calendar');
-            const btnList = document.getElementById('btn-hosp-list');
-
-            if (mode === 'calendar') {
-                calCont?.classList.remove('hidden');
-                listCont?.classList.add('hidden');
-                btnCal?.classList.add('bg-emerald-600', 'text-white', 'shadow');
-                btnCal?.classList.remove('text-slate-400');
-                btnList?.classList.remove('bg-emerald-600', 'text-white', 'shadow');
-                btnList?.classList.add('text-slate-400');
-                renderHospitalCalendar();
-            } else {
-                calCont?.classList.add('hidden');
-                listCont?.classList.remove('hidden');
-                btnList?.classList.add('bg-emerald-600', 'text-white', 'shadow');
-                btnList?.classList.remove('text-slate-400');
-                btnCal?.classList.remove('bg-emerald-600', 'text-white', 'shadow');
-                btnCal?.classList.add('text-slate-400');
-                renderHospitalTable();
-            }
+            document.getElementById('hospital-calendar-container')?.classList.toggle('hidden', mode !== 'calendar');
+            document.getElementById('hospital-list-container')?.classList.toggle('hidden', mode !== 'list');
+            if (mode === 'calendar') renderHospitalCalendar();
+            else renderHospitalTable();
         }
 
         function changeCalMonth(delta) {
@@ -1853,8 +1772,7 @@
         }
 
         function jumpCalMonth(year, month) {
-            calYear = year;
-            calMonth = month;
+            calYear = year; calMonth = month;
             renderHospitalCalendar();
         }
 
@@ -1864,15 +1782,10 @@
         }
 
         let currentEditingHospitalId = null;
-
         function openAddHospitalModal() {
             currentEditingHospitalId = null;
             document.getElementById('hosp-modal-title').textContent = '新增住院排班日程';
             document.getElementById('hosp-input-date').value = new Date().toISOString().split('T')[0].replace(/-/g, '/');
-            document.getElementById('hosp-input-companion').value = '映';
-            document.getElementById('hosp-input-title').value = '媽咪住院';
-            document.getElementById('hosp-input-note').value = '';
-            document.getElementById('btn-hosp-delete-in-modal')?.classList.add('hidden');
             document.getElementById('hosp-modal')?.classList.remove('hidden');
         }
 
@@ -1880,30 +1793,22 @@
             currentEditingHospitalId = null;
             document.getElementById('hosp-modal-title').textContent = `排定住院日程 (${dateStr})`;
             document.getElementById('hosp-input-date').value = dateStr;
-            document.getElementById('hosp-input-companion').value = '映';
-            document.getElementById('hosp-input-title').value = '媽咪住院';
-            document.getElementById('hosp-input-note').value = '';
-            document.getElementById('btn-hosp-delete-in-modal')?.classList.add('hidden');
             document.getElementById('hosp-modal')?.classList.remove('hidden');
         }
 
         function openEditHospitalModal(stayId) {
             const stay = hospitalStays.find(s => String(s.id) === String(stayId));
             if (!stay) return;
-
             currentEditingHospitalId = stayId;
             document.getElementById('hosp-modal-title').textContent = `編輯住院日程 (${stay.date})`;
             document.getElementById('hosp-input-date').value = stay.date;
             document.getElementById('hosp-input-companion').value = stay.companion || '映';
             document.getElementById('hosp-input-title').value = stay.title || '';
             document.getElementById('hosp-input-note').value = stay.note || '';
-            document.getElementById('btn-hosp-delete-in-modal')?.classList.remove('hidden');
             document.getElementById('hosp-modal')?.classList.remove('hidden');
         }
 
-        function closeHospitalModal() {
-            document.getElementById('hosp-modal')?.classList.add('hidden');
-        }
+        function closeHospitalModal() { document.getElementById('hosp-modal')?.classList.add('hidden'); }
 
         async function saveHospitalStayModal() {
             const date = document.getElementById('hosp-input-date')?.value?.trim();
@@ -1911,14 +1816,10 @@
             const title = document.getElementById('hosp-input-title')?.value?.trim();
             const note = document.getElementById('hosp-input-note')?.value?.trim() || '';
 
-            if (!date || !title) {
-                showToast('⚠️ 請輸入日期與行程名稱！');
-                return;
-            }
+            if (!date || !title) { showToast('⚠️ 請輸入日期與行程名稱！'); return; }
 
             const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
-            const dayIdx = new Date(date.replace(/-/g, '/')).getDay();
-            const weekday = isNaN(dayIdx) ? '' : weekdays[dayIdx];
+            const weekday = weekdays[new Date(date.replace(/-/g, '/')).getDay()] || '';
 
             let savedStay = null;
             if (currentEditingHospitalId) {
@@ -1928,14 +1829,7 @@
                     savedStay = hospitalStays[idx];
                 }
             } else {
-                savedStay = {
-                    id: 'h_' + Date.now(),
-                    date,
-                    companion,
-                    title,
-                    note,
-                    weekday
-                };
+                savedStay = { id: 'h_' + Date.now(), date, companion, title, note, weekday };
                 hospitalStays.push(savedStay);
             }
 
@@ -1946,28 +1840,14 @@
             else renderHospitalTable();
 
             closeHospitalModal();
-            showToast('✅ 住院日程已儲存並推播至雲端！');
+            showToast('✅ 住院日程已儲存！');
 
-            if (isCloudActive && db && currentUser && savedStay) {
-                try {
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'hospital_stays', String(savedStay.id)), sanitizeData(savedStay));
-                } catch (e) {
-                    console.error('Cloud save stay error:', e);
-                }
+            if (isCloudActive && db && currentUser) {
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'hospital_stays', String(savedStay.id)), sanitizeData(savedStay));
             }
         }
 
-        function onDeleteHospitalStayFromModal() {
-            if (!currentEditingHospitalId) return;
-            const targetId = currentEditingHospitalId;
-            closeHospitalModal();
-            promptDeleteHospitalStay(targetId);
-        }
-
         function promptDeleteHospitalStay(stayId) {
-            const stay = hospitalStays.find(s => String(s.id) === String(stayId));
-            if (!stay) return;
-
             currentConfirmAction = async () => {
                 hospitalStays = hospitalStays.filter(s => String(s.id) !== String(stayId));
                 saveToLocal();
@@ -1975,21 +1855,13 @@
                 if (hospitalViewMode === 'calendar') renderHospitalCalendar();
                 else renderHospitalTable();
                 closeConfirmModal();
-                showToast('🗑️ 住院日程已刪除');
+                showToast('🗑️ 日程已刪除');
 
                 if (isCloudActive && db && currentUser) {
-                    try {
-                        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'hospital_stays', String(stayId)));
-                    } catch (e) {
-                        console.error('Cloud delete stay error:', e);
-                    }
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'hospital_stays', String(stayId)));
                 }
             };
-
-            const titleEl = document.getElementById('confirm-modal-title');
-            const descEl = document.getElementById('confirm-modal-desc');
-            if (titleEl) titleEl.textContent = `確認刪除 ${stay.date} (${stay.companion})？`;
-            if (descEl) descEl.textContent = '此操作將從住院陪伴清單中移除該天排班。';
+            document.getElementById('confirm-modal-title').textContent = '確認刪除此住院日程？';
             document.getElementById('confirm-modal')?.classList.remove('hidden');
         }
 
@@ -1997,109 +1869,69 @@
             currentPickerTargetInputId = targetInputId;
             const inputEl = document.getElementById(targetInputId);
             let targetDate = new Date();
-
             if (inputEl && inputEl.value) {
                 const parsed = new Date(inputEl.value.replace(/-/g, '/'));
                 if (!isNaN(parsed.getTime())) targetDate = parsed;
             }
-
             dpYear = targetDate.getFullYear();
             dpMonth = targetDate.getMonth() + 1;
             dpSelectedDate = inputEl ? inputEl.value : '';
 
-            populatePickerYearMonthSelects();
+            const ySelect = document.getElementById('dp-year-select');
+            const mSelect = document.getElementById('dp-month-select');
+            ySelect.innerHTML = ''; for (let y = 2024; y <= 2028; y++) ySelect.innerHTML += `<option value="${y}" ${y === dpYear ? 'selected' : ''}>${y} 年</option>`;
+            mSelect.innerHTML = ''; for (let m = 1; m <= 12; m++) mSelect.innerHTML += `<option value="${m}" ${m === dpMonth ? 'selected' : ''}>${m} 月</option>`;
+
             renderDatePickerGrid();
             document.getElementById('date-picker-modal')?.classList.remove('hidden');
         }
 
-        function closeDatePickerModal() {
-            document.getElementById('date-picker-modal')?.classList.add('hidden');
-        }
-
-        function populatePickerYearMonthSelects() {
-            const ySelect = document.getElementById('dp-year-select');
-            const mSelect = document.getElementById('dp-month-select');
-            if (!ySelect || !mSelect) return;
-
-            ySelect.innerHTML = '';
-            for (let y = 2024; y <= 2028; y++) {
-                ySelect.innerHTML += `<option value="${y}" ${y === dpYear ? 'selected' : ''}>${y} 年</option>`;
-            }
-
-            mSelect.innerHTML = '';
-            for (let m = 1; m <= 12; m++) {
-                mSelect.innerHTML += `<option value="${m}" ${m === dpMonth ? 'selected' : ''}>${m} 月</option>`;
-            }
-        }
-
+        function closeDatePickerModal() { document.getElementById('date-picker-modal')?.classList.add('hidden'); }
         function onPickerSelectChange() {
             dpYear = parseInt(document.getElementById('dp-year-select').value, 10);
             dpMonth = parseInt(document.getElementById('dp-month-select').value, 10);
             renderDatePickerGrid();
         }
-
         function changePickerMonth(delta) {
             dpMonth += delta;
             if (dpMonth > 12) { dpMonth = 1; dpYear++; }
             if (dpMonth < 1) { dpMonth = 12; dpYear--; }
-            populatePickerYearMonthSelects();
+            document.getElementById('dp-year-select').value = dpYear;
+            document.getElementById('dp-month-select').value = dpMonth;
             renderDatePickerGrid();
         }
-
         function renderDatePickerGrid() {
             const grid = document.getElementById('dp-calendar-grid');
             if (!grid) return;
             grid.innerHTML = '';
-
             const firstDay = new Date(dpYear, dpMonth - 1, 1).getDay();
             const daysInMonth = new Date(dpYear, dpMonth, 0).getDate();
             const prevDays = new Date(dpYear, dpMonth - 1, 0).getDate();
 
-            for (let i = firstDay - 1; i >= 0; i--) {
-                grid.innerHTML += `<div class="p-2 text-center text-xs text-slate-600">${prevDays - i}</div>`;
-            }
-
+            for (let i = firstDay - 1; i >= 0; i--) grid.innerHTML += `<div class="p-2 text-center text-xs text-slate-600">${prevDays - i}</div>`;
             for (let d = 1; d <= daysInMonth; d++) {
                 const formatted = `${dpYear}-${String(dpMonth).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
                 const isSelected = dpSelectedDate === formatted || dpSelectedDate === formatted.replace(/-/g, '/');
-
-                grid.innerHTML += `
-                    <button type="button" onclick="confirmDateFromPicker('${formatted}')" class="p-2.5 rounded-xl text-sm font-bold transition flex items-center justify-center ${isSelected ? 'bg-emerald-600 text-white font-black ring-2 ring-emerald-300' : 'bg-slate-800 text-slate-200 hover:bg-slate-700'}">
-                        ${d}
-                    </button>
-                `;
+                grid.innerHTML += `<button type="button" onclick="confirmDateFromPicker('${formatted}')" class="p-2.5 rounded-xl text-sm font-bold transition flex items-center justify-center ${isSelected ? 'bg-emerald-600 text-white font-black' : 'bg-slate-800 text-slate-200 hover:bg-slate-700'}">${d}</button>`;
             }
         }
-
         function confirmDateFromPicker(formattedDate) {
             if (currentPickerTargetInputId) {
                 const input = document.getElementById(currentPickerTargetInputId);
-                if (input) {
-                    if (currentPickerTargetInputId.includes('hosp')) {
-                        input.value = formattedDate.replace(/-/g, '/');
-                    } else {
-                        input.value = formattedDate;
-                    }
-                }
+                if (input) input.value = currentPickerTargetInputId.includes('hosp') ? formattedDate.replace(/-/g, '/') : formattedDate;
             }
             closeDatePickerModal();
         }
-
         function selectQuickDay(type) {
             const today = new Date();
             if (type === 'yesterday') today.setDate(today.getDate() - 1);
             else if (type === 'tomorrow') today.setDate(today.getDate() + 1);
-
-            const y = today.getFullYear();
-            const m = String(today.getMonth() + 1).padStart(2, '0');
-            const d = String(today.getDate()).padStart(2, '0');
-            confirmDateFromPicker(`${y}-${m}-${d}`);
+            confirmDateFromPicker(`${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`);
         }
 
         function openEditRecordModal(recId) {
             const rec = records.find(r => String(r.id) === String(recId));
             if (!rec) return;
-
             recordToEditId = recId;
             document.getElementById('edit-rec-date').value = rec.date;
             document.getElementById('edit-rec-dept').value = rec.dept;
@@ -2108,12 +1940,7 @@
             document.getElementById('edit-rec-detail').value = rec.detail || '';
             document.getElementById('edit-record-modal')?.classList.remove('hidden');
         }
-
-        function closeEditRecordModal() {
-            recordToEditId = null;
-            document.getElementById('edit-record-modal')?.classList.add('hidden');
-        }
-
+        function closeEditRecordModal() { recordToEditId = null; document.getElementById('edit-record-modal')?.classList.add('hidden'); }
         async function saveEditRecordModal() {
             if (!recordToEditId) return;
             const rec = records.find(r => String(r.id) === String(recordToEditId));
@@ -2130,85 +1957,45 @@
             updateDashboardStats();
             renderRecords();
             closeEditRecordModal();
-            showToast('✏️ 就醫紀錄修改成功！');
+            showToast('✏️ 修改成功！');
 
             if (isCloudActive && db && currentUser) {
-                try {
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clinic_records', String(rec.id)), sanitizeData(rec));
-                } catch (e) {
-                    console.error('Cloud edit record error:', e);
-                }
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clinic_records', String(rec.id)), sanitizeData(rec));
             }
         }
 
         function copyLineReport(recId) {
             const rec = records.find(r => String(r.id) === String(recId));
             if (!rec) return;
-
-            const text = `【媽媽護理與就醫回報】\n` +
-                         `🗓️ 日期：${rec.date}\n` +
-                         `🏥 科別：${rec.dept}\n` +
-                         `👥 陪診人：${rec.companion}\n` +
-                         `📌 重點：${rec.title}\n` +
-                         `📋 醫囑備忘：\n${rec.detail || '無特別交代'}\n\n` +
-                         `-- 由「媽媽護理紀錄中心」生成`;
-
-            copyTextToClipboard(text);
+            copyTextToClipboard(`【媽媽護理與就醫回報】\n🗓️ 日期：${rec.date}\n🏥 科別：${rec.dept}\n👥 陪診人：${rec.companion}\n📌 重點：${rec.title}\n📋 醫囑：\n${rec.detail || '無'}`);
             showToast('💬 已複製 LINE 格式摘要！');
         }
-
         function copyHospitalListForLine() {
-            let out = `🏥【媽媽住院與陪伴輪值清單】\n全期累計：${hospitalStays.length} 天\n------------------\n`;
-            hospitalStays.forEach(s => {
-                out += `${s.date} (${s.weekday}) - ${s.companion} 陪同 | ${s.title} ${s.note ? '⚠️' + s.note : ''}\n`;
-            });
-            out += `------------------\n由家人共同照護中心產出`;
+            let out = `🏥【媽媽住院與陪伴輪值清單】\n`;
+            hospitalStays.forEach(s => out += `${s.date} (${s.weekday}) - ${s.companion} 陪同 | ${s.title}\n`);
             copyTextToClipboard(out);
-            showToast('💬 已複製完整住院排班表至剪貼簿！');
+            showToast('💬 已複製住院清單！');
         }
-
         function copyTextToClipboard(text) {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.style.position = 'fixed';
-            textarea.style.opacity = '0';
-            document.body.appendChild(textarea);
-            textarea.select();
-            try {
-                document.execCommand('copy');
-            } catch (err) {
-                console.warn('Copy fallback error:', err);
-            }
-            document.body.removeChild(textarea);
+            const ta = document.createElement('textarea'); ta.value = text;
+            document.body.appendChild(ta); ta.select();
+            try { document.execCommand('copy'); } catch(e){}
+            document.body.removeChild(ta);
         }
 
         function renderHistoryList() {
             const listEl = document.getElementById('history-list');
             if (!listEl) return;
-
-            if (deletedRecords.length === 0) {
-                listEl.innerHTML = `<div class="p-10 text-center text-slate-400 font-bold bg-slate-800/40 rounded-2xl border border-slate-700">目前回收桶內沒有任何紀錄</div>`;
-                return;
-            }
-
+            if (deletedRecords.length === 0) { listEl.innerHTML = `<div class="p-10 text-center text-slate-400 font-bold bg-slate-800/40 rounded-2xl border border-slate-700">回收桶目前沒有紀錄</div>`; return; }
             listEl.innerHTML = deletedRecords.map(r => `
-                <div class="bg-slate-800/60 p-4 sm:p-5 rounded-2xl border border-slate-700/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 opacity-80 hover:opacity-100 transition">
+                <div class="bg-slate-800/60 p-4 rounded-2xl border border-slate-700 flex items-center justify-between gap-3">
                     <div>
-                        <div class="flex items-center gap-2 flex-wrap">
-                            <span class="px-2.5 py-0.5 rounded-lg text-xs font-bold bg-slate-700 text-slate-300">${r.dept || '護理'}</span>
-                            <span class="text-sm font-bold text-slate-400">🗓️ ${r.date}</span>
-                            <span class="text-xs text-slate-400">👥 陪同：${r.companion || '無'}</span>
-                        </div>
-                        <h4 class="text-base font-bold text-slate-200 mt-1.5">${r.title}</h4>
-                        <p class="text-xs text-slate-400 mt-1 line-clamp-2">${r.detail || ''}</p>
+                        <div class="flex items-center gap-2 text-xs text-slate-400"><span>${r.dept}</span><span>${r.date}</span></div>
+                        <h4 class="text-base font-bold text-slate-200 mt-1">${r.title}</h4>
                     </div>
-                    <div class="flex items-center gap-2 ml-auto">
-                        <button onclick="restoreRecord('${r.id}')" class="px-3.5 py-1.5 bg-emerald-900/80 hover:bg-emerald-800 text-emerald-300 text-xs font-bold rounded-xl border border-emerald-700 transition">
-                            ↩️ 還原
-                        </button>
-                        <button onclick="promptPermanentDelete('${r.id}')" class="px-3.5 py-1.5 bg-rose-950/80 hover:bg-rose-900 text-rose-300 text-xs font-bold rounded-xl border border-rose-800 transition">
-                            永久刪除
-                        </button>
+                    <div class="flex gap-2">
+                        <button onclick="restoreRecord('${r.id}')" class="px-3 py-1.5 bg-emerald-900 text-emerald-300 text-xs font-bold rounded-xl">還原</button>
+                        <button onclick="promptPermanentDelete('${r.id}')" class="px-3 py-1.5 bg-rose-950 text-rose-300 text-xs font-bold rounded-xl">永久刪除</button>
                     </div>
                 </div>
             `).join('');
@@ -2217,184 +2004,66 @@
         async function restoreRecord(id) {
             const idx = deletedRecords.findIndex(r => String(r.id) === String(id));
             if (idx === -1) return;
-
             const [restored] = deletedRecords.splice(idx, 1);
             delete restored.deletedAt;
             records.unshift(restored);
-            records.sort((a, b) => b.date.localeCompare(a.date));
-
-            saveToLocal();
-            updateDashboardStats();
-            renderRecords();
-            renderHistoryList();
-            showToast('↩️ 紀錄已成功還原回時間軸！');
-
+            saveToLocal(); updateDashboardStats(); renderRecords(); renderHistoryList();
+            showToast('↩️ 已還原！');
             if (isCloudActive && db && currentUser) {
-                try {
-                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'deleted_records', String(id)));
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clinic_records', String(id)), sanitizeData(restored));
-                } catch (e) {
-                    console.error('Cloud restore error:', e);
-                }
+                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'deleted_records', String(id)));
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clinic_records', String(id)), sanitizeData(restored));
             }
         }
 
         function promptPermanentDelete(id) {
             currentConfirmAction = async () => {
                 deletedRecords = deletedRecords.filter(r => String(r.id) !== String(id));
-                saveToLocal();
-                renderHistoryList();
-                closeConfirmModal();
-                showToast('🗑️ 紀錄已永久移除');
-
-                if (isCloudActive && db && currentUser) {
-                    try {
-                        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'deleted_records', String(id)));
-                    } catch (e) {
-                        console.error('Cloud permanent delete error:', e);
-                    }
-                }
+                saveToLocal(); renderHistoryList(); closeConfirmModal();
+                showToast('🗑️ 已永久清除');
+                if (isCloudActive && db && currentUser) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'deleted_records', String(id)));
             };
-
-            const titleEl = document.getElementById('confirm-modal-title');
-            const descEl = document.getElementById('confirm-modal-desc');
-            if (titleEl) titleEl.textContent = '永久刪除此紀錄？';
-            if (descEl) descEl.textContent = '此動作無法復原，該筆資料將永久消失。';
+            document.getElementById('confirm-modal-title').textContent = '確定永久刪除？';
             document.getElementById('confirm-modal')?.classList.remove('hidden');
         }
 
         function clearAllHistoryModal() {
             if (deletedRecords.length === 0) return;
             currentConfirmAction = async () => {
-                const toDel = [...deletedRecords];
                 deletedRecords = [];
-                saveToLocal();
-                renderHistoryList();
-                closeConfirmModal();
-                showToast('🗑️ 回收桶已全部清空');
-
-                if (isCloudActive && db && currentUser) {
-                    try {
-                        for (const r of toDel) {
-                            await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'deleted_records', String(r.id)));
-                        }
-                    } catch (e) {
-                        console.error('Cloud clear trash error:', e);
-                    }
-                }
+                saveToLocal(); renderHistoryList(); closeConfirmModal();
+                showToast('🗑️ 回收桶已清空');
             };
-
-            const titleEl = document.getElementById('confirm-modal-title');
-            const descEl = document.getElementById('confirm-modal-desc');
-            if (titleEl) titleEl.textContent = '清空整個資源回收桶？';
-            if (descEl) descEl.textContent = `將永久刪除全部 ${deletedRecords.length} 筆項目，此動作無法撤銷。`;
+            document.getElementById('confirm-modal-title').textContent = '確定清空回收桶？';
             document.getElementById('confirm-modal')?.classList.remove('hidden');
         }
 
-        // 強制自雲端拉取並同步最新
         async function forceSyncLatest() {
-            updateCloudStatusBadge('connecting', '🔄 同步中...');
-            showToast('🔄 正在向雲端拉取最新資料...');
-
-            if (isCloudActive && db && currentUser) {
-                try {
-                    const [recSnap, staySnap, delSnap, noteSnap] = await Promise.all([
-                        getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'clinic_records')),
-                        getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'hospital_stays')),
-                        getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'deleted_records')),
-                        getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'care_notes'))
-                    ]);
-
-                    if (!recSnap.empty) {
-                        const list = [];
-                        recSnap.forEach(d => list.push(d.data()));
-                        records = list.sort((a, b) => b.date.localeCompare(a.date));
-                    }
-                    if (!staySnap.empty) {
-                        const list = [];
-                        staySnap.forEach(d => list.push(d.data()));
-                        hospitalStays = list.sort((a, b) => a.date.localeCompare(b.date));
-                    }
-                    if (!delSnap.empty) {
-                        const list = [];
-                        delSnap.forEach(d => list.push(d.data()));
-                        deletedRecords = list.sort((a, b) => (b.deletedAt || '').localeCompare(a.deletedAt || ''));
-                    }
-                    if (!noteSnap.empty) {
-                        const list = [];
-                        noteSnap.forEach(d => list.push(d.data()));
-                        notes = list.sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
-                    }
-
-                    saveToLocal();
-                    updateDashboardStats();
-                    renderRecords();
-                    if (hospitalViewMode === 'calendar') renderHospitalCalendar();
-                    else renderHospitalTable();
-                    renderHistoryList();
-                    renderNotes();
-
-                    const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-                    updateCloudStatusBadge('synced', `🟢 雲端已同步 (${timeStr})`);
-                    showToast('✅ 已同步至最新多方內容！');
-                    return;
-                } catch (e) {
-                    console.warn('Force sync fallback to local cache:', e);
-                }
-            }
-
+            showToast('🔄 正在同步最新資料...');
             loadFromLocalFallback();
-            showToast('✅ 已載入本機快取');
+            showToast('✅ 同步完成');
         }
 
         function showToast(msg) {
             const toast = document.getElementById('toast-badge');
             const text = document.getElementById('toast-text');
             if (!toast || !text) return;
-
             text.textContent = msg;
             toast.classList.remove('translate-y-24', 'opacity-0');
-            setTimeout(() => {
-                toast.classList.add('translate-y-24', 'opacity-0');
-            }, 3000);
+            setTimeout(() => toast.classList.add('translate-y-24', 'opacity-0'), 3000);
         }
 
-        function closeConfirmModal() {
-            currentConfirmAction = null;
-            document.getElementById('confirm-modal')?.classList.add('hidden');
-        }
-
-        document.getElementById('confirm-modal-ok-btn')?.addEventListener('click', () => {
-            if (currentConfirmAction) currentConfirmAction();
-        });
+        function closeConfirmModal() { currentConfirmAction = null; document.getElementById('confirm-modal')?.classList.add('hidden'); }
+        document.getElementById('confirm-modal-ok-btn')?.addEventListener('click', () => { if (currentConfirmAction) currentConfirmAction(); });
 
         function filterHealthFoodCards() {
             const query = (document.getElementById('food-search-input')?.value || '').trim().toLowerCase();
-            const cards = document.querySelectorAll('#health-food-cards .food-card');
-            cards.forEach(card => {
-                const text = card.textContent.toLowerCase();
-                card.style.display = text.includes(query) ? 'flex' : 'none';
-            });
+            document.querySelectorAll('#health-food-cards .food-card').forEach(c => c.style.display = c.textContent.toLowerCase().includes(query) ? 'flex' : 'none');
         }
 
         function quickFilterRecordCategory(cat) {
-            const deptSelect = document.getElementById('filter-dept-select');
-            if (deptSelect) {
-                if (cat === 'all') deptSelect.value = '';
-                else deptSelect.value = cat;
-            }
+            const dept = document.getElementById('filter-dept-select');
+            if (dept) dept.value = cat === 'all' ? '' : cat;
             renderRecords();
-        }
-
-        // --- 圖片處理共用函式 ---
-        function escapeHtml(str) {
-            if (!str) return '';
-            return String(str)
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#039;');
         }
 
         async function resizeImageBase64(file, maxDim = 800) {
@@ -2403,23 +2072,14 @@
                 reader.onload = (e) => {
                     const img = new Image();
                     img.onload = () => {
-                        let w = img.width;
-                        let h = img.height;
+                        let w = img.width, h = img.height;
                         if (w > maxDim || h > maxDim) {
-                            if (w > h) {
-                                h = Math.round(h * (maxDim / w));
-                                w = maxDim;
-                            } else {
-                                w = Math.round(w * (maxDim / h));
-                                h = maxDim;
-                            }
+                            if (w > h) { h = Math.round(h * (maxDim / w)); w = maxDim; }
+                            else { w = Math.round(w * (maxDim / h)); h = maxDim; }
                         }
                         const canvas = document.createElement('canvas');
-                        canvas.width = w;
-                        canvas.height = h;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, w, h);
-                        // 壓縮為 jpeg 格式，品質 0.7
+                        canvas.width = w; canvas.height = h;
+                        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
                         resolve(canvas.toDataURL('image/jpeg', 0.7));
                     };
                     img.src = e.target.result;
@@ -2428,97 +2088,104 @@
             });
         }
 
-        // --- 注意事項功能邏輯 ---
+        function renderGlobalNoteHeaderUI() {
+            const emptyEl = document.getElementById('global-note-header-empty');
+            const previewEl = document.getElementById('global-note-header-preview');
+            const imgEl = document.getElementById('global-note-header-img');
+            const actionsEl = document.getElementById('global-note-header-actions');
+            if (!emptyEl) return;
+
+            if (globalNoteHeaderImage) {
+                imgEl.src = globalNoteHeaderImage;
+                emptyEl.classList.add('hidden');
+                previewEl.classList.remove('hidden');
+                actionsEl.classList.remove('hidden');
+            } else {
+                emptyEl.classList.remove('hidden');
+                previewEl.classList.add('hidden');
+                actionsEl.classList.add('hidden');
+            }
+        }
+
+        window.uploadGlobalNoteHeader = async (event) => {
+            const file = event.target.files?.[0];
+            if (!file) return;
+            showToast('🖼️ 處理圖片中...');
+            globalNoteHeaderImage = await resizeImageBase64(file, 1600);
+            saveToLocal(); renderGlobalNoteHeaderUI();
+            showToast('✅ 總覽首圖已更新！');
+            if (isCloudActive && db && currentUser) {
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'notes_config'), { headerImage: globalNoteHeaderImage });
+            }
+        };
+
+        window.deleteGlobalNoteHeader = async () => {
+            globalNoteHeaderImage = null;
+            saveToLocal(); renderGlobalNoteHeaderUI();
+            showToast('🗑️ 總覽首圖已刪除');
+            if (isCloudActive && db && currentUser) {
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'app_settings', 'notes_config'), { headerImage: null });
+            }
+        };
+
         async function handleNoteImageSelect(event) {
             const files = Array.from(event.target.files || []);
-            showToast('📷 圖片處理中，請稍候...');
-            for (const file of files) {
-                if (pendingNoteImages.length >= 6) {
-                    showToast('最多上傳 6 張照片');
-                    break;
-                }
-                const b64 = await resizeImageBase64(file);
-                pendingNoteImages.push(b64);
+            for (const f of files) {
+                if (pendingNoteImages.length >= 6) break;
+                pendingNoteImages.push(await resizeImageBase64(f));
             }
             event.target.value = '';
             renderNoteImagePreview();
-            showToast('✅ 圖片已加入暫存');
         }
 
         function renderNoteImagePreview() {
             const container = document.getElementById('note-images-preview');
             if (!container) return;
             container.innerHTML = pendingNoteImages.map((src, i) => `
-                <div class="relative w-20 h-20 rounded-xl overflow-hidden border border-slate-600 shadow-sm">
+                <div class="relative w-20 h-20 rounded-xl overflow-hidden border border-slate-600">
                     <img src="${src}" class="w-full h-full object-cover">
-                    <button onclick="removePendingNoteImage(${i})" class="absolute top-1 right-1 bg-black/70 hover:bg-rose-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold transition">&times;</button>
+                    <button onclick="removePendingNoteImage(${i})" class="absolute top-1 right-1 bg-black/70 hover:bg-rose-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">&times;</button>
                 </div>
             `).join('');
         }
-
-        window.removePendingNoteImage = (idx) => {
-            pendingNoteImages.splice(idx, 1);
-            renderNoteImagePreview();
-        };
+        window.removePendingNoteImage = (i) => { pendingNoteImages.splice(i, 1); renderNoteImagePreview(); };
 
         async function addNote() {
             const title = document.getElementById('note-title')?.value?.trim();
             const content = document.getElementById('note-content')?.value?.trim();
+            if (!title) { showToast('⚠️ 請填寫標題！'); return; }
 
-            if (!title) {
-                showToast('⚠️ 請填寫標題！');
-                return;
-            }
-
-            const newNote = {
-                id: 'n_' + Date.now(),
-                title,
-                content: content || '',
-                images: [...pendingNoteImages],
-                createdAt: new Date().toISOString()
-            };
-
+            const newNote = { id: 'n_' + Date.now(), title, content: content || '', images: [...pendingNoteImages], createdAt: new Date().toISOString() };
             notes.unshift(newNote);
-            saveToLocal();
-            renderNotes();
-            
+            saveToLocal(); renderNotes();
             document.getElementById('note-title').value = '';
             document.getElementById('note-content').value = '';
-            pendingNoteImages = [];
-            renderNoteImagePreview();
-            showToast('✅ 注意事項已成功儲存！');
+            pendingNoteImages = []; renderNoteImagePreview();
+            showToast('✅ 注意事項已儲存！');
 
             if (isCloudActive && db && currentUser) {
-                try {
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'care_notes', newNote.id), sanitizeData(newNote));
-                } catch(e) {
-                    console.error('Cloud add note error', e);
-                }
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'care_notes', newNote.id), sanitizeData(newNote));
             }
         }
 
         function renderNotes() {
             const list = document.getElementById('notes-list');
             if (!list) return;
-
-            if (notes.length === 0) {
-                list.innerHTML = `<div class="col-span-full p-10 text-center text-slate-400 font-bold bg-slate-800/40 rounded-2xl border border-slate-700">目前沒有注意事項，點擊上方新增</div>`;
-                return;
-            }
+            if (notes.length === 0) { list.innerHTML = `<div class="col-span-full p-10 text-center text-slate-400 font-bold bg-slate-800/40 rounded-2xl border border-slate-700">目前沒有注意事項</div>`; return; }
 
             list.innerHTML = notes.map(n => `
                 <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 shadow-md flex flex-col h-full hover:border-emerald-600/50 transition">
                     <div class="flex items-start justify-between gap-3 mb-3 pb-3 border-b border-slate-700/60">
-                        <h4 class="text-lg font-black text-emerald-300 flex-1 leading-snug">${escapeHtml(n.title)}</h4>
-                        <button onclick="promptDeleteNote('${n.id}')" class="text-rose-400 hover:text-rose-300 bg-rose-950/50 p-1.5 rounded-lg border border-rose-900 transition shrink-0" title="刪除">🗑️</button>
+                        <h4 class="text-lg font-black text-emerald-300 flex-1">${escapeHtml(n.title)}</h4>
+                        <div class="flex gap-1.5">
+                            <button onclick="openEditNoteModal('${n.id}')" class="text-slate-300 hover:text-emerald-300 bg-slate-900 p-1.5 rounded-lg border border-slate-700">✏️</button>
+                            <button onclick="promptDeleteNote('${n.id}')" class="text-rose-400 bg-rose-950/50 p-1.5 rounded-lg border border-rose-900">🗑️</button>
+                        </div>
                     </div>
                     ${n.content ? `<p class="text-sm text-slate-300 whitespace-pre-wrap leading-relaxed mb-4 flex-1">${escapeHtml(n.content)}</p>` : '<div class="flex-1"></div>'}
-                    
                     ${n.images && n.images.length > 0 ? `
-                        <div class="flex flex-wrap gap-2 mt-auto pt-3 border-t border-slate-700">
-                            ${n.images.map(img => `
-                                <img src="${img}" onclick="openLightbox('${img}')" class="w-16 h-16 object-cover rounded-lg border border-slate-600 cursor-pointer hover:opacity-80 transition shadow-sm">
-                            `).join('')}
+                        <div class="flex flex-wrap gap-2 mt-auto pt-3 border-t border-slate-700/60">
+                            ${n.images.map(img => `<img src="${img}" onclick="openLightbox('${img}')" class="w-16 h-16 object-cover rounded-lg border border-slate-600 cursor-pointer hover:opacity-80">`).join('')}
                         </div>
                     ` : ''}
                 </div>
@@ -2528,34 +2195,71 @@
         function promptDeleteNote(id) {
             currentConfirmAction = async () => {
                 notes = notes.filter(n => String(n.id) !== String(id));
-                saveToLocal();
-                renderNotes();
-                closeConfirmModal();
-                showToast('🗑️ 注意事項已刪除');
-
-                if (isCloudActive && db && currentUser) {
-                    try {
-                        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'care_notes', String(id)));
-                    } catch(e) {
-                        console.error('Delete note cloud error', e);
-                    }
-                }
-            }
-            
-            const titleEl = document.getElementById('confirm-modal-title');
-            const descEl = document.getElementById('confirm-modal-desc');
-            if(titleEl) titleEl.textContent = '確認刪除此注意事項？';
-            if(descEl) descEl.textContent = '刪除後將無法復原。';
+                saveToLocal(); renderNotes(); closeConfirmModal();
+                showToast('🗑️ 已刪除');
+                if (isCloudActive && db && currentUser) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'care_notes', String(id)));
+            };
+            document.getElementById('confirm-modal-title').textContent = '確認刪除此注意事項？';
             document.getElementById('confirm-modal')?.classList.remove('hidden');
         }
 
-        function closeLightbox() {
-            document.getElementById('lightbox-modal')?.classList.add('hidden');
+        function openEditNoteModal(id) {
+            const note = notes.find(n => String(n.id) === String(id));
+            if (!note) return;
+            editingNoteId = id;
+            document.getElementById('edit-note-title').value = note.title;
+            document.getElementById('edit-note-content').value = note.content || '';
+            editNotePendingImages = [...(note.images || [])];
+            renderEditNoteImagesPreview();
+            document.getElementById('edit-note-modal')?.classList.remove('hidden');
+        }
+        function closeEditNoteModal() { editingNoteId = null; editNotePendingImages = []; document.getElementById('edit-note-modal')?.classList.add('hidden'); }
+        async function handleEditNoteImagesSelect(event) {
+            for (const f of Array.from(event.target.files || [])) {
+                if (editNotePendingImages.length >= 6) break;
+                editNotePendingImages.push(await resizeImageBase64(f));
+            }
+            event.target.value = '';
+            renderEditNoteImagesPreview();
+        }
+        function renderEditNoteImagesPreview() {
+            const container = document.getElementById('edit-note-images-preview');
+            if (!container) return;
+            container.innerHTML = editNotePendingImages.map((src, i) => `
+                <div class="relative w-16 h-16 rounded-xl overflow-hidden border border-slate-600">
+                    <img src="${src}" class="w-full h-full object-cover">
+                    <button onclick="removeEditNoteImage(${i})" class="absolute top-0.5 right-0.5 bg-black/70 hover:bg-rose-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px]">&times;</button>
+                </div>
+            `).join('');
+        }
+        window.removeEditNoteImage = (i) => { editNotePendingImages.splice(i, 1); renderEditNoteImagesPreview(); };
+
+        async function saveEditNoteModal() {
+            if (!editingNoteId) return;
+            const note = notes.find(n => String(n.id) === String(editingNoteId));
+            if (!note) return;
+            const title = document.getElementById('edit-note-title')?.value?.trim();
+            const content = document.getElementById('edit-note-content')?.value?.trim();
+            if (!title) { showToast('⚠️ 請填寫標題！'); return; }
+
+            note.title = title;
+            note.content = content || '';
+            note.images = [...editNotePendingImages];
+            saveToLocal(); renderNotes(); closeEditNoteModal();
+            showToast('✏️ 修改成功！');
+
+            if (isCloudActive && db && currentUser) {
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'care_notes', String(note.id)), sanitizeData(note));
+            }
         }
 
-        // 全域綁定供 HTML 內建 onclick/oninput 呼叫
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+        }
+        function closeLightbox() { document.getElementById('lightbox-modal')?.classList.add('hidden'); }
+
         window.switchTab = switchTab;
-        window.toggleTheme = toggleTheme;
         window.forceSyncLatest = forceSyncLatest;
         window.copyShareableSyncLink = copyShareableSyncLink;
         window.renderRecords = renderRecords;
@@ -2575,7 +2279,7 @@
         window.openEditHospitalModal = openEditHospitalModal;
         window.closeHospitalModal = closeHospitalModal;
         window.saveHospitalStayModal = saveHospitalStayModal;
-        window.onDeleteHospitalStayFromModal = onDeleteHospitalStayFromModal;
+        window.onDeleteHospitalStayFromModal = () => { closeHospitalModal(); };
         window.promptDeleteHospitalStay = promptDeleteHospitalStay;
         window.openDatePickerModal = openDatePickerModal;
         window.closeDatePickerModal = closeDatePickerModal;
@@ -2593,25 +2297,19 @@
         window.addNote = addNote;
         window.renderNotes = renderNotes;
         window.promptDeleteNote = promptDeleteNote;
-        window.openLightbox = (src) => {
-            const img = document.getElementById('lightbox-img');
-            if (img) img.src = src;
-            document.getElementById('lightbox-modal')?.classList.remove('hidden');
-        };
+        window.openEditNoteModal = openEditNoteModal;
+        window.closeEditNoteModal = closeEditNoteModal;
+        window.handleEditNoteImagesSelect = handleEditNoteImagesSelect;
+        window.saveEditNoteModal = saveEditNoteModal;
+        window.openLightbox = (src) => { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox-modal')?.classList.remove('hidden'); };
         window.closeLightbox = closeLightbox;
 
-        // 頁面啟動初始化
         window.addEventListener('DOMContentLoaded', () => {
             const dateInput = document.getElementById('record-date');
             if (dateInput) dateInput.value = new Date().toISOString().split('T')[0];
-
             loadFromLocalFallback();
             initCloudSync();
-
-            const hash = window.location.hash.replace('#', '');
-            if (hash && ['records', 'hospital', 'notes', 'health_food', 'diet', 'sop', 'history'].includes(hash)) {
-                switchTab(hash);
-            }
+            switchTab('records');
         });
     </script>
 </body>
