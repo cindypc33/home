@@ -1,0 +1,2618 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>媽媽專屬護理與回診紀錄中心</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            900: '#064e3b'
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'PingFang TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Microsoft JhengHei', sans-serif;
+            font-size: 16px;
+            line-height: 1.65;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #334155;
+            border-radius: 9999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .spinner {
+            border: 3px solid rgba(16, 185, 129, 0.2);
+            border-top: 3px solid #10b981;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen p-2.5 sm:p-5 transition-colors duration-200">
+
+    <div class="max-w-6xl mx-auto bg-slate-900 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border border-slate-800 transition-colors duration-200">
+        
+        <header class="bg-gradient-to-r from-emerald-900 via-slate-900 to-teal-950 p-4 sm:p-7 border-b border-emerald-800/40 relative">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2.5 flex-wrap">
+                        <span class="text-2xl sm:text-3xl">🌟</span>
+                        <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-wide">媽媽專屬護理與回診紀錄中心</h1>
+                    </div>
+                    <p class="mt-1.5 text-sm sm:text-base text-emerald-200/90 font-medium">全方位病程追蹤・38天住院排班・抗癌營養金庫・多方即時雲端同步</p>
+                </div>
+
+                <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+                    <div id="cloud-sync-badge" class="px-3.5 py-2 bg-emerald-950/90 border border-emerald-500/70 rounded-xl text-xs sm:text-sm font-bold text-emerald-300 flex items-center gap-2 shadow-sm transition">
+                        <span id="cloud-sync-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span id="cloud-sync-text">連線至家庭雲端...</span>
+                    </div>
+                    <button onclick="copyShareableSyncLink()" class="px-3.5 py-2 bg-emerald-700 hover:bg-emerald-600 text-white rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm active:scale-95" title="複製全家人同步連結發到 LINE 群組">
+                        <span>🔗</span> <span>複製共用連結</span>
+                    </button>
+                    <button onclick="forceSyncLatest()" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-slate-700 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="立即從雲端拉取最新資料">
+                        <span>🔄</span> <span>同步最新</span>
+                    </button>
+                    <button onclick="toggleTheme()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl text-sm font-bold transition flex items-center gap-2 shadow-sm">
+                        <span id="theme-icon" class="text-base">☀️</span> <span id="theme-text">切換亮色</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 pt-3 border-t border-emerald-800/40 text-left">
+                <div class="bg-slate-800/70 p-3 rounded-xl border border-slate-700/60">
+                    <span class="text-xs text-slate-400 block font-semibold">就醫歷程累積</span>
+                    <span id="stat-total-records" class="text-lg sm:text-xl font-extrabold text-emerald-400 mt-0.5 block">載入中...</span>
+                </div>
+                <div class="bg-slate-800/70 p-3 rounded-xl border border-slate-700/60">
+                    <span class="text-xs text-slate-400 block font-semibold">全期住院排班</span>
+                    <span id="stat-total-stays" class="text-lg sm:text-xl font-extrabold text-teal-300 mt-0.5 block">38 天</span>
+                </div>
+                <div class="bg-slate-800/70 p-3 rounded-xl border border-slate-700/60">
+                    <span class="text-xs text-slate-400 block font-semibold">最近就診/檢查預約</span>
+                    <span id="stat-latest-date" class="text-xs sm:text-sm font-bold text-amber-300 mt-1 block">2026-11-16</span>
+                </div>
+                <div class="bg-slate-800/70 p-3 rounded-xl border border-slate-700/60">
+                    <span class="text-xs text-slate-400 block font-semibold">三姊妹陪伴輪值天數</span>
+                    <div id="stat-companion-summary" class="text-xs sm:text-sm font-bold text-slate-200 mt-1">映: 15 / 樺: 14 / 潔: 9</div>
+                </div>
+            </div>
+        </header>
+
+        <nav class="flex border-b border-slate-800 bg-slate-900 text-slate-400 overflow-x-auto custom-scrollbar">
+            <button onclick="switchTab('records')" id="tab-records" class="tab-btn px-4 sm:px-6 py-4 font-bold border-b-4 border-emerald-500 text-emerald-400 bg-slate-800/60 whitespace-nowrap text-sm sm:text-base flex items-center gap-2">
+                <span>🏥</span> 就醫病歷時間軸
+            </button>
+            <button onclick="switchTab('hospital')" id="tab-hospital" class="tab-btn px-4 sm:px-6 py-4 font-bold border-b-4 border-transparent hover:text-emerald-300 hover:bg-slate-800/40 whitespace-nowrap text-sm sm:text-base flex items-center gap-2">
+                <span>🛌</span> 住院陪護清單
+            </button>
+            <button onclick="switchTab('notes')" id="tab-notes" class="tab-btn px-4 sm:px-6 py-4 font-bold border-b-4 border-transparent hover:text-emerald-300 hover:bg-slate-800/40 whitespace-nowrap text-sm sm:text-base flex items-center gap-2">
+                <span>📌</span> 圖文注意事項
+            </button>
+            <button onclick="switchTab('health_food')" id="tab-health_food" class="tab-btn px-4 sm:px-6 py-4 font-bold border-b-4 border-transparent hover:text-emerald-300 hover:bg-slate-800/40 whitespace-nowrap text-sm sm:text-base flex items-center gap-2">
+                <span>🌿</span> 健康食物區
+            </button>
+            <button onclick="switchTab('diet')" id="tab-diet" class="tab-btn px-4 sm:px-6 py-4 font-bold border-b-4 border-transparent hover:text-emerald-300 hover:bg-slate-800/40 whitespace-nowrap text-sm sm:text-base flex items-center gap-2">
+                <span>🚦</span> 飲食護理紅綠燈
+            </button>
+            <button onclick="switchTab('sop')" id="tab-sop" class="tab-btn px-4 sm:px-6 py-4 font-bold border-b-4 border-transparent hover:text-emerald-300 hover:bg-slate-800/40 whitespace-nowrap text-sm sm:text-base flex items-center gap-2">
+                <span>📋</span> 照護與打泥 SOP
+            </button>
+            <button onclick="switchTab('history')" id="tab-history" class="tab-btn px-4 sm:px-6 py-4 font-bold border-b-4 border-transparent hover:text-emerald-300 hover:bg-slate-800/40 whitespace-nowrap text-sm sm:text-base flex items-center gap-2">
+                <span>🗑️</span> 資源回收桶
+            </button>
+        </nav>
+
+        <main class="p-3 sm:p-7 min-h-[600px]">
+
+            <section id="content-records" class="block animate-fade-in">
+                <div class="bg-slate-800/80 p-4 sm:p-6 rounded-2xl mb-7 border border-slate-700 shadow-md">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-black text-emerald-400 text-lg sm:text-xl flex items-center gap-2">
+                            <span>📝</span> 新增就醫、檢查或護理紀錄
+                        </h3>
+                        <span class="text-xs text-emerald-400 font-semibold">雲端自動推播至全家人手機</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div>
+                            <label class="block text-xs text-slate-300 font-bold mb-1.5">日期 (點選開啟大字月曆)</label>
+                            <div class="flex items-center gap-1.5">
+                                <input type="text" id="record-date" placeholder="YYYY-MM-DD" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium focus:ring-2 focus:ring-emerald-500 outline-none cursor-pointer" onclick="openDatePickerModal('record-date')" readonly>
+                                <button type="button" onclick="openDatePickerModal('record-date')" class="px-3 py-2.5 bg-slate-700 hover:bg-slate-600 text-emerald-300 rounded-xl text-sm font-bold transition flex items-center gap-1" title="開啟大字月曆選取">
+                                    📅
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-slate-300 font-bold mb-1.5">科別 / 類別</label>
+                            <select id="record-dept" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium focus:ring-2 focus:ring-emerald-500 outline-none">
+                                <option value="腫瘤科">腫瘤科 (免疫/放療/化學)</option>
+                                <option value="放射科">放射科 (放療/CT/PET-CT)</option>
+                                <option value="感染科">感染科 (抗生素/隱球菌)</option>
+                                <option value="心臟科">心臟科</option>
+                                <option value="神經外科">神經外科</option>
+                                <option value="腎臟科">腎臟科</option>
+                                <option value="皮膚科">皮膚科 (外用藥膏)</option>
+                                <option value="牙科">牙科 (三和牙醫)</option>
+                                <option value="專科聯合">專科聯合門診</option>
+                                <option value="營養照護">營養與生活護理</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-slate-300 font-bold mb-1.5">陪診人</label>
+                            <select id="record-companion" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium focus:ring-2 focus:ring-emerald-500 outline-none">
+                                <option value="映">映</option>
+                                <option value="潔">潔 (ruby)</option>
+                                <option value="樺">樺</option>
+                                <option value="待定">待定 (協調中)</option>
+                                <option value="全家">全家</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-slate-300 font-bold mb-1.5">看診重點 / 檢查項目</label>
+                            <input type="text" id="record-title" placeholder="例: 胸部電腦斷層 (下午 3:30)" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium focus:ring-2 focus:ring-emerald-500 outline-none">
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <label class="block text-xs text-slate-300 font-bold mb-1.5">詳細醫囑、用藥或檢查規範備忘</label>
+                        <textarea id="record-detail" placeholder="輸入醫師指示、檢驗指數、禁食規則、抗生素或用藥時間..." class="bg-slate-900 border border-slate-700 p-3.5 rounded-xl w-full h-28 text-slate-100 font-normal focus:ring-2 focus:ring-emerald-500 outline-none resize-none leading-relaxed"></textarea>
+                    </div>
+
+                    <div class="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="text-xs text-slate-400">
+                            💡 提示：儲存後，在各處裝置皆會透過雲端同步更新。
+                        </div>
+                        <button onclick="addRecord()" id="btn-add-record" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-7 py-2.5 rounded-xl shadow-lg transition flex items-center justify-center gap-2 active:scale-95">
+                            <span>➕</span> 儲存並歸檔至雲端
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800/60 p-4 rounded-2xl mb-6 border border-slate-700/80 flex flex-col md:flex-row gap-3 items-center justify-between">
+                    <div class="flex items-center gap-2 w-full md:w-auto flex-1">
+                        <span class="text-slate-400 text-base">🔍</span>
+                        <input type="text" id="filter-search-input" oninput="renderRecords()" placeholder="搜尋醫囑、檢查項目、用藥或科別關鍵字..." class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl w-full text-slate-200 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                    </div>
+                    <div class="flex items-center gap-2 w-full md:w-auto flex-wrap justify-end">
+                        <select id="filter-dept-select" onchange="renderRecords()" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl text-sm text-slate-200 outline-none">
+                            <option value="">全部科別</option>
+                            <option value="重大檢查">重大檢查 / 影像造影</option>
+                            <option value="腫瘤科">腫瘤科</option>
+                            <option value="放射科">放射科</option>
+                            <option value="感染科">感染科</option>
+                            <option value="牙科">牙科</option>
+                            <option value="專科聯合">專科聯合</option>
+                            <option value="心臟科">心臟科</option>
+                            <option value="皮膚科">皮膚科</option>
+                            <option value="營養照護">營養照護</option>
+                        </select>
+                        <select id="filter-companion-select" onchange="renderRecords()" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl text-sm text-slate-200 outline-none">
+                            <option value="">全部陪同人</option>
+                            <option value="映">映</option>
+                            <option value="潔">潔 (ruby)</option>
+                            <option value="樺">樺</option>
+                            <option value="待定">待定 (協調中)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-2 mb-4">
+                    <button onclick="quickFilterRecordCategory('all')" class="quick-filter-btn px-3.5 py-1.5 rounded-lg bg-emerald-600 text-white font-bold text-xs whitespace-nowrap">全部紀錄</button>
+                    <button onclick="quickFilterRecordCategory('放射治療')" class="quick-filter-btn px-3.5 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-emerald-300 font-bold text-xs whitespace-nowrap border border-slate-700">⚡ 放射治療療程</button>
+                    <button onclick="quickFilterRecordCategory('免疫治療')" class="quick-filter-btn px-3.5 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-emerald-300 font-bold text-xs whitespace-nowrap border border-slate-700">💉 免疫治療循環</button>
+                    <button onclick="quickFilterRecordCategory('重大檢查')" class="quick-filter-btn px-3.5 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-emerald-300 font-bold text-xs whitespace-nowrap border border-slate-700">🔬 重大影像/檢查</button>
+                    <button onclick="quickFilterRecordCategory('專科門診')" class="quick-filter-btn px-3.5 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-emerald-300 font-bold text-xs whitespace-nowrap border border-slate-700">🩺 專科門診追蹤</button>
+                </div>
+
+                <div id="records-list" class="space-y-4">
+                    <div class="flex items-center justify-center py-16 text-slate-400 gap-3">
+                        <div class="spinner"></div> 正在連線並載入最新就醫紀錄...
+                    </div>
+                </div>
+            </section>
+
+            <section id="content-hospital" class="hidden animate-fade-in">
+                <div class="bg-slate-800/80 p-4 rounded-2xl mb-6 border border-slate-700 flex flex-col md:flex-row items-center justify-between gap-3">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <div class="inline-flex bg-slate-900 p-1 rounded-xl border border-slate-700">
+                            <button onclick="switchHospitalView('calendar')" id="btn-hosp-calendar" class="px-4 py-2 rounded-lg text-sm font-extrabold bg-emerald-600 text-white shadow transition flex items-center gap-1.5">
+                                <span>📅</span> 月曆式
+                            </button>
+                            <button onclick="switchHospitalView('list')" id="btn-hosp-list" class="px-4 py-2 rounded-lg text-sm font-extrabold text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
+                                <span>📋</span> 清單式
+                            </button>
+                        </div>
+
+                        <select id="filter-hosp-companion" onchange="filterHospitalStays()" class="bg-slate-900 border border-slate-700 px-3.5 py-2 rounded-xl text-sm font-bold text-slate-200 outline-none">
+                            <option value="">全部陪同人</option>
+                            <option value="映">映 陪同</option>
+                            <option value="樺">樺 陪同</option>
+                            <option value="潔">潔 陪同</option>
+                        </select>
+                    </div>
+
+                    <div class="flex items-center gap-2 flex-wrap justify-end w-full md:w-auto">
+                        <button onclick="copyHospitalListForLine()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-emerald-300 font-bold rounded-xl text-sm transition flex items-center gap-1.5 border border-slate-600">
+                            <span>💬</span> 複製 LINE 清單
+                        </button>
+                        <button onclick="openAddHospitalModal()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold rounded-xl text-sm transition flex items-center gap-1.5 shadow active:scale-95">
+                            <span>➕</span> 新增住院日程
+                        </button>
+                    </div>
+                </div>
+
+                <div id="hospital-calendar-container" class="block">
+                    <div class="bg-slate-800/60 p-4 rounded-2xl border border-slate-700 mb-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+                        <div class="flex items-center gap-3">
+                            <button onclick="changeCalMonth(-1)" class="p-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-xl transition font-bold px-3">◀ 上個月</button>
+                            <h2 id="calendar-current-month-label" class="text-xl font-extrabold text-emerald-400 min-w-[140px] text-center">2026 年 8 月</h2>
+                            <button onclick="changeCalMonth(1)" class="p-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-xl transition font-bold px-3">下個月 ▶</button>
+                        </div>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="text-xs text-slate-400 font-semibold">快速跳轉：</span>
+                            <button onclick="jumpCalMonth(2026, 4)" class="px-3 py-1 bg-slate-700 hover:bg-emerald-800 text-slate-200 text-xs font-bold rounded-lg transition border border-slate-600">2026/04</button>
+                            <button onclick="jumpCalMonth(2026, 5)" class="px-3 py-1 bg-slate-700 hover:bg-emerald-800 text-slate-200 text-xs font-bold rounded-lg transition border border-slate-600">2026/05</button>
+                            <button onclick="jumpCalMonth(2026, 8)" class="px-3 py-1 bg-emerald-700 text-white text-xs font-bold rounded-lg transition border border-emerald-500">2026/08</button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-7 gap-1.5 sm:gap-2 text-center text-xs sm:text-sm font-bold text-slate-400 mb-1.5">
+                        <div class="py-1 text-rose-400">週日</div>
+                        <div class="py-1">週一</div>
+                        <div class="py-1">週二</div>
+                        <div class="py-1">週三</div>
+                        <div class="py-1">週四</div>
+                        <div class="py-1">週五</div>
+                        <div class="py-1 text-teal-400">週六</div>
+                    </div>
+
+                    <div id="hospital-calendar-grid" class="grid grid-cols-7 gap-1.5 sm:gap-2">
+                        <!-- 動態填充 -->
+                    </div>
+                </div>
+
+                <div id="hospital-list-container" class="hidden">
+                    <div class="bg-slate-800/80 rounded-2xl border border-slate-700 overflow-hidden shadow-lg">
+                        <div class="overflow-x-auto custom-scrollbar">
+                            <table class="w-full text-left text-sm sm:text-base border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-900/90 text-slate-300 font-extrabold border-b border-slate-700">
+                                        <th class="p-3.5">日期</th>
+                                        <th class="p-3.5">星期</th>
+                                        <th class="p-3.5">行程項目</th>
+                                        <th class="p-3.5">陪同人</th>
+                                        <th class="p-3.5 min-w-[200px]">重要備註 / 檢查事項</th>
+                                        <th class="p-3.5 text-center">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="hospital-list-tbody" class="divide-y divide-slate-700/60">
+                                    <!-- 動態生成表格列 -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="content-notes" class="hidden animate-fade-in">
+                <!-- 護理指南首圖區塊 -->
+                <div class="bg-slate-800/80 p-4 sm:p-6 rounded-2xl mb-7 border border-slate-700 shadow-md">
+                    <h2 class="text-xl sm:text-2xl font-black text-emerald-400 mb-4 border-l-4 border-emerald-500 pl-3">康復照護指南首圖</h2>
+                    <div class="flex justify-center mb-4">
+                        <img src="image_064b13.jpg" alt="康復照護指南與注意事項圖表" class="max-w-full h-auto rounded-xl shadow-lg border border-slate-600 cursor-pointer hover:opacity-90 transition" onclick="openLightbox('image_064b13.jpg')" onerror="this.src='https://placehold.co/800x400/1e293b/10b981?text=請將+image_064b13.jpg+放至同一資料夾'">
+                    </div>
+                </div>
+
+                <!-- 新增注意事項表單 -->
+                <div class="bg-slate-800/80 p-4 sm:p-6 rounded-2xl mb-7 border border-slate-700 shadow-md">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-black text-emerald-400 text-lg sm:text-xl flex items-center gap-2">
+                            <span>📌</span> 新增注意事項與備忘
+                        </h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs text-slate-300 font-bold mb-1.5">標題 / 重點</label>
+                            <input type="text" id="note-title" placeholder="例: 藥膏塗抹順序 / 食物打泥規範" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium focus:ring-2 focus:ring-emerald-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-300 font-bold mb-1.5">詳細說明 (選填)</label>
+                            <textarea id="note-content" placeholder="輸入詳細的操作步驟或備忘內容..." class="bg-slate-900 border border-slate-700 p-3.5 rounded-xl w-full h-28 text-slate-100 font-normal focus:ring-2 focus:ring-emerald-500 outline-none resize-none leading-relaxed"></textarea>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
+                            <div class="flex items-center gap-3 flex-wrap">
+                                <label class="block text-xs text-slate-300 font-bold">附加圖文解說</label>
+                                <label for="note-images" class="cursor-pointer bg-slate-700 hover:bg-slate-600 text-emerald-300 px-4 py-2 rounded-xl text-sm font-bold transition flex items-center gap-1.5 border border-slate-600 shadow-sm">
+                                    <span>📷</span> 上傳圖片
+                                </label>
+                                <input type="file" id="note-images" accept="image/*" multiple class="hidden" onchange="handleNoteImageSelect(event)">
+                            </div>
+                            <button onclick="addNote()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-7 py-2.5 rounded-xl shadow-lg transition flex items-center justify-center gap-2 active:scale-95">
+                                <span>➕</span> 儲存注意事項
+                            </button>
+                        </div>
+                        <!-- 圖片預覽區塊 -->
+                        <div id="note-images-preview" class="flex flex-wrap gap-2.5 mt-3"></div>
+                    </div>
+                </div>
+
+                <!-- 注意事項列表容器 -->
+                <div id="notes-list" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- JS 動態生成 -->
+                    <div class="flex items-center justify-center py-16 text-slate-400 gap-3 col-span-full">
+                        <div class="spinner"></div> 載入注意事項中...
+                    </div>
+                </div>
+            </section>
+
+            <section id="content-health_food" class="hidden animate-fade-in">
+                <div class="bg-gradient-to-br from-emerald-950/70 to-slate-900 p-5 rounded-2xl border border-emerald-800/50 mb-6">
+                    <div class="flex items-center gap-3">
+                        <span class="text-3xl">🥦</span>
+                        <div>
+                            <h2 class="text-xl sm:text-2xl font-black text-emerald-300">劉博仁醫師公開：抗癌湯與細胞養護食材庫</h2>
+                            <p class="text-sm text-slate-300 mt-1">針對黏膜修復、抑制發炎、去渣打泥與提高造血防禦完整整理</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <input type="text" id="food-search-input" oninput="filterHealthFoodCards()" placeholder="搜尋食材（例如：高麗菜、冬粉、南瓜、大蒜、初榨橄欖油...）" class="bg-slate-900 border border-slate-700 p-3 rounded-xl w-full text-slate-200 text-sm font-medium focus:ring-2 focus:ring-emerald-500 outline-none">
+                </div>
+
+                <div id="health-food-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <div class="food-card bg-slate-800/80 p-5 rounded-2xl border border-slate-700 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3 border-b border-slate-700 pb-2.5">
+                                <h3 class="text-lg font-black text-emerald-300 flex items-center gap-2"><span>🥬</span> 一、蔬菜與蕈菇類</h3>
+                                <span class="text-xs bg-emerald-900/80 text-emerald-300 px-2 py-0.5 rounded-full font-bold">顧黏膜/解毒</span>
+                            </div>
+                            <ul class="space-y-3 text-sm text-slate-200">
+                                <li>
+                                    <strong class="text-emerald-400">十字花科蔬菜 (高麗菜、綠白花椰菜、青江菜)：</strong>
+                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">幫助肝臟解毒。高麗菜富含「維生素 U」，能保護胃壁與食道黏膜。建議煮爛打泥。</p>
+                                </li>
+                                <li>
+                                    <strong class="text-amber-400">南瓜 (低 GI 澱粉)：</strong>
+                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">富含 β-胡蘿蔔素與葉黃素。<span class="text-amber-300 font-bold">⚠️ 媽媽叮嚀：嚴禁連皮！必須削皮蒸透打泥，防止硬皮刮傷食道。</span></p>
+                                </li>
+                                <li>
+                                    <strong class="text-emerald-400">番茄與紅蘿蔔 (脂溶性好物)：</strong>
+                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">茄紅素能保護口腔黏膜。需搭配油脂烹調；番茄需先燙去外皮去酸打泥。</p>
+                                </li>
+                                <li>
+                                    <strong class="text-amber-400">蕈菇類 (金針菇、香菇、蘑菇)：</strong>
+                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">富含多醣體能調節免疫。<span class="text-amber-300 font-bold">⚠️ 媽媽叮嚀：纖維堅韌，嚴禁整朵食用！必須高速破壁打成濃湯濾渣。</span></p>
+                                </li>
+                                <li>
+                                    <strong class="text-emerald-400">深綠色蔬菜：</strong>
+                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">含天然「鎂」，有助放鬆神經、改善睡眠與穩定情緒。</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="food-card bg-slate-800/80 p-5 rounded-2xl border border-slate-700 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3 border-b border-slate-700 pb-2.5">
+                                <h3 class="text-lg font-black text-amber-300 flex items-center gap-2"><span>🧄</span> 二、辛香料點綴 (慎用)</h3>
+                                <span class="text-xs bg-rose-950 text-rose-300 border border-rose-800 px-2 py-0.5 rounded-full font-bold">喉痛期禁辛辣</span>
+                            </div>
+                            <ul class="space-y-3 text-sm text-slate-200">
+                                <li>
+                                    <strong class="text-rose-400">大蒜 (大蒜素 Allicin)：</strong>
+                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">能降低息肉風險與抗菌。但具辛辣刺激性，<span class="text-rose-300 font-bold">目前放療黏膜破洞與皮膚發炎期嚴禁食用！</span></p>
+                                </li>
+                                <li>
+                                    <strong class="text-emerald-400">枸杞：</strong>
+                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">富含多醣體與抗氧化物質，對眼睛明目及肝臟解毒有益，可微量泡軟打泥入湯。</p>
+                                </li>
+                                <li>
+                                    <strong class="text-rose-400">胡椒粉：</strong>
+                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">天然抗氧化劑能提味減鹽。<span class="text-rose-300 font-bold">⚠️ 現階段易引發食道充血與劇烈咳嗽，暫時嚴格禁用。</span></p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="food-card bg-slate-800/80 p-5 rounded-2xl border border-slate-700 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3 border-b border-slate-700 pb-2.5">
+                                <h3 class="text-lg font-black text-teal-300 flex items-center gap-2"><span>🐟</span> 三、優質蛋白質</h3>
+                                <span class="text-xs bg-teal-950 text-teal-300 px-2 py-0.5 rounded-full font-bold">多白肉・少紅肉</span>
+                            </div>
+                            <ul class="space-y-3 text-sm text-slate-200">
+                                <li>
+                                    <strong class="text-teal-300">白肉與植物性蛋白 (魚肉、雞肉、豆腐、毛豆)：</strong>
+                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">減少肝臟負擔，避免紅肉過多鐵蛋白促發炎。鱸魚、午仔魚去骨打泥，豆腐提供極佳嫩質蛋白。</p>
+                                </li>
+                                <li>
+                                    <strong class="text-teal-300">深海魚與牛奶：</strong>
+                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">天然維生素 D3 來源，維持骨質與增強造血白血球。</p>
+                                </li>
+                                <li>
+                                    <strong class="text-teal-300">雞蛋：</strong>
+                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">建議做成無渣蒸蛋，溫潤好吞，避免乾硬茶葉蛋黃嗆咳。</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="food-card bg-slate-800/80 p-5 rounded-2xl border border-slate-700 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3 border-b border-slate-700 pb-2.5">
+                                <h3 class="text-lg font-black text-yellow-300 flex items-center gap-2"><span>🥑</span> 四、護腦抗發炎好油</h3>
+                                <span class="text-xs bg-yellow-950 text-yellow-300 px-2 py-0.5 rounded-full font-bold">Omega-3/9</span>
+                            </div>
+                            <ul class="space-y-3 text-sm text-slate-200">
+                                <li>
+                                    <strong class="text-yellow-300">Omega-9 油品 (冷壓初榨橄欖油、苦茶油、酪梨油)：</strong>
+                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">抗發炎、保護心血管與大腦神經。起鍋後淋入溫湯，潤滑食道利於吞嚥。</p>
+                                </li>
+                                <li>
+                                    <strong class="text-yellow-300">Omega-3 油品 (魚油 EPA/DHA、海藻油)：</strong>
+                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">強力抗炎細胞保護，有效緩解放療後的組織發炎反應。</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="food-card bg-slate-800/80 p-5 rounded-2xl border border-slate-700 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3 border-b border-slate-700 pb-2.5">
+                                <h3 class="text-lg font-black text-indigo-300 flex items-center gap-2"><span>🥣</span> 五、低 GI 澱粉與穀物</h3>
+                                <span class="text-xs bg-indigo-950 text-indigo-300 px-2 py-0.5 rounded-full font-bold">穩定血糖</span>
+                            </div>
+                            <ul class="space-y-3 text-sm text-slate-200">
+                                <li>
+                                    <strong class="text-indigo-300">冬粉 (綠豆製純粉)：</strong>
+                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">極佳的低 GI 澱粉，血糖穩定不易飆升堆積脂肪。可剪細碎浸於清魚湯，順滑好吸入。</p>
+                                </li>
+                                <li>
+                                    <strong class="text-indigo-300">全穀雜糧 (燕麥、糙米、小麥)：</strong>
+                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">富含 B 群維持神經機能。<span class="text-amber-300 font-bold">⚠️ 需煮成去渣濃米湯，避開乾硬全穀顆粒。</span></p>
+                                </li>
+                                <li>
+                                    <strong class="text-amber-400">堅果種子與豆類：</strong>
+                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">富含好油與「鎂」。但烘焙堅果性燥，媽媽暫不宜整顆嚼食，可使用純堅果醬微量調味。</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="food-card bg-slate-800/80 p-5 rounded-2xl border border-emerald-700/60 shadow-sm flex flex-col justify-between bg-emerald-950/20">
+                        <div>
+                            <div class="flex items-center justify-between mb-3 border-b border-slate-700 pb-2.5">
+                                <h3 class="text-lg font-black text-emerald-300 flex items-center gap-2"><span>🥛</span> 六、早晨細胞特調飲品</h3>
+                                <span class="text-xs bg-emerald-900 text-emerald-200 px-2 py-0.5 rounded-full font-bold">劉醫師推薦</span>
+                            </div>
+                            <div class="text-sm text-slate-200 space-y-2 leading-relaxed">
+                                <p class="text-emerald-400 font-bold">劉醫師早晨健康飲配方：</p>
+                                <div class="bg-slate-900/90 p-3.5 rounded-xl border border-emerald-800/50 text-xs space-y-1.5 text-slate-300 font-medium">
+                                    <p>• <span class="text-emerald-300 font-bold">無糖溫豆漿</span> 為基底</p>
+                                    <p>• 添入 <span class="text-emerald-300 font-bold">黑芝麻粉</span> (補鈣與花青素)</p>
+                                    <p>• 添入 <span class="text-emerald-300 font-bold">卵磷脂粉 ＋ 優質蛋白質粉</span></p>
+                                    <p>• 起杯前滴入數滴 <span class="text-emerald-300 font-bold">冷壓初榨橄欖油</span></p>
+                                </div>
+                                <p class="text-xs text-slate-400 pt-1">全液態溫順好吞嚥，補充足量卵磷脂與健康脂肪酸，養護黏膜上皮細胞。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="content-diet" class="hidden animate-fade-in">
+                <h2 class="text-xl sm:text-2xl font-black text-emerald-400 mb-5 border-l-4 border-emerald-500 pl-3">全期飲食護理紅綠燈 (電療修復 / 防過敏期)</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div class="bg-rose-950/40 rounded-2xl border border-rose-800/60 overflow-hidden shadow-md">
+                        <div class="bg-rose-900 text-white p-3.5 font-black text-center text-lg">🚨 紅燈：嚴禁進場 (全面封存)</div>
+                        <div class="p-5 text-sm space-y-3">
+                            <p class="text-rose-300 font-bold border-b border-rose-800/60 pb-2">極易加重皮膚發癢、食道充血與劇咳</p>
+                            <ul class="space-y-2.5 text-slate-300 text-xs sm:text-sm">
+                                <li><strong class="text-rose-400">🔥 燥熱辛辣：</strong> 辣椒、生蒜、老薑(炸薑絲)、胡椒粉</li>
+                                <li><strong class="text-rose-400">🥭 燥熱水果：</strong> 榴槤、芒果、龍眼、荔枝、鳳梨</li>
+                                <li><strong class="text-rose-400">🥜 烘焙堅果：</strong> 花生(醬)、核桃、腰果 (顆粒黏喉易嗆)</li>
+                                <li><strong class="text-rose-400">🌿 補品補藥：</strong> 紅蔘、當歸、十全、麻油雞</li>
+                                <li><strong class="text-rose-400">🦐 帶殼海鮮：</strong> 蝦、蟹、蛤蜊、蚵仔、XO醬</li>
+                                <li><strong class="text-rose-400">🍯 其他禁忌：</strong> 生生蜂蜜(帶菌風險)、高溫油炸重鹹</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-950/30 rounded-2xl border border-amber-700/60 overflow-hidden shadow-md">
+                        <div class="bg-amber-800 text-white p-3.5 font-black text-center text-lg">⚠️ 黃燈：謹慎對沖 (去渣去粗)</div>
+                        <div class="p-5 text-sm space-y-3">
+                            <p class="text-amber-300 font-bold border-b border-amber-800/60 pb-2">需去纖維、去粗梗、煮透打滑泥</p>
+                            <ul class="space-y-2.5 text-slate-300 text-xs sm:text-sm">
+                                <li><strong class="text-amber-400">🎃 南瓜：</strong> 必須徹底去皮去籽！煮爛過篩成細泥。</li>
+                                <li><strong class="text-amber-400">🥦 地瓜葉/青菜：</strong> 嚴禁粗梗，只取嫩葉並以果汁機高速打泥濾渣。</li>
+                                <li><strong class="text-amber-400">🍲 苦瓜清湯：</strong> 必須撈乾淨浮油，去籽煮透打泥，減輕負擔。</li>
+                                <li><strong class="text-amber-400">🍄 蕈菇類：</strong> 纖維極韌易卡喉，只可少許入湯打成無顆粒細湯。</li>
+                                <li><strong class="text-amber-400">🥑 酪梨藍莓：</strong> 需徹底濾掉藍莓皮與籽渣，去酸度後溫順飲用。</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-emerald-950/40 rounded-2xl border border-emerald-700/60 overflow-hidden shadow-md">
+                        <div class="bg-emerald-800 text-white p-3.5 font-black text-center text-lg">✅ 綠燈：黃金選股 (護理專用)</div>
+                        <div class="p-5 text-sm space-y-3">
+                            <p class="text-emerald-300 font-bold border-b border-emerald-800/60 pb-2">平性溫和、修復黏膜、優質蛋白質</p>
+                            <ul class="space-y-2.5 text-slate-300 text-xs sm:text-sm">
+                                <li><strong class="text-emerald-400">🛡️ 黏膜修復：</strong> 純蓮藕粉 (微溫/常溫無糖)、百合銀耳露 (打泥)。</li>
+                                <li><strong class="text-emerald-400">🐟 優質白肉：</strong> 鱸魚/午仔魚清湯 (細心去刺打泥)、嫩豆腐、無渣蒸蛋。</li>
+                                <li><strong class="text-emerald-400">🥣 低GI主食：</strong> 綠豆冬粉 (剪碎吸高湯)、日本山藥泥、馬鈴薯泥。</li>
+                                <li><strong class="text-emerald-400">🥑 護腦好油：</strong> 起鍋淋冷壓初榨橄欖油、苦茶油潤喉。</li>
+                                <li><strong class="text-emerald-400">💧 醫療營養：</strong> 速養遼 (L-Glutamine 漱口含服)、速癒素。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="content-sop" class="hidden animate-fade-in">
+                <h2 class="text-xl sm:text-2xl font-black text-emerald-400 mb-5 border-l-4 border-emerald-500 pl-3">醫療級照護標準作業流程 (SOP)</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="bg-slate-800/80 p-5 rounded-2xl border border-blue-800/60 relative">
+                        <span class="absolute top-3 right-3 text-xs bg-blue-900 text-blue-300 px-2.5 py-1 rounded-full font-bold">食道黏膜防護</span>
+                        <h3 class="text-lg font-black text-blue-400 mb-3 flex items-center gap-2"><span>💧</span> 速養遼 (L-Glutamine) 標準服法</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-sm text-slate-200">
+                            <li>1 平匙粉末加入 100~200cc <strong class="text-rose-400">常溫水或微涼水 (嚴禁熱水)</strong>。</li>
+                            <li>建議於飯前 30 分鐘或睡前空腹時給予。</li>
+                            <li>讓媽媽含在口中 <strong class="text-amber-300">輕柔漱口含留 15~30 秒</strong>。</li>
+                            <li>極小口、慢慢吞嚥，讓液體均勻敷貼在食道與潰瘍傷口表面。</li>
+                        </ol>
+                    </div>
+
+                    <div class="bg-slate-800/80 p-5 rounded-2xl border border-pink-800/60 relative">
+                        <span class="absolute top-3 right-3 text-xs bg-pink-900 text-pink-300 px-2.5 py-1 rounded-full font-bold">皮膚止癢保養</span>
+                        <h3 class="text-lg font-black text-pink-400 mb-3 flex items-center gap-2"><span>🧴</span> 皮膚科擦藥（嚴格間隔 5 分鐘）</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-sm text-slate-200">
+                            <li>每日 3~4 次，先均勻塗抹「保濕乳液」打底打潤。</li>
+                            <li><strong class="text-pink-300">手機設定計時器，嚴格靜待 5 分鐘</strong>，確保水分吸收。</li>
+                            <li>再針對發紅、會癢之局部皮膚，薄塗專用藥膏。</li>
+                            <li>切勿洗太熱的水，以免洗去油脂加劇乾燥脫屑。</li>
+                        </ol>
+                    </div>
+
+                    <div class="bg-slate-800/80 p-5 rounded-2xl border border-amber-800/60 relative">
+                        <span class="absolute top-3 right-3 text-xs bg-amber-900 text-amber-300 px-2.5 py-1 rounded-full font-bold">防嗆防卡喉</span>
+                        <h3 class="text-lg font-black text-amber-400 mb-3 flex items-center gap-2"><span>🥣</span> 蔬菜與肉類打泥去渣工序</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-sm text-slate-200">
+                            <li>徹底去骨、去魚刺、去粗梗、南瓜徹底削皮。</li>
+                            <li>蒸煮至完全軟爛無硬塊。</li>
+                            <li>加入溫鮮魚湯或蔬菜清湯，破壁調理機高速攪打 2 分鐘。</li>
+                            <li><strong class="text-amber-300">關鍵：必須過細網篩濾</strong>，確保無任何小纖維殘留。</li>
+                        </ol>
+                    </div>
+
+                    <div class="bg-slate-800/80 p-5 rounded-2xl border border-purple-800/60 relative">
+                        <span class="absolute top-3 right-3 text-xs bg-purple-900 text-purple-300 px-2.5 py-1 rounded-full font-bold">隱球菌追蹤</span>
+                        <h3 class="text-lg font-black text-purple-400 mb-3 flex items-center gap-2"><span>💊</span> 隱球菌口服抗生素觀察</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-sm text-slate-200">
+                            <li>每 12 小時準時服藥，預計服用 6~12 個月（先至二月）。</li>
+                            <li>每 3 個月定期安排胸部 X 光或 CT 追蹤。</li>
+                            <li><strong class="text-rose-400">絕對不可發燒</strong>，若有體溫升高或畏寒寒顫應即時就醫。</li>
+                            <li>後續若施打免疫治療，務必主動請陳醫師開立肺囊蟲預防藥。</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <section id="content-history" class="hidden animate-fade-in">
+                <div class="flex items-center justify-between mb-5">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-black text-emerald-400 border-l-4 border-emerald-500 pl-3">資源回收桶 (已刪除之紀錄)</h2>
+                        <p class="text-xs sm:text-sm text-slate-400 mt-1">此處保存已撤除或已替換之紀錄（包含正子攝影備忘），可隨時一鍵還原或永久清理。</p>
+                    </div>
+                    <button onclick="clearAllHistoryModal()" id="btn-clear-trash" class="text-xs sm:text-sm font-bold text-rose-400 hover:text-rose-300 border border-rose-700/60 px-3.5 py-2 rounded-xl bg-rose-950/30 transition">
+                        🗑️ 清空所有歷史
+                    </button>
+                </div>
+                <div id="history-list" class="space-y-4">
+                    <!-- 動態生成回收桶卡片 -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- 圖片放大檢視 Modal (Lightbox) -->
+    <div id="lightbox-modal" class="hidden fixed inset-0 bg-black/95 z-[100] flex items-center justify-center p-4 animate-fade-in" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl cursor-zoom-out" onclick="event.stopPropagation(); closeLightbox()">
+        <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white hover:text-emerald-400 bg-slate-800/50 hover:bg-slate-800 p-2 rounded-full transition text-2xl w-10 h-10 flex items-center justify-center">&times;</button>
+    </div>
+
+    <!-- 視覺化大字月曆選取器 Modal -->
+    <div id="date-picker-modal" class="hidden fixed inset-0 bg-black/80 z-[80] flex items-center justify-center p-3 animate-fade-in">
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl p-5 sm:p-6 w-full max-w-md shadow-2xl text-slate-100">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+                <button type="button" onclick="changePickerMonth(-1)" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 font-bold px-3 transition">◀</button>
+                <div class="flex items-center gap-2">
+                    <select id="dp-year-select" onchange="onPickerSelectChange()" class="bg-slate-800 border border-slate-700 text-emerald-400 font-black rounded-xl p-2 text-base outline-none"></select>
+                    <select id="dp-month-select" onchange="onPickerSelectChange()" class="bg-slate-800 border border-slate-700 text-emerald-400 font-black rounded-xl p-2 text-base outline-none"></select>
+                </div>
+                <button type="button" onclick="changePickerMonth(1)" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 font-bold px-3 transition">▶</button>
+            </div>
+
+            <div class="grid grid-cols-7 gap-1 text-center text-xs font-bold text-slate-400 mb-2">
+                <div class="text-rose-400">日</div>
+                <div>一</div>
+                <div>二</div>
+                <div>三</div>
+                <div>四</div>
+                <div>五</div>
+                <div class="text-teal-400">六</div>
+            </div>
+
+            <div id="dp-calendar-grid" class="grid grid-cols-7 gap-1 sm:gap-1.5 mb-4"></div>
+
+            <div class="flex items-center justify-between pt-3 border-t border-slate-800 gap-2">
+                <div class="flex items-center gap-1.5">
+                    <button type="button" onclick="selectQuickDay('yesterday')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300">昨天</button>
+                    <button type="button" onclick="selectQuickDay('today')" class="px-2.5 py-1.5 bg-emerald-800 hover:bg-emerald-700 text-xs font-bold rounded-lg text-emerald-200">今天</button>
+                    <button type="button" onclick="selectQuickDay('tomorrow')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300">明天</button>
+                </div>
+                <button type="button" onclick="closeDatePickerModal()" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-bold rounded-xl transition">關閉</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增 / 編輯 住院日程 Modal -->
+    <div id="hosp-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-3 animate-fade-in">
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl p-5 sm:p-7 w-full max-w-lg shadow-2xl text-left">
+            <h3 id="hosp-modal-title" class="text-xl font-black text-emerald-400 mb-4 border-l-4 border-emerald-500 pl-3">編輯住院日程</h3>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-300 font-bold mb-1.5">日期 (點選開啟月曆)</label>
+                    <div class="flex items-center gap-1.5">
+                        <input type="text" id="hosp-input-date" placeholder="YYYY-MM-DD" class="bg-slate-800 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium outline-none cursor-pointer" onclick="openDatePickerModal('hosp-input-date')" readonly>
+                        <button type="button" onclick="openDatePickerModal('hosp-input-date')" class="px-3 py-2.5 bg-slate-700 text-emerald-300 rounded-xl font-bold">📅</button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs text-slate-300 font-bold mb-1.5">陪同照顧人</label>
+                    <select id="hosp-input-companion" class="bg-slate-800 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium outline-none">
+                        <option value="映">映</option>
+                        <option value="樺">樺</option>
+                        <option value="潔">潔 (ruby)</option>
+                        <option value="全家">全家</option>
+                        <option value="待定">待定 (協調中)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs text-slate-300 font-bold mb-1.5">行程項目名稱</label>
+                    <input type="text" id="hosp-input-title" placeholder="例: 媽媽住院、急診住院、胃鏡檢查..." class="bg-slate-800 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs text-slate-300 font-bold mb-1.5">備註 / 重要檢查事項 (可空白)</label>
+                    <textarea id="hosp-input-note" placeholder="例如：09:30 照胃鏡、前晚 12:00 嚴格禁食禁水、抽血指標..." class="bg-slate-800 border border-slate-700 p-3 rounded-xl w-full h-24 text-slate-100 font-normal outline-none resize-none"></textarea>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between gap-3 mt-6 pt-4 border-t border-slate-800">
+                <button type="button" id="btn-hosp-delete-in-modal" onclick="onDeleteHospitalStayFromModal()" class="px-4 py-2 bg-rose-950/80 hover:bg-rose-900 text-rose-300 border border-rose-800 text-sm font-bold rounded-xl transition hidden">
+                    🗑️ 刪除此日程
+                </button>
+                <div class="flex items-center gap-2 ml-auto">
+                    <button type="button" onclick="closeHospitalModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-bold rounded-xl transition">取消</button>
+                    <button type="button" onclick="saveHospitalStayModal()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-extrabold rounded-xl transition shadow">儲存日程至雲端</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 編輯病歷紀錄 Modal -->
+    <div id="edit-record-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-3 animate-fade-in">
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl p-5 sm:p-7 w-full max-w-xl shadow-2xl text-left text-slate-100">
+            <h3 class="text-xl font-black text-emerald-400 mb-4 border-l-4 border-emerald-500 pl-3">編輯就醫與護理紀錄</h3>
+            
+            <div class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs text-slate-300 font-bold mb-1.5">日期 (點選開啟月曆)</label>
+                        <div class="flex items-center gap-1.5">
+                            <input type="text" id="edit-rec-date" placeholder="YYYY-MM-DD" class="bg-slate-800 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium outline-none cursor-pointer" onclick="openDatePickerModal('edit-rec-date')" readonly>
+                            <button type="button" onclick="openDatePickerModal('edit-rec-date')" class="px-3 py-2.5 bg-slate-700 text-emerald-300 rounded-xl font-bold">📅</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-300 font-bold mb-1.5">科別</label>
+                        <select id="edit-rec-dept" class="bg-slate-800 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium outline-none">
+                            <option value="腫瘤科">腫瘤科</option>
+                            <option value="放射科">放射科</option>
+                            <option value="感染科">感染科</option>
+                            <option value="心臟科">心臟科</option>
+                            <option value="神經外科">神經外科</option>
+                            <option value="腎臟科">腎臟科</option>
+                            <option value="皮膚科">皮膚科</option>
+                            <option value="牙科">牙科</option>
+                            <option value="專科聯合">專科聯合</option>
+                            <option value="營養照護">營養照護</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs text-slate-300 font-bold mb-1.5">陪診人</label>
+                        <select id="edit-rec-companion" class="bg-slate-800 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium outline-none">
+                            <option value="映">映</option>
+                            <option value="潔">潔 (ruby)</option>
+                            <option value="樺">樺</option>
+                            <option value="待定">待定 (協調中)</option>
+                            <option value="全家">全家</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-300 font-bold mb-1.5">重點標題</label>
+                        <input type="text" id="edit-rec-title" class="bg-slate-800 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs text-slate-300 font-bold mb-1.5">詳細醫囑與用藥備忘</label>
+                    <textarea id="edit-rec-detail" class="bg-slate-800 border border-slate-700 p-3 rounded-xl w-full h-28 text-slate-100 font-normal outline-none resize-none leading-relaxed"></textarea>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-3 mt-6 pt-4 border-t border-slate-800">
+                <button type="button" onclick="closeEditRecordModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-bold rounded-xl transition">取消</button>
+                <button type="button" onclick="saveEditRecordModal()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-extrabold rounded-xl transition shadow">儲存修改至雲端</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 自訂刪除與操作確認 Modal -->
+    <div id="confirm-modal" class="hidden fixed inset-0 bg-black/80 z-[90] flex items-center justify-center p-3 animate-fade-in">
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl p-6 w-full max-w-sm shadow-2xl text-center">
+            <div class="text-4xl mb-3" id="confirm-modal-icon">🗑️</div>
+            <h3 id="confirm-modal-title" class="text-lg font-black text-slate-100 mb-2">確認要執行刪除？</h3>
+            <p id="confirm-modal-desc" class="text-xs sm:text-sm text-slate-400 mb-6 leading-relaxed">此操作會移至資源回收桶，之後可再進行復原。</p>
+            <div class="flex items-center justify-center gap-3">
+                <button onclick="closeConfirmModal()" class="px-5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-sm transition">取消</button>
+                <button id="confirm-modal-ok-btn" class="px-5 py-2 bg-rose-600 hover:bg-rose-500 text-white font-extrabold rounded-xl text-sm transition shadow">確認</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 通知 Toast 浮籤 -->
+    <div id="toast-badge" class="fixed bottom-6 right-6 transform translate-y-24 opacity-0 transition-all duration-300 bg-emerald-600 text-white px-5 py-3 rounded-2xl shadow-2xl font-extrabold text-sm z-[110] pointer-events-none flex items-center gap-2 border border-emerald-400/40">
+        <span id="toast-text">已更新</span>
+    </div>
+
+    <script type="module">
+        // =========================================================================
+        // 多方即時同步核心設定 (遵循 RULE 1 Strict Paths /artifacts/{appId}/public/data)
+        // =========================================================================
+        // 【修正重點】改用「動態載入」Firebase 模組，並用 try/catch 包住。
+        // 原本寫在檔案最上方的 static import 只要載入失敗（離線、防火牆擋住、
+        // 用雙擊本機檔案開啟等情況），整支 script 會直接停擺，導致所有頁籤、
+        // 清單、按鈕全部沒有反應、畫面卡在「載入中...」。改成動態載入後，
+        // 就算雲端連不上，其餘畫面與本機儲存功能仍會正常顯示與運作。
+        let initializeApp, getAuth, signInAnonymously, signInWithCustomToken;
+        let getFirestore, doc, setDoc, getDoc, getDocs, collection, onSnapshot, deleteDoc;
+        let firebaseSdkLoaded = false;
+
+        async function loadFirebaseSdk() {
+            try {
+                const [appMod, authMod, storeMod] = await Promise.all([
+                    import("https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"),
+                    import("https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"),
+                    import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js")
+                ]);
+                ({ initializeApp } = appMod);
+                ({ getAuth, signInAnonymously, signInWithCustomToken } = authMod);
+                ({ getFirestore, doc, setDoc, getDoc, getDocs, collection, onSnapshot, deleteDoc } = storeMod);
+                firebaseSdkLoaded = true;
+            } catch (e) {
+                console.warn('Firebase SDK 載入失敗，將以本機儲存模式運作：', e);
+                firebaseSdkLoaded = false;
+            }
+        }
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'mom_family_care_hub';
+
+        function sanitizeData(obj) {
+            return JSON.parse(JSON.stringify(obj, (k, v) => (v === undefined ? null : v)));
+        }
+
+        // ==========================================
+        // 種子資料庫（已包含所有最新行程、住院與注意事項）
+        // ==========================================
+        const SEED_HOSPITAL_STAYS = [
+            { id: 'h_20260426', date: '2026/04/26', weekday: '日', title: '媽媽住院', companion: '樺', note: '' },
+            { id: 'h_20260427', date: '2026/04/27', weekday: '一', title: '媽媽住院', companion: '潔', note: '' },
+            { id: 'h_20260428', date: '2026/04/28', weekday: '二', title: '媽媽住院', companion: '樺', note: '' },
+            { id: 'h_20260429', date: '2026/04/29', weekday: '三', title: '媽媽住院', companion: '潔', note: '' },
+            { id: 'h_20260430', date: '2026/04/30', weekday: '四', title: '照胃鏡 + 媽媽住院', companion: '映', note: '09:30 照胃鏡' },
+            { id: 'h_20260501', date: '2026/05/01', weekday: '五', title: '媽媽住院', companion: '樺', note: '' },
+            { id: 'h_20260502', date: '2026/05/02', weekday: '六', title: '媽媽住院', companion: '映', note: '' },
+            { id: 'h_20260503', date: '2026/05/03', weekday: '日', title: '媽媽住院', companion: '樺', note: '' },
+            { id: 'h_20260504', date: '2026/05/04', weekday: '一', title: '媽媽住院', companion: '潔', note: '' },
+            { id: 'h_20260505', date: '2026/05/05', weekday: '二', title: '媽媽住院', companion: '映', note: '' },
+            { id: 'h_20260506', date: '2026/05/06', weekday: '三', title: '免疫+回診+胃腸科回診', companion: '潔', note: '門診回診' },
+            { id: 'h_20260507', date: '2026/05/07', weekday: '四', title: '媽媽住院', companion: '映', note: '' },
+            { id: 'h_20260508', date: '2026/05/08', weekday: '五', title: '媽媽住院', companion: '樺', note: '' },
+            { id: 'h_20260509', date: '2026/05/09', weekday: '六', title: '媽媽住院', companion: '映', note: '' },
+            { id: 'h_20260510', date: '2026/05/10', weekday: '日', title: '媽媽住院', companion: '樺', note: '' },
+            { id: 'h_20260806', date: '2026/08/06', weekday: '四', title: '急診住院', companion: '映', note: '血氧不穩，發燒斷斷續續，掛急診門診轉住院' },
+            { id: 'h_20260807', date: '2026/08/07', weekday: '五', title: '媽咪住院', companion: '樺', note: '' },
+            { id: 'h_20260808', date: '2026/08/08', weekday: '六', title: '媽咪住院', companion: '映', note: '' },
+            { id: 'h_20260809', date: '2026/08/09', weekday: '日', title: '媽咪住院', companion: '樺', note: '' },
+            { id: 'h_20260810', date: '2026/08/10', weekday: '一', title: '媽咪住院', companion: '潔', note: '' },
+            { id: 'h_20260811', date: '2026/08/11', weekday: '二', title: '媽咪住院', companion: '映', note: '' },
+            { id: 'h_20260812', date: '2026/08/12', weekday: '三', title: '媽咪住院', companion: '潔', note: '' },
+            { id: 'h_20260813', date: '2026/08/13', weekday: '四', title: '媽咪住院', companion: '映', note: '' },
+            { id: 'h_20260814', date: '2026/08/14', weekday: '五', title: '媽咪住院', companion: '樺', note: '' },
+            { id: 'h_20260815', date: '2026/08/15', weekday: '六', title: '媽咪住院', companion: '映', note: '' },
+            { id: 'h_20260816', date: '2026/08/16', weekday: '日', title: '媽咪住院', companion: '樺', note: '' },
+            { id: 'h_20260817', date: '2026/08/17', weekday: '一', title: '媽咪住院', companion: '潔', note: '' },
+            { id: 'h_20260818', date: '2026/08/18', weekday: '二', title: '媽咪住院', companion: '映', note: '' },
+            { id: 'h_20260819', date: '2026/08/19', weekday: '三', title: '媽咪住院', companion: '潔', note: '' },
+            { id: 'h_20260820', date: '2026/08/20', weekday: '四', title: '媽咪住院', companion: '樺', note: '' },
+            { id: 'h_20260821', date: '2026/08/21', weekday: '五', title: '正子檢查 + 抽血 (住院)', companion: '映', note: '09:30 檢查；前一晚 12:00 AM 空腹 8 小時（可喝水）' },
+            { id: 'h_20260822', date: '2026/08/22', weekday: '六', title: '媽咪住院', companion: '樺', note: '' },
+            { id: 'h_20260823', date: '2026/08/23', weekday: '日', title: '媽咪住院', companion: '映', note: '' },
+            { id: 'h_20260824', date: '2026/08/24', weekday: '一', title: '媽咪住院', companion: '潔', note: '' },
+            { id: 'h_20260825', date: '2026/08/25', weekday: '二', title: '媽咪住院', companion: '樺', note: '' },
+            { id: 'h_20260826', date: '2026/08/26', weekday: '三', title: '心臟科 + 血腫科回診', companion: '潔', note: '回診（心臟科7天前抽血、血腫科當日抽血）' },
+            { id: 'h_20260827', date: '2026/08/27', weekday: '四', title: '放射科 + 皮膚科回診', companion: '樺', note: '放射科下午診、皮膚科洪誌聰醫師' },
+            { id: 'h_20260828', date: '2026/08/28', weekday: '五', title: '媽咪住院', companion: '映', note: '' },
+            { id: 'h_20260829', date: '2026/08/29', weekday: '六', title: '媽咪住院', companion: '樺', note: '' },
+            { id: 'h_20260830', date: '2026/08/30', weekday: '日', title: '媽咪住院', companion: '映', note: '' },
+            { id: 'h_20260831', date: '2026/08/31', weekday: '一', title: '媽咪住院', companion: '潔', note: '' }
+        ];
+
+        const SEED_RECORDS = [
+            {
+                id: 'r_20261116_ct',
+                date: '2026-11-16',
+                dept: '放射科',
+                category: '重大檢查',
+                companion: '待定',
+                title: '胸部電腦斷層 (下午 3:30)',
+                detail: '檢查時間：下午 3:30\n地點：放射科造影室\n陪診人：待定（協調中）\n項目：胸部電腦斷層 (CT) 掃描追蹤\n⚠️ 注意事項：請依放射科檢查通知單規定提早報到，並留意空腹禁食規範。'
+            },
+            {
+                id: 'r_20261008_pet',
+                date: '2026-10-08',
+                dept: '放射科',
+                category: '重大檢查',
+                companion: '潔',
+                title: '正子檢查 (PET-CT 早上 9:00)',
+                detail: '檢查時間：早上 9:00\n地點：核子醫學科 / 正子造影中心\n陪診人：潔\n⚠️ 關鍵注意事項：【前一天晚上 12:00 起嚴格禁食、禁水】！檢查當日依醫囑準時報到施打顯影劑。'
+            },
+            {
+                id: 'r_20261006_onco',
+                date: '2026-10-06',
+                dept: '腫瘤科',
+                category: '專科門診',
+                companion: '待定',
+                title: '血液腫瘤科回診',
+                detail: '看診科別：血液腫瘤科門診\n陪診人：待定（協調中）\n重點事項：回診追蹤常規抽血指數、各器官功能與評估後續抗癌用藥療程。'
+            },
+            {
+                id: 'r_20260921_dent',
+                date: '2026-09-21',
+                dept: '牙科',
+                category: '專科門診',
+                companion: '樺',
+                title: '三和牙醫看診 (下午 5:30)',
+                detail: '預約時間：下午 5:30\n地點：三和牙醫\n陪診人：樺\n重點事項：牙科接續治療、洗牙/口腔定期清潔評估，配合整體黏膜防護與放療後口腔護理。'
+            },
+            {
+                id: 'r_20260915_dent',
+                date: '2026-09-15',
+                dept: '牙科',
+                category: '專科門診',
+                companion: '樺',
+                title: '三和牙醫看診 (下午 3:45)',
+                detail: '預約時間：下午 3:45\n地點：三和牙醫\n陪診人：樺\n重點事項：口腔與牙齒檢查評估，檢查黏膜與牙齦狀況。'
+            },
+            {
+                id: 'r_20260910_joint',
+                date: '2026-09-10',
+                dept: '專科聯合',
+                category: '專科門診',
+                companion: '樺',
+                title: '放射 + 心臟 + 皮膚科回診',
+                detail: '同日三科聯合門診追蹤：\n1. 放射科：評估放射治療後續黏膜與病況復原狀況\n2. 心臟科：追蹤心血管與常規用藥評估\n3. 皮膚科：追蹤皮膚發炎紅癢與藥膏擦拭保養 (先擦保濕乳液隔5分鐘再擦藥膏)'
+            },
+            {
+                id: 'r_20260908_onco',
+                date: '2026-09-08',
+                dept: '腫瘤科',
+                category: '專科門診',
+                companion: '映',
+                title: '血液腫瘤科現場掛號 (持住院計劃書掛號)',
+                detail: '備註：持住院計劃書現場掛號血液腫瘤科門診。\n重點事項：評估出院後後續抗癌用藥療程與銜接門診追蹤。'
+            },
+            {
+                id: 'r_20260907_infect',
+                date: '2026-09-07',
+                dept: '感染科',
+                category: '專科門診',
+                companion: '潔',
+                title: '感染科回診 (持住院計劃書回診) - 肺部出院回診',
+                detail: '備註：持住院計劃書回診。\n1. 隱球菌感染要吃6-12個月，每12小時一次，三個月照一次X光。\n2. 目前排定先吃到二月再檢查狀況，其他兩個病毒(梅毒及肺囊蟲肺炎)殺光了。\n3. 詢問之後有打免疫治療要請陳醫師開預防藥(肺囊蟲預防藥)。\n4. 藥物：拿掉8小時抗生素、類固醇、小鳥藥粉(咳嗽藥)，僅留下12小時抗生素。\n5. 注意事項：慢慢吃及不能發燒。'
+            },
+            {
+                id: 'r_20260817_diet',
+                date: '2026-08-17',
+                dept: '營養照護',
+                category: '專科門診',
+                companion: '映',
+                title: '腸胃恢復與飲食微調',
+                detail: '媽媽食慾好轉。今日嘗試無渣蒸蛋與去油苦瓜清湯。茶葉蛋黃偏乾易嗆咳，已改為蒸蛋；苦瓜湯已撈去浮油打泥。繼續增加優質蛋白質(去骨鱸魚泥)把體重養上來。'
+            },
+            {
+                id: 'r_20260816_penic',
+                date: '2026-08-16',
+                dept: '感染科',
+                category: '專科門診',
+                companion: '潔',
+                title: '肺部抗生素療程啟動',
+                detail: '開始施打抗生素。密切注意「賈克-赫斯麥反應」(發燒/寒顫)，觀察腸胃是否腹瀉，搭配速養遼保護食道黏膜。'
+            },
+            {
+                id: 'r_20260730_derm',
+                date: '2026-07-30',
+                dept: '皮膚科',
+                category: '專科門診',
+                companion: '映',
+                title: '皮膚發炎過敏看診',
+                detail: '醫囑：先擦保濕乳液，隔 5 分鐘再擦紅癢藥膏。禁忌食物：嚴禁燥熱、補品(紅蔘)、花生堅果、芋頭竹筍芒果、帶殼海鮮。這與電療食道防護完全一致。'
+            },
+            {
+                id: 'r_20260422_imm19',
+                date: '2026-04-22',
+                dept: '腫瘤科',
+                category: '免疫治療',
+                companion: '潔',
+                title: '免疫#19 + 回診',
+                detail: '免疫治療第 19 次施打與門診追蹤。'
+            },
+            {
+                id: 'r_20260414_mri',
+                date: '2026-04-14',
+                dept: '放射科',
+                category: '重大檢查',
+                companion: '樺',
+                title: '照核磁腦部 (MRI 晚上 7:00)',
+                detail: '晚上 19:00 進行腦部核磁共振 (MRI) 造影檢查。'
+            },
+            {
+                id: 'r_20260408_imm18',
+                date: '2026-04-08',
+                dept: '腫瘤科',
+                category: '免疫治療',
+                companion: '映',
+                title: '免疫回診#18 + 心臟回診',
+                detail: '免疫治療第 18 次回診，聯合心臟科門診檢查心血管狀況。'
+            },
+            {
+                id: 'r_20260325_imm17',
+                date: '2026-03-25',
+                dept: '腫瘤科',
+                category: '免疫治療',
+                companion: '潔',
+                title: '免疫回診#17 + 腎臟科定期追蹤',
+                detail: '免疫治療第 17 次回診，會診腎臟科定期追蹤腎功能各項指標。'
+            },
+            {
+                id: 'r_20260317_rad_chk',
+                date: '2026-03-17',
+                dept: '放射科',
+                category: '專科門診',
+                companion: '映',
+                title: '放射科回診',
+                detail: '放射治療療程結束後續追蹤與黏膜恢復觀察。'
+            },
+            {
+                id: 'r_20260311_imm16',
+                date: '2026-03-11',
+                dept: '腫瘤科',
+                category: '免疫治療',
+                companion: '樺',
+                title: '免疫#16回診 + 抽血',
+                detail: '免疫第 16 次回診，配合抽血檢驗白血球、肝腎指標與發炎指數。'
+            },
+            {
+                id: 'r_20260225_imm15',
+                date: '2026-02-25',
+                dept: '腫瘤科',
+                category: '免疫治療',
+                companion: '映',
+                title: '免疫#15 + 回診',
+                detail: '免疫治療第 15 次施打與門診追蹤。'
+            },
+            {
+                id: 'r_20260211_imm14',
+                date: '2026-02-11',
+                dept: '腫瘤科',
+                category: '免疫治療',
+                companion: '映',
+                title: '免疫#14 + 回診',
+                detail: '免疫治療第 14 次施打與門診追蹤。'
+            },
+            {
+                id: 'r_20260205_rad10',
+                date: '2026-02-05',
+                dept: '放射科',
+                category: '放射治療',
+                companion: '潔',
+                title: '放射#10 (第十次放療完成)',
+                detail: '第 10 次放射治療施打，本階段放療圓滿完成！後續持續速養遼護喉。'
+            },
+            {
+                id: 'r_20260204_rad9',
+                date: '2026-02-04',
+                dept: '放射科',
+                category: '放射治療',
+                companion: '映',
+                title: '放射#9',
+                detail: '放射治療第 9 次施打。'
+            },
+            {
+                id: 'r_20260203_rad8',
+                date: '2026-02-03',
+                dept: '放射科',
+                category: '放射治療',
+                companion: '樺',
+                title: '放射#8',
+                detail: '放射治療第 8 次施打。'
+            },
+            {
+                id: 'r_20260202_rad7',
+                date: '2026-02-02',
+                dept: '放射科',
+                category: '放射治療',
+                companion: '潔',
+                title: '放射#7',
+                detail: '放射治療第 7 次施打。'
+            },
+            {
+                id: 'r_20260130_rad6',
+                date: '2026-01-30',
+                dept: '放射科',
+                category: '放射治療',
+                companion: '樺',
+                title: '放射#6',
+                detail: '放射治療第 6 次施打。'
+            },
+            {
+                id: 'r_20260129_rad5',
+                date: '2026-01-29',
+                dept: '放射科',
+                category: '放射治療',
+                companion: '映',
+                title: '放射#5',
+                detail: '放射治療第 5 次施打。'
+            },
+            {
+                id: 'r_20260128_imm13',
+                date: '2026-01-28',
+                dept: '腫瘤科',
+                category: '免疫治療',
+                companion: '潔',
+                title: '免疫#13 + 回診 + 放射#4',
+                detail: '同日施打免疫治療第 13 次，並進行第 4 次放射治療。'
+            },
+            {
+                id: 'r_20260127_rad3',
+                date: '2026-01-27',
+                dept: '放射科',
+                category: '放射治療',
+                companion: '潔',
+                title: '放射#3',
+                detail: '放射治療第 3 次施打。'
+            },
+            {
+                id: 'r_20260126_rad2',
+                date: '2026-01-26',
+                dept: '放射科',
+                category: '放射治療',
+                companion: '潔',
+                title: '放射#2',
+                detail: '放射治療第 2 次施打。'
+            },
+            {
+                id: 'r_20260123_rad1',
+                date: '2026-01-23',
+                dept: '放射科',
+                category: '放射治療',
+                companion: '映',
+                title: '放射#1',
+                detail: '第 1 次放射治療正式展開。'
+            },
+            {
+                id: 'r_20260122_rad_loc',
+                date: '2026-01-22',
+                dept: '放射科',
+                category: '放射治療',
+                companion: '樺',
+                title: '放射#定位',
+                detail: '放射治療前置電腦斷層模擬定位與製作固定模具。'
+            },
+            {
+                id: 'r_20260119_ct',
+                date: '2026-01-19',
+                dept: '放射科',
+                category: '重大檢查',
+                companion: '潔',
+                title: '肺部電腦斷層 (早上禁食)',
+                detail: '早上進行肺部電腦斷層掃描，遵照醫囑當天早上嚴格禁食。'
+            },
+            {
+                id: 'r_20260114_imm12',
+                date: '2026-01-14',
+                dept: '腫瘤科',
+                category: '免疫治療',
+                companion: '樺',
+                title: '上午 8:30 免疫#12 + 回診 + 心臟回診 33號',
+                detail: '上午 8:30 免疫第 12 次治療，腫瘤科回診，並前往心臟科 33 號看診。'
+            },
+            {
+                id: 'r_20260106_rad',
+                date: '2026-01-06',
+                dept: '放射科',
+                category: '專科門診',
+                companion: '映',
+                title: '放射腫瘤回診 56號',
+                detail: '放射腫瘤科門診回診 56 號看診。'
+            },
+            {
+                id: 'r_20260105_ns',
+                date: '2026-01-05',
+                dept: '神經外科',
+                category: '專科門診',
+                companion: '潔',
+                title: '神經外科回診 54號',
+                detail: '神經外科定期門診 54 號看診追蹤。'
+            }
+        ];
+
+        // 4. 注意事項預設種子
+        const SEED_NOTES = [
+            {
+                id: 'n_20260912_1',
+                title: '打泥與過濾標準示範',
+                content: '所有含纖維的青菜與肉類，打泥後「必須」使用極細濾網過篩，將粗糙渣渣濾除，以免刺激媽媽食道發炎處。',
+                images: [],
+                createdAt: '2026-09-12T10:00:00Z'
+            }
+        ];
+
+        const PET_SCAN_RECORD = {
+            id: 'r_20260815_pet_draft',
+            date: '2026-08-15',
+            dept: '腫瘤科',
+            companion: '樺',
+            title: '免疫審查退件-等待正子攝影 (暫存回收桶)',
+            detail: '健保免疫藥物申請需補件，等待安排 PET-CT 正子攝影。此空窗期全力養體重與白血球，將百合銀耳露與純蓮藕粉作為重點資產。',
+            deletedAt: '2026-08-16T12:00:00.000Z'
+        };
+
+        let hospitalStays = [...SEED_HOSPITAL_STAYS];
+        let records = [...SEED_RECORDS];
+        let deletedRecords = [PET_SCAN_RECORD];
+        let notes = [...SEED_NOTES];
+        let hospitalViewMode = 'calendar';
+        let calYear = 2026;
+        let calMonth = 8;
+        let recordToEditId = null;
+        let currentConfirmAction = null;
+        let currentActiveTab = 'records';
+
+        // 注意事項狀態
+        let pendingNoteImages = [];
+
+        // 月曆挑選器狀態
+        let currentPickerTargetInputId = null;
+        let dpYear = 2026;
+        let dpMonth = 9;
+        let dpSelectedDate = '';
+
+        let db = null;
+        let auth = null;
+        let currentUser = null;
+        let isCloudActive = false;
+
+        // 本機備援 Key
+        const STORAGE_KEY_HOSP = `care_stays_${appId}_v5`;
+        const STORAGE_KEY_REC = `care_records_${appId}_v5`;
+        const STORAGE_KEY_DEL = `care_trash_${appId}_v5`;
+        const STORAGE_KEY_NOTES = `care_notes_${appId}_v5`;
+
+        function saveToLocal() {
+            try {
+                localStorage.setItem(STORAGE_KEY_HOSP, JSON.stringify(hospitalStays));
+                localStorage.setItem(STORAGE_KEY_REC, JSON.stringify(records));
+                localStorage.setItem(STORAGE_KEY_DEL, JSON.stringify(deletedRecords));
+                localStorage.setItem(STORAGE_KEY_NOTES, JSON.stringify(notes));
+            } catch (e) {
+                console.warn('Local save warning:', e);
+            }
+        }
+
+        function loadFromLocalFallback() {
+            try {
+                const rawHosp = localStorage.getItem(STORAGE_KEY_HOSP);
+                if (rawHosp) {
+                    const parsed = JSON.parse(rawHosp);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        hospitalStays = parsed;
+                    }
+                }
+
+                const rawRec = localStorage.getItem(STORAGE_KEY_REC);
+                if (rawRec) {
+                    const parsed = JSON.parse(rawRec);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        records = parsed;
+                    }
+                }
+
+                const rawDel = localStorage.getItem(STORAGE_KEY_DEL);
+                if (rawDel) {
+                    const parsed = JSON.parse(rawDel);
+                    if (Array.isArray(parsed)) deletedRecords = parsed;
+                }
+                
+                const rawNotes = localStorage.getItem(STORAGE_KEY_NOTES);
+                if (rawNotes) {
+                    const parsed = JSON.parse(rawNotes);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        const existingIds = new Set(parsed.map(n => String(n.id)));
+                        const missingSeeds = SEED_NOTES.filter(s => !existingIds.has(String(s.id)));
+                        notes = [...parsed, ...missingSeeds].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+                    }
+                }
+            } catch (e) {
+                console.warn('Local fallback error:', e);
+            }
+
+            updateDashboardStats();
+            renderRecords();
+            renderHospitalCalendar();
+            renderHospitalTable();
+            renderHistoryList();
+            renderNotes();
+        }
+
+        async function initCloudSync() {
+            updateCloudStatusBadge('connecting', '連線家庭雲端...');
+
+            let firebaseConfig = null;
+            try {
+                if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                    firebaseConfig = typeof __firebase_config === 'string' ? JSON.parse(__firebase_config) : __firebase_config;
+                }
+            } catch (e) {
+                console.warn('Firebase config error:', e);
+            }
+
+            if (!firebaseConfig) {
+                updateCloudStatusBadge('local', '🟢 本機儲存已就緒 (獨立模式)');
+                return;
+            }
+
+            await loadFirebaseSdk();
+            if (!firebaseSdkLoaded) {
+                updateCloudStatusBadge('local', '🟡 雲端 SDK 載入失敗，已切換本機儲存模式');
+                return;
+            }
+
+            try {
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+
+                const token = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : undefined;
+                if (token) {
+                    try {
+                        const cred = await signInWithCustomToken(auth, token);
+                        currentUser = cred.user;
+                    } catch (e) {
+                        const cred = await signInAnonymously(auth);
+                        currentUser = cred.user;
+                    }
+                } else {
+                    const cred = await signInAnonymously(auth);
+                    currentUser = cred.user;
+                }
+
+                if (!currentUser) {
+                    updateCloudStatusBadge('local', '本機離線模式');
+                    return;
+                }
+
+                isCloudActive = true;
+                updateCloudStatusBadge('synced', '🟢 多方即時連線中');
+
+                await ensureCloudSeededOnce();
+                startFirestoreRealtimeListeners();
+
+            } catch (err) {
+                console.error('Firebase setup failed:', err);
+                updateCloudStatusBadge('local', '本機離線儲存');
+            }
+        }
+
+        async function ensureCloudSeededOnce() {
+            if (!db || !currentUser) return;
+            try {
+                const initDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'app_metadata', 'seed_lock_v1');
+                const initSnap = await getDoc(initDocRef);
+
+                if (!initSnap.exists()) {
+                    updateCloudStatusBadge('connecting', '初始化家庭雲端資料庫...');
+                    
+                    const batchOps = [];
+                    for (const r of SEED_RECORDS) {
+                        batchOps.push(setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clinic_records', String(r.id)), sanitizeData(r)));
+                    }
+                    for (const s of SEED_HOSPITAL_STAYS) {
+                        batchOps.push(setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'hospital_stays', String(s.id)), sanitizeData(s)));
+                    }
+                    for (const n of SEED_NOTES) {
+                        batchOps.push(setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'care_notes', String(n.id)), sanitizeData(n)));
+                    }
+                    batchOps.push(setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'deleted_records', String(PET_SCAN_RECORD.id)), sanitizeData(PET_SCAN_RECORD)));
+                    batchOps.push(setDoc(initDocRef, { initialized: true, initAt: new Date().toISOString() }));
+                    
+                    await Promise.all(batchOps);
+                }
+            } catch (e) {
+                console.warn('Check seed error:', e);
+            }
+        }
+
+        function startFirestoreRealtimeListeners() {
+            if (!db || !currentUser) return;
+
+            const recCol = collection(db, 'artifacts', appId, 'public', 'data', 'clinic_records');
+            onSnapshot(recCol, (snap) => {
+                const list = [];
+                snap.forEach(d => list.push(d.data()));
+                if (list.length > 0) {
+                    records = list.sort((a, b) => b.date.localeCompare(a.date));
+                    saveToLocal();
+                    updateDashboardStats();
+                    renderRecords();
+                }
+                const nowTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                updateCloudStatusBadge('synced', `🟢 雲端多方即時同步 (${nowTime})`);
+            }, (err) => {
+                console.error('Records sync error:', err);
+                updateCloudStatusBadge('error', '雲端同步重試中...');
+            });
+
+            const stayCol = collection(db, 'artifacts', appId, 'public', 'data', 'hospital_stays');
+            onSnapshot(stayCol, (snap) => {
+                const list = [];
+                snap.forEach(d => list.push(d.data()));
+                if (list.length > 0) {
+                    hospitalStays = list.sort((a, b) => a.date.localeCompare(b.date));
+                    saveToLocal();
+                    updateDashboardStats();
+                    if (hospitalViewMode === 'calendar') renderHospitalCalendar();
+                    else renderHospitalTable();
+                }
+            }, (err) => console.error('Stays sync error:', err));
+
+            const delCol = collection(db, 'artifacts', appId, 'public', 'data', 'deleted_records');
+            onSnapshot(delCol, (snap) => {
+                const list = [];
+                snap.forEach(d => list.push(d.data()));
+                deletedRecords = list.sort((a, b) => (b.deletedAt || '').localeCompare(a.deletedAt || ''));
+                saveToLocal();
+                renderHistoryList();
+            }, (err) => console.error('Trash sync error:', err));
+            
+            // 4. 注意事項即時監聽
+            const noteCol = collection(db, 'artifacts', appId, 'public', 'data', 'care_notes');
+            onSnapshot(noteCol, (snap) => {
+                const list = [];
+                snap.forEach(d => list.push(d.data()));
+                notes = list.sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
+                saveToLocal();
+                if (currentActiveTab === 'notes') renderNotes();
+            }, (err) => console.error('Note listener err:', err));
+        }
+
+        function updateCloudStatusBadge(state, text) {
+            const badge = document.getElementById('cloud-sync-badge');
+            const dot = document.getElementById('cloud-sync-dot');
+            const textEl = document.getElementById('cloud-sync-text');
+            if (!badge || !dot || !textEl) return;
+
+            textEl.textContent = text;
+            if (state === 'synced') {
+                dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse';
+            } else if (state === 'connecting') {
+                dot.className = 'w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse';
+            } else if (state === 'error') {
+                dot.className = 'w-2.5 h-2.5 rounded-full bg-rose-500';
+            } else {
+                dot.className = 'w-2.5 h-2.5 rounded-full bg-slate-400';
+            }
+        }
+
+        function copyShareableSyncLink() {
+            copyTextToClipboard(window.location.href);
+            showToast('🔗 已複製全家人同步網址！傳至 LINE 點開即可多方即時同步');
+        }
+
+        // 頁籤切換
+        function switchTab(tabId) {
+            currentActiveTab = tabId;
+            const tabs = ['records', 'hospital', 'notes', 'health_food', 'diet', 'sop', 'history'];
+            tabs.forEach(id => {
+                const el = document.getElementById(`content-${id}`);
+                const btn = document.getElementById(`tab-${id}`);
+                if (el) el.classList.toggle('hidden', id !== tabId);
+                if (btn) {
+                    if (id === tabId) {
+                        btn.classList.add('border-emerald-500', 'text-emerald-400', 'bg-slate-800/60');
+                        btn.classList.remove('border-transparent');
+                    } else {
+                        btn.classList.remove('border-emerald-500', 'text-emerald-400', 'bg-slate-800/60');
+                        btn.classList.add('border-transparent');
+                    }
+                }
+            });
+
+            if (tabId === 'hospital') {
+                if (hospitalViewMode === 'calendar') renderHospitalCalendar();
+                else renderHospitalTable();
+            } else if (tabId === 'notes') {
+                renderNotes();
+            }
+        }
+
+        // 深淺主題切換
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.classList.toggle('dark');
+            const icon = document.getElementById('theme-icon');
+            const text = document.getElementById('theme-text');
+            if (icon && text) {
+                icon.textContent = isDark ? '☀️' : '🌙';
+                text.textContent = isDark ? '切換亮色' : '切換深色';
+            }
+        }
+
+        // 更新頂部儀表板統計
+        function updateDashboardStats() {
+            const totalRecEl = document.getElementById('stat-total-records');
+            const totalStaysEl = document.getElementById('stat-total-stays');
+            const latestDateEl = document.getElementById('stat-latest-date');
+            const companionSumEl = document.getElementById('stat-companion-summary');
+
+            if (totalRecEl) totalRecEl.textContent = `${records.length} 筆`;
+            if (totalStaysEl) totalStaysEl.textContent = `${hospitalStays.length} 天`;
+
+            if (latestDateEl && records.length > 0) {
+                const sorted = [...records].sort((a, b) => b.date.localeCompare(a.date));
+                latestDateEl.textContent = sorted[0].date;
+            }
+
+            if (companionSumEl) {
+                let ying = 0, hua = 0, jie = 0;
+                hospitalStays.forEach(s => {
+                    if (s.companion === '映') ying++;
+                    else if (s.companion === '樺') hua++;
+                    else if (s.companion === '潔') jie++;
+                });
+                companionSumEl.textContent = `映: ${ying} / 樺: ${hua} / 潔: ${jie}`;
+            }
+        }
+
+        // 渲染病歷列表
+        function renderRecords() {
+            const listEl = document.getElementById('records-list');
+            if (!listEl) return;
+
+            const searchKey = (document.getElementById('filter-search-input')?.value || '').trim().toLowerCase();
+            const deptFilter = document.getElementById('filter-dept-select')?.value || '';
+            const compFilter = document.getElementById('filter-companion-select')?.value || '';
+
+            let filtered = records.filter(r => {
+                if (deptFilter && r.dept !== deptFilter && r.category !== deptFilter) return false;
+                if (compFilter && r.companion !== compFilter) return false;
+                if (searchKey) {
+                    const matchTitle = (r.title || '').toLowerCase().includes(searchKey);
+                    const matchDetail = (r.detail || '').toLowerCase().includes(searchKey);
+                    const matchDept = (r.dept || '').toLowerCase().includes(searchKey);
+                    if (!matchTitle && !matchDetail && !matchDept) return false;
+                }
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                listEl.innerHTML = `
+                    <div class="bg-slate-800/40 p-10 rounded-2xl border border-slate-700 text-center text-slate-400">
+                        <div class="text-4xl mb-2">🔍</div>
+                        <p class="font-bold">沒有符合條件的就醫紀錄</p>
+                    </div>
+                `;
+                return;
+            }
+
+            listEl.innerHTML = filtered.map(r => {
+                let deptColor = 'bg-slate-700 text-slate-200';
+                if (r.dept === '腫瘤科') deptColor = 'bg-blue-900/80 text-blue-200 border border-blue-600/60';
+                else if (r.dept === '放射科') deptColor = 'bg-indigo-900/80 text-indigo-200 border border-indigo-600/60';
+                else if (r.dept === '感染科') deptColor = 'bg-purple-900/80 text-purple-200 border border-purple-600/60';
+                else if (r.dept === '牙科') deptColor = 'bg-teal-900/80 text-teal-200 border border-teal-600/60';
+                else if (r.dept === '皮膚科') deptColor = 'bg-pink-900/80 text-pink-200 border border-pink-600/60';
+                else if (r.dept === '專科聯合') deptColor = 'bg-amber-900/80 text-amber-200 border border-amber-600/60';
+
+                let compBadge = '';
+                if (r.companion === '映') compBadge = 'bg-emerald-950 text-emerald-300 border-emerald-600/70';
+                else if (r.companion === '樺') compBadge = 'bg-teal-950 text-teal-300 border-teal-600/70';
+                else if (r.companion === '潔') compBadge = 'bg-cyan-950 text-cyan-300 border-cyan-600/70';
+                else compBadge = 'bg-amber-950 text-amber-300 border-amber-600/70';
+
+                const safeId = String(r.id);
+
+                return `
+                    <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 shadow-md hover:border-emerald-600/70 transition relative">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-slate-700/80">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="px-3 py-1 rounded-xl text-xs font-black ${deptColor}">${r.dept}</span>
+                                <span class="text-sm sm:text-base font-bold text-slate-300">🗓️ ${r.date}</span>
+                                <span class="px-2.5 py-0.5 rounded-xl text-xs font-bold border ${compBadge}">👥 陪同：${r.companion || '未定'}</span>
+                                ${r.category ? `<span class="px-2 py-0.5 bg-slate-900 text-slate-400 text-xs rounded-lg">${r.category}</span>` : ''}
+                            </div>
+
+                            <div class="flex items-center gap-1.5 ml-auto">
+                                <button onclick="copyLineReport('${safeId}')" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-emerald-300 text-xs font-bold rounded-lg transition border border-slate-600 flex items-center gap-1" title="複製排版發送至 LINE 群組">
+                                    💬 LINE 回報
+                                </button>
+                                <button onclick="openEditRecordModal('${safeId}')" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-bold rounded-lg transition border border-slate-600" title="編輯此筆紀錄">
+                                    ✏️ 編輯
+                                </button>
+                                <button onclick="promptDeleteRecord('${safeId}')" class="px-2.5 py-1 bg-rose-950/80 hover:bg-rose-900 text-rose-300 text-xs font-bold rounded-lg transition border border-rose-800" title="移至資源回收桶">
+                                    🗑️ 刪除
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <h4 class="text-lg font-black text-slate-100">${r.title}</h4>
+                            <p class="mt-2 text-sm sm:text-base text-slate-300 leading-relaxed whitespace-pre-wrap">${r.detail || '無特別醫囑'}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function addRecord() {
+            const date = document.getElementById('record-date')?.value?.trim();
+            const dept = document.getElementById('record-dept')?.value;
+            const companion = document.getElementById('record-companion')?.value;
+            const title = document.getElementById('record-title')?.value?.trim();
+            const detail = document.getElementById('record-detail')?.value?.trim();
+
+            if (!date || !title) {
+                showToast('⚠️ 請填寫完整「日期」與「重點摘要」！');
+                return;
+            }
+
+            const newRec = {
+                id: 'r_' + Date.now(),
+                date,
+                dept,
+                companion,
+                title,
+                detail: detail || '',
+                category: dept === '放射科' && title.includes('斷層') ? '重大檢查' : '專科門診'
+            };
+
+            records.unshift(newRec);
+            records.sort((a, b) => b.date.localeCompare(a.date));
+            saveToLocal();
+            updateDashboardStats();
+            renderRecords();
+
+            document.getElementById('record-title').value = '';
+            document.getElementById('record-detail').value = '';
+            showToast('✅ 紀錄已成功新增並推播至雲端！');
+
+            if (isCloudActive && db && currentUser) {
+                try {
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clinic_records', newRec.id), sanitizeData(newRec));
+                } catch (e) {
+                    console.error('Cloud add record error:', e);
+                }
+            }
+        }
+
+        function promptDeleteRecord(recordId) {
+            const target = records.find(r => String(r.id) === String(recordId));
+            if (!target) return;
+
+            currentConfirmAction = async () => {
+                records = records.filter(r => String(r.id) !== String(recordId));
+                target.deletedAt = new Date().toISOString();
+                deletedRecords.unshift(target);
+
+                saveToLocal();
+                updateDashboardStats();
+                renderRecords();
+                renderHistoryList();
+                closeConfirmModal();
+                showToast('🗑️ 紀錄已移至資源回收桶');
+
+                if (isCloudActive && db && currentUser) {
+                    try {
+                        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clinic_records', String(recordId)));
+                        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'deleted_records', String(recordId)), sanitizeData(target));
+                    } catch (e) {
+                        console.error('Cloud delete record error:', e);
+                    }
+                }
+            };
+
+            const titleEl = document.getElementById('confirm-modal-title');
+            const descEl = document.getElementById('confirm-modal-desc');
+            if (titleEl) titleEl.textContent = `確認刪除「${target.title}」？`;
+            if (descEl) descEl.textContent = '紀錄將移至「資源回收桶」，您隨時可以前往復原或永久清除。';
+            document.getElementById('confirm-modal')?.classList.remove('hidden');
+        }
+
+        // 住院月曆渲染
+        function renderHospitalCalendar() {
+            const gridEl = document.getElementById('hospital-calendar-grid');
+            const monthLabel = document.getElementById('calendar-current-month-label');
+            if (!gridEl || !monthLabel) return;
+
+            monthLabel.textContent = `${calYear} 年 ${calMonth} 月`;
+            gridEl.innerHTML = '';
+
+            const firstDay = new Date(calYear, calMonth - 1, 1).getDay();
+            const totalDays = new Date(calYear, calMonth, 0).getDate();
+            const prevMonthDays = new Date(calYear, calMonth - 1, 0).getDate();
+
+            const compFilter = document.getElementById('filter-hosp-companion')?.value || '';
+            const stayMap = {};
+            hospitalStays.forEach(s => {
+                if (compFilter && s.companion !== compFilter) return;
+                const norm = s.date.replace(/-/g, '/');
+                stayMap[norm] = s;
+            });
+
+            for (let i = firstDay - 1; i >= 0; i--) {
+                const dayNum = prevMonthDays - i;
+                gridEl.innerHTML += `<div class="bg-slate-900/40 p-2 rounded-xl min-h-[90px] border border-slate-800/60 opacity-30 text-xs font-bold">${dayNum}</div>`;
+            }
+
+            for (let d = 1; d <= totalDays; d++) {
+                const dateKey = `${calYear}/${String(calMonth).padStart(2, '0')}/${String(d).padStart(2, '0')}`;
+                const stay = stayMap[dateKey];
+
+                let cellHtml = '';
+                if (stay) {
+                    let compBadgeColor = 'bg-emerald-900/80 text-emerald-300 border border-emerald-600/80';
+                    if (stay.companion === '樺') compBadgeColor = 'bg-teal-900/80 text-teal-300 border border-teal-600/80';
+                    else if (stay.companion === '潔') compBadgeColor = 'bg-cyan-900/80 text-cyan-300 border border-cyan-600/80';
+
+                    const hasHighlight = stay.note && stay.note.length > 0;
+                    const cardBorder = hasHighlight ? 'border-amber-500/80 bg-slate-800' : 'border-slate-700 bg-slate-800/90';
+
+                    cellHtml = `
+                        <div onclick="openEditHospitalModal('${stay.id}')" class="bg-slate-800 p-2 sm:p-2.5 rounded-xl min-h-[95px] sm:min-h-[115px] border ${cardBorder} hover:border-emerald-500 transition cursor-pointer flex flex-col justify-between shadow-sm relative group">
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm sm:text-base font-black text-slate-100">${d}</span>
+                                    <span class="px-2 py-0.5 rounded-md text-[11px] font-black ${compBadgeColor}">${stay.companion}</span>
+                                </div>
+                                <div class="text-xs font-bold text-slate-200 mt-1 line-clamp-1">${stay.title}</div>
+                                ${hasHighlight ? `<div class="text-[11px] text-amber-300 font-medium mt-1 line-clamp-2">⚠️ ${stay.note}</div>` : ''}
+                            </div>
+                            <div class="flex items-center justify-between pt-1.5 mt-1 border-t border-slate-700/60">
+                                <span class="text-[10px] text-slate-400">點擊編輯</span>
+                                <button onclick="event.stopPropagation(); promptDeleteHospitalStay('${stay.id}')" class="text-xs text-rose-400 hover:text-rose-200 font-bold px-1.5 py-0.5 rounded bg-rose-950/60 border border-rose-800" title="刪除此日程">
+                                    🗑️
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    cellHtml = `
+                        <div onclick="quickAddHospitalDay('${dateKey}')" class="bg-slate-900/60 p-2 sm:p-2.5 rounded-xl min-h-[95px] sm:min-h-[115px] border border-slate-800/70 hover:border-slate-600 transition cursor-pointer flex flex-col justify-between group">
+                            <span class="text-xs sm:text-sm font-bold text-slate-400">${d}</span>
+                            <span class="text-[10px] text-slate-400 opacity-0 group-hover:opacity-100 transition text-center">+ 排班</span>
+                        </div>
+                    `;
+                }
+
+                gridEl.innerHTML += cellHtml;
+            }
+        }
+
+        // 住院清單表格渲染
+        function renderHospitalTable() {
+            const tbody = document.getElementById('hospital-list-tbody');
+            if (!tbody) return;
+
+            const compFilter = document.getElementById('filter-hosp-companion')?.value || '';
+            const filtered = hospitalStays.filter(s => !compFilter || s.companion === compFilter);
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400">沒有符合條件的住院排班紀錄</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(s => {
+                let compBadge = 'bg-emerald-950 text-emerald-300 border-emerald-600/70';
+                if (s.companion === '樺') compBadge = 'bg-teal-950 text-teal-300 border-teal-600/70';
+                else if (s.companion === '潔') compBadge = 'bg-cyan-950 text-cyan-300 border-cyan-600/70';
+
+                return `
+                    <tr class="hover:bg-slate-800/50 transition">
+                        <td class="p-3.5 font-bold text-slate-200 whitespace-nowrap">${s.date}</td>
+                        <td class="p-3.5 font-medium text-slate-400 whitespace-nowrap">${s.weekday || ''}</td>
+                        <td class="p-3.5 font-bold text-emerald-400">${s.title}</td>
+                        <td class="p-3.5 whitespace-nowrap">
+                            <span class="px-2.5 py-1 rounded-lg text-xs font-black border ${compBadge}">${s.companion}</span>
+                        </td>
+                        <td class="p-3.5 text-sm text-slate-300">
+                            ${s.note ? `<span class="text-amber-300 font-medium">⚠️ ${s.note}</span>` : '<span class="text-slate-400">--</span>'}
+                        </td>
+                        <td class="p-3.5 text-center whitespace-nowrap">
+                            <div class="flex items-center justify-center gap-1.5">
+                                <button onclick="openEditHospitalModal('${s.id}')" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-bold rounded-lg border border-slate-600 transition">✏️ 編輯</button>
+                                <button onclick="promptDeleteHospitalStay('${s.id}')" class="px-2.5 py-1 bg-rose-950/80 hover:bg-rose-900 text-rose-300 text-xs font-bold rounded-lg border border-rose-800 transition">🗑️ 刪除</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function switchHospitalView(mode) {
+            hospitalViewMode = mode;
+            const calCont = document.getElementById('hospital-calendar-container');
+            const listCont = document.getElementById('hospital-list-container');
+            const btnCal = document.getElementById('btn-hosp-calendar');
+            const btnList = document.getElementById('btn-hosp-list');
+
+            if (mode === 'calendar') {
+                calCont?.classList.remove('hidden');
+                listCont?.classList.add('hidden');
+                btnCal?.classList.add('bg-emerald-600', 'text-white', 'shadow');
+                btnCal?.classList.remove('text-slate-400');
+                btnList?.classList.remove('bg-emerald-600', 'text-white', 'shadow');
+                btnList?.classList.add('text-slate-400');
+                renderHospitalCalendar();
+            } else {
+                calCont?.classList.add('hidden');
+                listCont?.classList.remove('hidden');
+                btnList?.classList.add('bg-emerald-600', 'text-white', 'shadow');
+                btnList?.classList.remove('text-slate-400');
+                btnCal?.classList.remove('bg-emerald-600', 'text-white', 'shadow');
+                btnCal?.classList.add('text-slate-400');
+                renderHospitalTable();
+            }
+        }
+
+        function changeCalMonth(delta) {
+            calMonth += delta;
+            if (calMonth > 12) { calMonth = 1; calYear++; }
+            if (calMonth < 1) { calMonth = 12; calYear--; }
+            renderHospitalCalendar();
+        }
+
+        function jumpCalMonth(year, month) {
+            calYear = year;
+            calMonth = month;
+            renderHospitalCalendar();
+        }
+
+        function filterHospitalStays() {
+            if (hospitalViewMode === 'calendar') renderHospitalCalendar();
+            else renderHospitalTable();
+        }
+
+        let currentEditingHospitalId = null;
+
+        function openAddHospitalModal() {
+            currentEditingHospitalId = null;
+            document.getElementById('hosp-modal-title').textContent = '新增住院排班日程';
+            document.getElementById('hosp-input-date').value = new Date().toISOString().split('T')[0].replace(/-/g, '/');
+            document.getElementById('hosp-input-companion').value = '映';
+            document.getElementById('hosp-input-title').value = '媽咪住院';
+            document.getElementById('hosp-input-note').value = '';
+            document.getElementById('btn-hosp-delete-in-modal')?.classList.add('hidden');
+            document.getElementById('hosp-modal')?.classList.remove('hidden');
+        }
+
+        function quickAddHospitalDay(dateStr) {
+            currentEditingHospitalId = null;
+            document.getElementById('hosp-modal-title').textContent = `排定住院日程 (${dateStr})`;
+            document.getElementById('hosp-input-date').value = dateStr;
+            document.getElementById('hosp-input-companion').value = '映';
+            document.getElementById('hosp-input-title').value = '媽咪住院';
+            document.getElementById('hosp-input-note').value = '';
+            document.getElementById('btn-hosp-delete-in-modal')?.classList.add('hidden');
+            document.getElementById('hosp-modal')?.classList.remove('hidden');
+        }
+
+        function openEditHospitalModal(stayId) {
+            const stay = hospitalStays.find(s => String(s.id) === String(stayId));
+            if (!stay) return;
+
+            currentEditingHospitalId = stayId;
+            document.getElementById('hosp-modal-title').textContent = `編輯住院日程 (${stay.date})`;
+            document.getElementById('hosp-input-date').value = stay.date;
+            document.getElementById('hosp-input-companion').value = stay.companion || '映';
+            document.getElementById('hosp-input-title').value = stay.title || '';
+            document.getElementById('hosp-input-note').value = stay.note || '';
+            document.getElementById('btn-hosp-delete-in-modal')?.classList.remove('hidden');
+            document.getElementById('hosp-modal')?.classList.remove('hidden');
+        }
+
+        function closeHospitalModal() {
+            document.getElementById('hosp-modal')?.classList.add('hidden');
+        }
+
+        async function saveHospitalStayModal() {
+            const date = document.getElementById('hosp-input-date')?.value?.trim();
+            const companion = document.getElementById('hosp-input-companion')?.value;
+            const title = document.getElementById('hosp-input-title')?.value?.trim();
+            const note = document.getElementById('hosp-input-note')?.value?.trim() || '';
+
+            if (!date || !title) {
+                showToast('⚠️ 請輸入日期與行程名稱！');
+                return;
+            }
+
+            const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+            const dayIdx = new Date(date.replace(/-/g, '/')).getDay();
+            const weekday = isNaN(dayIdx) ? '' : weekdays[dayIdx];
+
+            let savedStay = null;
+            if (currentEditingHospitalId) {
+                const idx = hospitalStays.findIndex(s => String(s.id) === String(currentEditingHospitalId));
+                if (idx !== -1) {
+                    hospitalStays[idx] = { ...hospitalStays[idx], date, companion, title, note, weekday };
+                    savedStay = hospitalStays[idx];
+                }
+            } else {
+                savedStay = {
+                    id: 'h_' + Date.now(),
+                    date,
+                    companion,
+                    title,
+                    note,
+                    weekday
+                };
+                hospitalStays.push(savedStay);
+            }
+
+            hospitalStays.sort((a, b) => a.date.localeCompare(b.date));
+            saveToLocal();
+            updateDashboardStats();
+            if (hospitalViewMode === 'calendar') renderHospitalCalendar();
+            else renderHospitalTable();
+
+            closeHospitalModal();
+            showToast('✅ 住院日程已儲存並推播至雲端！');
+
+            if (isCloudActive && db && currentUser && savedStay) {
+                try {
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'hospital_stays', String(savedStay.id)), sanitizeData(savedStay));
+                } catch (e) {
+                    console.error('Cloud save stay error:', e);
+                }
+            }
+        }
+
+        function onDeleteHospitalStayFromModal() {
+            if (!currentEditingHospitalId) return;
+            const targetId = currentEditingHospitalId;
+            closeHospitalModal();
+            promptDeleteHospitalStay(targetId);
+        }
+
+        function promptDeleteHospitalStay(stayId) {
+            const stay = hospitalStays.find(s => String(s.id) === String(stayId));
+            if (!stay) return;
+
+            currentConfirmAction = async () => {
+                hospitalStays = hospitalStays.filter(s => String(s.id) !== String(stayId));
+                saveToLocal();
+                updateDashboardStats();
+                if (hospitalViewMode === 'calendar') renderHospitalCalendar();
+                else renderHospitalTable();
+                closeConfirmModal();
+                showToast('🗑️ 住院日程已刪除');
+
+                if (isCloudActive && db && currentUser) {
+                    try {
+                        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'hospital_stays', String(stayId)));
+                    } catch (e) {
+                        console.error('Cloud delete stay error:', e);
+                    }
+                }
+            };
+
+            const titleEl = document.getElementById('confirm-modal-title');
+            const descEl = document.getElementById('confirm-modal-desc');
+            if (titleEl) titleEl.textContent = `確認刪除 ${stay.date} (${stay.companion})？`;
+            if (descEl) descEl.textContent = '此操作將從住院陪伴清單中移除該天排班。';
+            document.getElementById('confirm-modal')?.classList.remove('hidden');
+        }
+
+        function openDatePickerModal(targetInputId) {
+            currentPickerTargetInputId = targetInputId;
+            const inputEl = document.getElementById(targetInputId);
+            let targetDate = new Date();
+
+            if (inputEl && inputEl.value) {
+                const parsed = new Date(inputEl.value.replace(/-/g, '/'));
+                if (!isNaN(parsed.getTime())) targetDate = parsed;
+            }
+
+            dpYear = targetDate.getFullYear();
+            dpMonth = targetDate.getMonth() + 1;
+            dpSelectedDate = inputEl ? inputEl.value : '';
+
+            populatePickerYearMonthSelects();
+            renderDatePickerGrid();
+            document.getElementById('date-picker-modal')?.classList.remove('hidden');
+        }
+
+        function closeDatePickerModal() {
+            document.getElementById('date-picker-modal')?.classList.add('hidden');
+        }
+
+        function populatePickerYearMonthSelects() {
+            const ySelect = document.getElementById('dp-year-select');
+            const mSelect = document.getElementById('dp-month-select');
+            if (!ySelect || !mSelect) return;
+
+            ySelect.innerHTML = '';
+            for (let y = 2024; y <= 2028; y++) {
+                ySelect.innerHTML += `<option value="${y}" ${y === dpYear ? 'selected' : ''}>${y} 年</option>`;
+            }
+
+            mSelect.innerHTML = '';
+            for (let m = 1; m <= 12; m++) {
+                mSelect.innerHTML += `<option value="${m}" ${m === dpMonth ? 'selected' : ''}>${m} 月</option>`;
+            }
+        }
+
+        function onPickerSelectChange() {
+            dpYear = parseInt(document.getElementById('dp-year-select').value, 10);
+            dpMonth = parseInt(document.getElementById('dp-month-select').value, 10);
+            renderDatePickerGrid();
+        }
+
+        function changePickerMonth(delta) {
+            dpMonth += delta;
+            if (dpMonth > 12) { dpMonth = 1; dpYear++; }
+            if (dpMonth < 1) { dpMonth = 12; dpYear--; }
+            populatePickerYearMonthSelects();
+            renderDatePickerGrid();
+        }
+
+        function renderDatePickerGrid() {
+            const grid = document.getElementById('dp-calendar-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            const firstDay = new Date(dpYear, dpMonth - 1, 1).getDay();
+            const daysInMonth = new Date(dpYear, dpMonth, 0).getDate();
+            const prevDays = new Date(dpYear, dpMonth - 1, 0).getDate();
+
+            for (let i = firstDay - 1; i >= 0; i--) {
+                grid.innerHTML += `<div class="p-2 text-center text-xs text-slate-600">${prevDays - i}</div>`;
+            }
+
+            for (let d = 1; d <= daysInMonth; d++) {
+                const formatted = `${dpYear}-${String(dpMonth).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+                const isSelected = dpSelectedDate === formatted || dpSelectedDate === formatted.replace(/-/g, '/');
+
+                grid.innerHTML += `
+                    <button type="button" onclick="confirmDateFromPicker('${formatted}')" class="p-2.5 rounded-xl text-sm font-bold transition flex items-center justify-center ${isSelected ? 'bg-emerald-600 text-white font-black ring-2 ring-emerald-300' : 'bg-slate-800 text-slate-200 hover:bg-slate-700'}">
+                        ${d}
+                    </button>
+                `;
+            }
+        }
+
+        function confirmDateFromPicker(formattedDate) {
+            if (currentPickerTargetInputId) {
+                const input = document.getElementById(currentPickerTargetInputId);
+                if (input) {
+                    if (currentPickerTargetInputId.includes('hosp')) {
+                        input.value = formattedDate.replace(/-/g, '/');
+                    } else {
+                        input.value = formattedDate;
+                    }
+                }
+            }
+            closeDatePickerModal();
+        }
+
+        function selectQuickDay(type) {
+            const today = new Date();
+            if (type === 'yesterday') today.setDate(today.getDate() - 1);
+            else if (type === 'tomorrow') today.setDate(today.getDate() + 1);
+
+            const y = today.getFullYear();
+            const m = String(today.getMonth() + 1).padStart(2, '0');
+            const d = String(today.getDate()).padStart(2, '0');
+            confirmDateFromPicker(`${y}-${m}-${d}`);
+        }
+
+        function openEditRecordModal(recId) {
+            const rec = records.find(r => String(r.id) === String(recId));
+            if (!rec) return;
+
+            recordToEditId = recId;
+            document.getElementById('edit-rec-date').value = rec.date;
+            document.getElementById('edit-rec-dept').value = rec.dept;
+            document.getElementById('edit-rec-companion').value = rec.companion || '映';
+            document.getElementById('edit-rec-title').value = rec.title;
+            document.getElementById('edit-rec-detail').value = rec.detail || '';
+            document.getElementById('edit-record-modal')?.classList.remove('hidden');
+        }
+
+        function closeEditRecordModal() {
+            recordToEditId = null;
+            document.getElementById('edit-record-modal')?.classList.add('hidden');
+        }
+
+        async function saveEditRecordModal() {
+            if (!recordToEditId) return;
+            const rec = records.find(r => String(r.id) === String(recordToEditId));
+            if (!rec) return;
+
+            rec.date = document.getElementById('edit-rec-date')?.value?.trim();
+            rec.dept = document.getElementById('edit-rec-dept')?.value;
+            rec.companion = document.getElementById('edit-rec-companion')?.value;
+            rec.title = document.getElementById('edit-rec-title')?.value?.trim();
+            rec.detail = document.getElementById('edit-rec-detail')?.value?.trim();
+
+            records.sort((a, b) => b.date.localeCompare(a.date));
+            saveToLocal();
+            updateDashboardStats();
+            renderRecords();
+            closeEditRecordModal();
+            showToast('✏️ 就醫紀錄修改成功！');
+
+            if (isCloudActive && db && currentUser) {
+                try {
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clinic_records', String(rec.id)), sanitizeData(rec));
+                } catch (e) {
+                    console.error('Cloud edit record error:', e);
+                }
+            }
+        }
+
+        function copyLineReport(recId) {
+            const rec = records.find(r => String(r.id) === String(recId));
+            if (!rec) return;
+
+            const text = `【媽媽護理與就醫回報】\n` +
+                         `🗓️ 日期：${rec.date}\n` +
+                         `🏥 科別：${rec.dept}\n` +
+                         `👥 陪診人：${rec.companion}\n` +
+                         `📌 重點：${rec.title}\n` +
+                         `📋 醫囑備忘：\n${rec.detail || '無特別交代'}\n\n` +
+                         `-- 由「媽媽護理紀錄中心」生成`;
+
+            copyTextToClipboard(text);
+            showToast('💬 已複製 LINE 格式摘要！');
+        }
+
+        function copyHospitalListForLine() {
+            let out = `🏥【媽媽住院與陪伴輪值清單】\n全期累計：${hospitalStays.length} 天\n------------------\n`;
+            hospitalStays.forEach(s => {
+                out += `${s.date} (${s.weekday}) - ${s.companion} 陪同 | ${s.title} ${s.note ? '⚠️' + s.note : ''}\n`;
+            });
+            out += `------------------\n由家人共同照護中心產出`;
+            copyTextToClipboard(out);
+            showToast('💬 已複製完整住院排班表至剪貼簿！');
+        }
+
+        function copyTextToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+            } catch (err) {
+                console.warn('Copy fallback error:', err);
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function renderHistoryList() {
+            const listEl = document.getElementById('history-list');
+            if (!listEl) return;
+
+            if (deletedRecords.length === 0) {
+                listEl.innerHTML = `<div class="p-10 text-center text-slate-400 font-bold bg-slate-800/40 rounded-2xl border border-slate-700">目前回收桶內沒有任何紀錄</div>`;
+                return;
+            }
+
+            listEl.innerHTML = deletedRecords.map(r => `
+                <div class="bg-slate-800/60 p-4 sm:p-5 rounded-2xl border border-slate-700/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 opacity-80 hover:opacity-100 transition">
+                    <div>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="px-2.5 py-0.5 rounded-lg text-xs font-bold bg-slate-700 text-slate-300">${r.dept || '護理'}</span>
+                            <span class="text-sm font-bold text-slate-400">🗓️ ${r.date}</span>
+                            <span class="text-xs text-slate-400">👥 陪同：${r.companion || '無'}</span>
+                        </div>
+                        <h4 class="text-base font-bold text-slate-200 mt-1.5">${r.title}</h4>
+                        <p class="text-xs text-slate-400 mt-1 line-clamp-2">${r.detail || ''}</p>
+                    </div>
+                    <div class="flex items-center gap-2 ml-auto">
+                        <button onclick="restoreRecord('${r.id}')" class="px-3.5 py-1.5 bg-emerald-900/80 hover:bg-emerald-800 text-emerald-300 text-xs font-bold rounded-xl border border-emerald-700 transition">
+                            ↩️ 還原
+                        </button>
+                        <button onclick="promptPermanentDelete('${r.id}')" class="px-3.5 py-1.5 bg-rose-950/80 hover:bg-rose-900 text-rose-300 text-xs font-bold rounded-xl border border-rose-800 transition">
+                            永久刪除
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function restoreRecord(id) {
+            const idx = deletedRecords.findIndex(r => String(r.id) === String(id));
+            if (idx === -1) return;
+
+            const [restored] = deletedRecords.splice(idx, 1);
+            delete restored.deletedAt;
+            records.unshift(restored);
+            records.sort((a, b) => b.date.localeCompare(a.date));
+
+            saveToLocal();
+            updateDashboardStats();
+            renderRecords();
+            renderHistoryList();
+            showToast('↩️ 紀錄已成功還原回時間軸！');
+
+            if (isCloudActive && db && currentUser) {
+                try {
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'deleted_records', String(id)));
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clinic_records', String(id)), sanitizeData(restored));
+                } catch (e) {
+                    console.error('Cloud restore error:', e);
+                }
+            }
+        }
+
+        function promptPermanentDelete(id) {
+            currentConfirmAction = async () => {
+                deletedRecords = deletedRecords.filter(r => String(r.id) !== String(id));
+                saveToLocal();
+                renderHistoryList();
+                closeConfirmModal();
+                showToast('🗑️ 紀錄已永久移除');
+
+                if (isCloudActive && db && currentUser) {
+                    try {
+                        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'deleted_records', String(id)));
+                    } catch (e) {
+                        console.error('Cloud permanent delete error:', e);
+                    }
+                }
+            };
+
+            const titleEl = document.getElementById('confirm-modal-title');
+            const descEl = document.getElementById('confirm-modal-desc');
+            if (titleEl) titleEl.textContent = '永久刪除此紀錄？';
+            if (descEl) descEl.textContent = '此動作無法復原，該筆資料將永久消失。';
+            document.getElementById('confirm-modal')?.classList.remove('hidden');
+        }
+
+        function clearAllHistoryModal() {
+            if (deletedRecords.length === 0) return;
+            currentConfirmAction = async () => {
+                const toDel = [...deletedRecords];
+                deletedRecords = [];
+                saveToLocal();
+                renderHistoryList();
+                closeConfirmModal();
+                showToast('🗑️ 回收桶已全部清空');
+
+                if (isCloudActive && db && currentUser) {
+                    try {
+                        for (const r of toDel) {
+                            await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'deleted_records', String(r.id)));
+                        }
+                    } catch (e) {
+                        console.error('Cloud clear trash error:', e);
+                    }
+                }
+            };
+
+            const titleEl = document.getElementById('confirm-modal-title');
+            const descEl = document.getElementById('confirm-modal-desc');
+            if (titleEl) titleEl.textContent = '清空整個資源回收桶？';
+            if (descEl) descEl.textContent = `將永久刪除全部 ${deletedRecords.length} 筆項目，此動作無法撤銷。`;
+            document.getElementById('confirm-modal')?.classList.remove('hidden');
+        }
+
+        // 強制自雲端拉取並同步最新
+        async function forceSyncLatest() {
+            updateCloudStatusBadge('connecting', '🔄 同步中...');
+            showToast('🔄 正在向雲端拉取最新資料...');
+
+            if (isCloudActive && db && currentUser) {
+                try {
+                    const [recSnap, staySnap, delSnap, noteSnap] = await Promise.all([
+                        getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'clinic_records')),
+                        getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'hospital_stays')),
+                        getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'deleted_records')),
+                        getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'care_notes'))
+                    ]);
+
+                    if (!recSnap.empty) {
+                        const list = [];
+                        recSnap.forEach(d => list.push(d.data()));
+                        records = list.sort((a, b) => b.date.localeCompare(a.date));
+                    }
+                    if (!staySnap.empty) {
+                        const list = [];
+                        staySnap.forEach(d => list.push(d.data()));
+                        hospitalStays = list.sort((a, b) => a.date.localeCompare(b.date));
+                    }
+                    if (!delSnap.empty) {
+                        const list = [];
+                        delSnap.forEach(d => list.push(d.data()));
+                        deletedRecords = list.sort((a, b) => (b.deletedAt || '').localeCompare(a.deletedAt || ''));
+                    }
+                    if (!noteSnap.empty) {
+                        const list = [];
+                        noteSnap.forEach(d => list.push(d.data()));
+                        notes = list.sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
+                    }
+
+                    saveToLocal();
+                    updateDashboardStats();
+                    renderRecords();
+                    if (hospitalViewMode === 'calendar') renderHospitalCalendar();
+                    else renderHospitalTable();
+                    renderHistoryList();
+                    renderNotes();
+
+                    const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                    updateCloudStatusBadge('synced', `🟢 雲端已同步 (${timeStr})`);
+                    showToast('✅ 已同步至最新多方內容！');
+                    return;
+                } catch (e) {
+                    console.warn('Force sync fallback to local cache:', e);
+                }
+            }
+
+            loadFromLocalFallback();
+            showToast('✅ 已載入本機快取');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast-badge');
+            const text = document.getElementById('toast-text');
+            if (!toast || !text) return;
+
+            text.textContent = msg;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+
+        function closeConfirmModal() {
+            currentConfirmAction = null;
+            document.getElementById('confirm-modal')?.classList.add('hidden');
+        }
+
+        document.getElementById('confirm-modal-ok-btn')?.addEventListener('click', () => {
+            if (currentConfirmAction) currentConfirmAction();
+        });
+
+        function filterHealthFoodCards() {
+            const query = (document.getElementById('food-search-input')?.value || '').trim().toLowerCase();
+            const cards = document.querySelectorAll('#health-food-cards .food-card');
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(query) ? 'flex' : 'none';
+            });
+        }
+
+        function quickFilterRecordCategory(cat) {
+            const deptSelect = document.getElementById('filter-dept-select');
+            if (deptSelect) {
+                if (cat === 'all') deptSelect.value = '';
+                else deptSelect.value = cat;
+            }
+            renderRecords();
+        }
+
+        // --- 圖片處理共用函式 ---
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        async function resizeImageBase64(file, maxDim = 800) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        let w = img.width;
+                        let h = img.height;
+                        if (w > maxDim || h > maxDim) {
+                            if (w > h) {
+                                h = Math.round(h * (maxDim / w));
+                                w = maxDim;
+                            } else {
+                                w = Math.round(w * (maxDim / h));
+                                h = maxDim;
+                            }
+                        }
+                        const canvas = document.createElement('canvas');
+                        canvas.width = w;
+                        canvas.height = h;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, w, h);
+                        // 壓縮為 jpeg 格式，品質 0.7
+                        resolve(canvas.toDataURL('image/jpeg', 0.7));
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // --- 注意事項功能邏輯 ---
+        async function handleNoteImageSelect(event) {
+            const files = Array.from(event.target.files || []);
+            showToast('📷 圖片處理中，請稍候...');
+            for (const file of files) {
+                if (pendingNoteImages.length >= 6) {
+                    showToast('最多上傳 6 張照片');
+                    break;
+                }
+                const b64 = await resizeImageBase64(file);
+                pendingNoteImages.push(b64);
+            }
+            event.target.value = '';
+            renderNoteImagePreview();
+            showToast('✅ 圖片已加入暫存');
+        }
+
+        function renderNoteImagePreview() {
+            const container = document.getElementById('note-images-preview');
+            if (!container) return;
+            container.innerHTML = pendingNoteImages.map((src, i) => `
+                <div class="relative w-20 h-20 rounded-xl overflow-hidden border border-slate-600 shadow-sm">
+                    <img src="${src}" class="w-full h-full object-cover">
+                    <button onclick="removePendingNoteImage(${i})" class="absolute top-1 right-1 bg-black/70 hover:bg-rose-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold transition">&times;</button>
+                </div>
+            `).join('');
+        }
+
+        window.removePendingNoteImage = (idx) => {
+            pendingNoteImages.splice(idx, 1);
+            renderNoteImagePreview();
+        };
+
+        async function addNote() {
+            const title = document.getElementById('note-title')?.value?.trim();
+            const content = document.getElementById('note-content')?.value?.trim();
+
+            if (!title) {
+                showToast('⚠️ 請填寫標題！');
+                return;
+            }
+
+            const newNote = {
+                id: 'n_' + Date.now(),
+                title,
+                content: content || '',
+                images: [...pendingNoteImages],
+                createdAt: new Date().toISOString()
+            };
+
+            notes.unshift(newNote);
+            saveToLocal();
+            renderNotes();
+            
+            document.getElementById('note-title').value = '';
+            document.getElementById('note-content').value = '';
+            pendingNoteImages = [];
+            renderNoteImagePreview();
+            showToast('✅ 注意事項已成功儲存！');
+
+            if (isCloudActive && db && currentUser) {
+                try {
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'care_notes', newNote.id), sanitizeData(newNote));
+                } catch(e) {
+                    console.error('Cloud add note error', e);
+                }
+            }
+        }
+
+        function renderNotes() {
+            const list = document.getElementById('notes-list');
+            if (!list) return;
+
+            if (notes.length === 0) {
+                list.innerHTML = `<div class="col-span-full p-10 text-center text-slate-400 font-bold bg-slate-800/40 rounded-2xl border border-slate-700">目前沒有注意事項，點擊上方新增</div>`;
+                return;
+            }
+
+            list.innerHTML = notes.map(n => `
+                <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 shadow-md flex flex-col h-full hover:border-emerald-600/50 transition">
+                    <div class="flex items-start justify-between gap-3 mb-3 pb-3 border-b border-slate-700/60">
+                        <h4 class="text-lg font-black text-emerald-300 flex-1 leading-snug">${escapeHtml(n.title)}</h4>
+                        <button onclick="promptDeleteNote('${n.id}')" class="text-rose-400 hover:text-rose-300 bg-rose-950/50 p-1.5 rounded-lg border border-rose-900 transition shrink-0" title="刪除">🗑️</button>
+                    </div>
+                    ${n.content ? `<p class="text-sm text-slate-300 whitespace-pre-wrap leading-relaxed mb-4 flex-1">${escapeHtml(n.content)}</p>` : '<div class="flex-1"></div>'}
+                    
+                    ${n.images && n.images.length > 0 ? `
+                        <div class="flex flex-wrap gap-2 mt-auto pt-3 border-t border-slate-700">
+                            ${n.images.map(img => `
+                                <img src="${img}" onclick="openLightbox('${img}')" class="w-16 h-16 object-cover rounded-lg border border-slate-600 cursor-pointer hover:opacity-80 transition shadow-sm">
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        function promptDeleteNote(id) {
+            currentConfirmAction = async () => {
+                notes = notes.filter(n => String(n.id) !== String(id));
+                saveToLocal();
+                renderNotes();
+                closeConfirmModal();
+                showToast('🗑️ 注意事項已刪除');
+
+                if (isCloudActive && db && currentUser) {
+                    try {
+                        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'care_notes', String(id)));
+                    } catch(e) {
+                        console.error('Delete note cloud error', e);
+                    }
+                }
+            }
+            
+            const titleEl = document.getElementById('confirm-modal-title');
+            const descEl = document.getElementById('confirm-modal-desc');
+            if(titleEl) titleEl.textContent = '確認刪除此注意事項？';
+            if(descEl) descEl.textContent = '刪除後將無法復原。';
+            document.getElementById('confirm-modal')?.classList.remove('hidden');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox-modal')?.classList.add('hidden');
+        }
+
+        // 全域綁定供 HTML 內建 onclick/oninput 呼叫
+        window.switchTab = switchTab;
+        window.toggleTheme = toggleTheme;
+        window.forceSyncLatest = forceSyncLatest;
+        window.copyShareableSyncLink = copyShareableSyncLink;
+        window.renderRecords = renderRecords;
+        window.addRecord = addRecord;
+        window.openEditRecordModal = openEditRecordModal;
+        window.closeEditRecordModal = closeEditRecordModal;
+        window.saveEditRecordModal = saveEditRecordModal;
+        window.promptDeleteRecord = promptDeleteRecord;
+        window.copyLineReport = copyLineReport;
+        window.copyHospitalListForLine = copyHospitalListForLine;
+        window.switchHospitalView = switchHospitalView;
+        window.changeCalMonth = changeCalMonth;
+        window.jumpCalMonth = jumpCalMonth;
+        window.filterHospitalStays = filterHospitalStays;
+        window.openAddHospitalModal = openAddHospitalModal;
+        window.quickAddHospitalDay = quickAddHospitalDay;
+        window.openEditHospitalModal = openEditHospitalModal;
+        window.closeHospitalModal = closeHospitalModal;
+        window.saveHospitalStayModal = saveHospitalStayModal;
+        window.onDeleteHospitalStayFromModal = onDeleteHospitalStayFromModal;
+        window.promptDeleteHospitalStay = promptDeleteHospitalStay;
+        window.openDatePickerModal = openDatePickerModal;
+        window.closeDatePickerModal = closeDatePickerModal;
+        window.changePickerMonth = changePickerMonth;
+        window.onPickerSelectChange = onPickerSelectChange;
+        window.confirmDateFromPicker = confirmDateFromPicker;
+        window.selectQuickDay = selectQuickDay;
+        window.restoreRecord = restoreRecord;
+        window.promptPermanentDelete = promptPermanentDelete;
+        window.clearAllHistoryModal = clearAllHistoryModal;
+        window.closeConfirmModal = closeConfirmModal;
+        window.filterHealthFoodCards = filterHealthFoodCards;
+        window.quickFilterRecordCategory = quickFilterRecordCategory;
+        window.handleNoteImageSelect = handleNoteImageSelect;
+        window.addNote = addNote;
+        window.renderNotes = renderNotes;
+        window.promptDeleteNote = promptDeleteNote;
+        window.openLightbox = (src) => {
+            const img = document.getElementById('lightbox-img');
+            if (img) img.src = src;
+            document.getElementById('lightbox-modal')?.classList.remove('hidden');
+        };
+        window.closeLightbox = closeLightbox;
+
+        // 頁面啟動初始化
+        window.addEventListener('DOMContentLoaded', () => {
+            const dateInput = document.getElementById('record-date');
+            if (dateInput) dateInput.value = new Date().toISOString().split('T')[0];
+
+            loadFromLocalFallback();
+            initCloudSync();
+
+            const hash = window.location.hash.replace('#', '');
+            if (hash && ['records', 'hospital', 'notes', 'health_food', 'diet', 'sop', 'history'].includes(hash)) {
+                switchTab(hash);
+            }
+        });
+    </script>
+</body>
+</html>
