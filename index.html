@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>媽媽專屬護理與回診紀錄中心</title>
+    <title>媽媽專屬紀錄中心</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -71,9 +71,9 @@
                 <div>
                     <div class="flex items-center gap-2.5 flex-wrap">
                         <span class="text-2xl sm:text-3xl">🌟</span>
-                        <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-wide">媽媽專屬護理與回診紀錄中心</h1>
+                        <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-wide">媽媽專屬紀錄中心</h1>
                     </div>
-                    <p class="mt-1.5 text-sm sm:text-base text-emerald-200/90 font-medium">全方位病程追蹤・38天住院排班・抗癌營養金庫・多方即時雲端同步</p>
+                    <p class="mt-1.5 text-sm sm:text-base text-emerald-200/90 font-medium">各項病程追蹤，紀錄方便掌握即時資訊</p>
                 </div>
 
                 <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
@@ -173,11 +173,11 @@
                             <label class="block text-xs text-slate-300 font-bold mb-1.5">陪診人</label>
                             <select id="record-companion" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium focus:ring-2 focus:ring-emerald-500 outline-none">
                                 <option value="映">映</option>
-                                <option value="潔">潔 (ruby)</option>
+                                <option value="潔">潔</option>
                                 <option value="樺">樺</option>
                                 <option value="待定">待定 (協調中)</option>
-                                <option value="全家">全家</option>
-                            </select>
+                                                            
+                        </select>
                         </div>
 
                         <div>
@@ -222,7 +222,7 @@
                         <select id="filter-companion-select" onchange="renderRecords()" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl text-sm text-slate-200 outline-none">
                             <option value="">全部陪同人</option>
                             <option value="映">映</option>
-                            <option value="潔">潔 (ruby)</option>
+                            <option value="潔">潔</option>
                             <option value="樺">樺</option>
                             <option value="待定">待定 (協調中)</option>
                         </select>
