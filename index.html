@@ -178,6 +178,20 @@
         <main class="p-4 sm:p-8 min-h-[600px]">
 
             <section id="content-records" class="block animate-fade-in">
+                <!-- 每日吃藥與用藥溫馨提醒橫幅 -->
+                <div class="bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-amber-500/15 border border-amber-300 p-4 sm:p-5 rounded-3xl mb-7 shadow-sm flex items-center gap-3.5">
+                    <span class="text-3xl animate-bounce">💊</span>
+                    <div>
+                        <h4 class="text-base sm:text-lg font-black text-amber-800 tracking-wide font-serif-tc">每日吃藥與用藥溫馨提醒</h4>
+                        <p class="text-xs sm:text-sm text-amber-900/90 font-bold mt-0.5 leading-relaxed">
+                            • 早起空腹：血壓藥（請依照當天量測血壓判定是否服用）及胃食道逆流藥<br>
+                            • 隱球菌口服抗生素：每 12 小時準時服藥（請持續至 2 月評估）<br>
+                            • 類固醇：早、晚各一顆，可與抗生素一起服用<br>
+                            • 皮膚科外用藥膏：每日 3~4 次，<span class="text-rose-600 underline">先擦保濕乳液打底，嚴格靜待 5 分鐘後</span>再薄塗專用藥膏
+                        </p>
+                    </div>
+                </div>
+
                 <div class="bg-white/90 p-5 sm:p-7 rounded-3xl mb-7 border border-amber-200 shadow-lg">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="font-black text-amber-700 text-lg sm:text-xl flex items-center gap-2">
@@ -373,7 +387,6 @@
             </section>
 
             <section id="content-notes" class="hidden animate-fade-in">
-                <!-- 注意事項頂部全局大圖區塊 -->
                 <div class="bg-white/90 p-5 sm:p-7 rounded-3xl mb-7 border border-amber-200 shadow-md">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-lg sm:text-xl font-black text-amber-700 border-l-4 border-amber-500 pl-3 font-serif-tc">總覽首圖 / 照護指南</h2>
@@ -592,7 +605,7 @@
                                     <p>• 添入 <span class="text-amber-700 font-bold">卵磷脂粉 ＋ 優質蛋白質粉</span></p>
                                     <p>• 起杯前滴入數滴 <span class="text-amber-700 font-bold">冷壓初榨橄欖油</span></p>
                                 </div>
-                                <p class="text-xs text-amber-800 pt-1">全液態溫順好吞嚥，補充足量卵磷脂與健康脂肪酸，養護黏膜上皮細胞。</p>
+                                <p class="text-xs text-amber-800 pt-1">全液態溫順好吞嚥,補充足量卵磷脂與健康脂肪酸,養護黏膜上皮細胞。</p>
                             </div>
                         </div>
                     </div>
@@ -1022,8 +1035,8 @@
             { id: 'r_20260625', date: '2026-06-25', dept: '放射科', category: '放射治療', companion: '映', title: '8:00 放射23 + 回診', detail: '放射治療第 23 次與回診。' },
             { id: 'r_20260626', date: '2026-06-26', dept: '放射科', category: '放射治療', companion: '樺', title: '8:00 放射24', detail: '放射治療第 24 次。' },
             { id: 'r_20260629', date: '2026-06-29', dept: '放射科', category: '放射治療', companion: '潔', title: '8:00 放射25', detail: '放射治療第 25 次。' },
-            { id: 'r_20260708', date: '2026-07-08', dept: '心臟科', category: '專科門診', companion: '映', title: '心臟科現場掛號 + 免疫#24 + 回診', detail: '心臟科現場掛號(6:30抽號碼牌7:30掛號)+回診+免疫#24(療程結束，要申請新的)+回診。' },
-            { id: 'r_20260711', date: '2026-07-11', dept: '皮膚科', category: '專科門診', companion: '待定', title: '上午皮膚科現場掛號 + 看診-陳奕先', detail: '颱風天候狀況留意。' },
+            { id: 'r_20260708', date: '2026-07-08', dept: '心臟科', category: '免疫治療', companion: '映', title: '心臟科現場掛號 + 免疫#24 + 回診', detail: '心臟科現場掛號(6:30抽號碼牌7:30掛號)+回診+免疫#24(療程結束，要申請新的)+回診。' },
+            { id: 'r_20260711', date: '2026-07-11', dept: '皮膚科', category: '專科門診', companion: '待定', title: '上午皮膚科現場掛號 + 看診-陳奕先 (颱風)', detail: '颱風天候狀況留意。' },
             { id: 'r_20260718', date: '2026-07-18', dept: '皮膚科', category: '專科門診', companion: '待定', title: '上午皮膚科現場掛號 + 看診-洪誌聰', detail: '皮膚科洪誌聰醫師門診。' },
             { id: 'r_20260720', date: '2026-07-20', dept: '放射科', category: '重大檢查', companion: '潔', title: '下午 3:30 肺部斷層', detail: '下午 3:30 肺部電腦斷層造影檢查。' },
             { id: 'r_20260729', date: '2026-07-29', dept: '腫瘤科', category: '專科門診', companion: '潔', title: '血液腫瘤科回診 + 肺部斷層報告 + 心臟科回診', detail: '血液腫瘤科回診+看肺部斷層報告+心臟科回診(已掛149號(有心臟科加號單)。' },
@@ -1665,7 +1678,22 @@
             const compFilter = document.getElementById('filter-companion-select')?.value || '';
             
             let filtered = records.filter(r => {
-                if (currentRecordCategoryFilter !== 'all' && r.category !== currentRecordCategoryFilter) return false;
+                if (currentRecordCategoryFilter !== 'all') {
+                    const t = (r.title || '').toLowerCase();
+                    const d = (r.detail || '').toLowerCase();
+                    const cat = (r.category || '').toLowerCase();
+                    const dept = (r.dept || '').toLowerCase();
+                    
+                    if (currentRecordCategoryFilter === '放射治療') {
+                        if (!t.includes('放射') && !d.includes('放射') && !cat.includes('放射') && !dept.includes('放射')) return false;
+                    } else if (currentRecordCategoryFilter === '免疫治療') {
+                        if (!t.includes('免疫') && !d.includes('免疫') && !cat.includes('免疫') && !dept.includes('免疫')) return false;
+                    } else if (currentRecordCategoryFilter === '重大檢查') {
+                        if (r.category !== '重大檢查' && !t.includes('斷層') && !t.includes('造影') && !t.includes('磁振') && !t.includes('掃描') && !t.includes('檢查')) return false;
+                    } else if (currentRecordCategoryFilter === '專科門診') {
+                        if (r.category !== '專科門診' && !t.includes('回診') && !t.includes('門診') && !t.includes('牙醫')) return false;
+                    }
+                }
                 if (deptFilter && r.dept !== deptFilter && r.category !== deptFilter) return false;
                 if (compFilter && r.companion !== compFilter) return false;
                 if (searchKey) {
