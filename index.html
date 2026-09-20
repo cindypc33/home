@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoM專屬紀錄中心</title>
+    <title>MoM專屬</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -118,7 +118,7 @@
                 <div>
                     <div class="flex items-center gap-3">
                         <span class="text-3xl filter drop-shadow-sm animate-bounce">☀️</span>
-                        <h1 class="text-2xl sm:text-3xl font-black text-amber-700 tracking-wide font-serif-tc">MoM專屬紀錄中心</h1>
+                        <h1 class="text-2xl sm:text-3xl font-black text-amber-700 tracking-wide font-serif-tc">MoM專屬</h1>
                     </div>
                     <p class="mt-2 text-sm text-amber-800 font-bold tracking-wide">陽光、溫暖、充滿希望 🌻 陪媽媽每一天，傳遞平安喜樂</p>
                 </div>
@@ -1077,7 +1077,7 @@
             { id: 'r_20260626', date: '2026-06-26', dept: ['放射科'], category: ['放射治療'], companion: '樺', title: '8:00 放射24', detail: '放射治療第 24 次。' },
             { id: 'r_20260629', date: '2026-06-29', dept: ['放射科'], category: ['放射治療'], companion: '潔', title: '8:00 放射25', detail: '放射治療第 25 次。' },
             { id: 'r_20260708', date: '2026-07-08', dept: ['心臟科', '腫瘤科'], category: ['專科門診', '免疫治療'], companion: '映', title: '心臟科現場掛號 + 免疫#24 + 回診', detail: '心臟科現場掛號(6:30抽號碼牌7:30掛號)+回診+免疫#24(療程結束，要申請新的)+回診。' },
-            { id: 'r_20260711', date: '2026-07-11', dept: ['皮膚科'], category: ['專科門診'], companion: '待定', title: '上午皮膚科現場掛號 + 看診-陳怡穎 (颱風)', detail: '颱風天候狀況留意。' },
+            { id: 'r_20260711', date: '2026-07-11', dept: ['皮膚科'], category: ['專科門診'], companion: '待定', title: '上午皮膚科現場掛號 + 看診-陳奕先 (颱風)', detail: '颱風天候狀況留意。' },
             { id: 'r_20260718', date: '2026-07-18', dept: ['皮膚科'], category: ['專科門診'], companion: '待定', title: '上午皮膚科現場掛號 + 看診-洪誌聰', detail: '皮膚科洪誌聰醫師門診。' },
             { id: 'r_20260720', date: '2026-07-20', dept: ['放射科'], category: ['重大檢查'], companion: '潔', title: '下午 3:30 肺部斷層', detail: '下午 3:30 肺部電腦斷層造影檢查。' },
             { id: 'r_20260729', date: '2026-07-29', dept: ['腫瘤科', '心臟科'], category: ['專科門診', '重大檢查'], companion: '潔', title: '血液腫瘤科回診 + 看肺部斷層報告 + 心臟科回診', detail: '血液腫瘤科回診+看肺部斷層報告+心臟科回診(已掛149號(有心臟科加號單)。' },
@@ -1712,6 +1712,14 @@
             }
         }
 
+        function getWeekdayText(dateStr) {
+            if (!dateStr) return '';
+            const weekdays = ['週日', '週一', '週二', '週三', '週四', '週五', '週六'];
+            const d = new Date(dateStr.replace(/-/g, '/'));
+            if (isNaN(d.getTime())) return '';
+            return weekdays[d.getDay()] || '';
+        }
+
         function updateDashboardStats() {
             const totalRecEl = document.getElementById('stat-total-records');
             const totalStaysEl = document.getElementById('stat-total-stays');
@@ -1746,8 +1754,9 @@
                         dArr.forEach(d => { if (d && !allDepts.includes(d)) allDepts.push(d); });
                     });
                     const deptsStr = allDepts.join('、');
+                    const wDay = getWeekdayText(targetDateStr);
 
-                    latestDateEl.innerHTML = `${targetDateStr} ${deptsStr}`;
+                    latestDateEl.innerHTML = `${targetDateStr} (${wDay}) ${deptsStr}`;
                     latestDateEl.className = `text-xs sm:text-sm font-bold text-amber-900 mt-1 block whitespace-normal break-words leading-tight`;
                 } else {
                     latestDateEl.textContent = "--";
@@ -1816,6 +1825,7 @@
             listEl.innerHTML = filtered.map(r => {
                 const rDepts = Array.isArray(r.dept) ? r.dept : [r.dept];
                 const rCats = Array.isArray(r.category) ? r.category : [r.category];
+                const wDay = getWeekdayText(r.date);
                 
                 const deptBadges = rDepts.map(dep => {
                     let deptColor = 'bg-amber-100 text-amber-900 border border-amber-300';
@@ -1835,7 +1845,7 @@
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-amber-100">
                             <div class="flex items-center gap-2 flex-wrap">
                                 ${deptBadges}
-                                <span class="text-sm sm:text-base font-bold text-amber-900">🗓️ ${r.date}</span>
+                                <span class="text-sm sm:text-base font-bold text-amber-900">🗓️ ${r.date} (${wDay})</span>
                                 <span class="px-3 py-1 rounded-xl text-xs font-bold border bg-amber-50 text-amber-900 border-amber-300">👥 陪同：${r.companion || '未定'}</span>
                                 ${catBadges}
                             </div>
@@ -2254,7 +2264,8 @@
             if (!rec) return;
             const rDepts = Array.isArray(rec.dept) ? rec.dept.join('、') : rec.dept;
             const rCats = Array.isArray(rec.category) ? rec.category.join('、') : rec.category;
-            copyTextToClipboard(`【MoM護理與就醫回報】\n🗓️ 日期：${rec.date}\n🏥 科別：${rDepts}\n🏷️ 分類：${rCats}\n👥 陪診人：${rec.companion}\n📌 重點：${rec.title}\n📋 醫囑：\n${rec.detail || '無'}`);
+            const wDay = getWeekdayText(rec.date);
+            copyTextToClipboard(`【MoM護理與就醫回報】\n🗓️ 日期：${rec.date} (${wDay})\n🏥 科別：${rDepts}\n🏷️ 分類：${rCats}\n👥 陪診人：${rec.companion}\n📌 重點：${rec.title}\n📋 醫囑：\n${rec.detail || '無'}`);
             showToast('💬 已複製 LINE 格式摘要！');
         }
         
@@ -2278,10 +2289,11 @@
             if (deletedRecords.length === 0) { listEl.innerHTML = `<div class="p-10 text-center text-amber-800 font-bold bg-white/80 rounded-3xl border border-amber-200">回收桶目前沒有紀錄</div>`; return; }
             listEl.innerHTML = deletedRecords.map(r => {
                 const rDepts = Array.isArray(r.dept) ? r.dept.join('、') : (r.dept || '');
+                const wDay = getWeekdayText(r.date);
                 return `
                 <div class="bg-white p-5 rounded-3xl border border-amber-200 flex items-center justify-between gap-3 shadow-sm">
                     <div>
-                        <div class="flex items-center gap-2 text-xs text-amber-700 font-bold"><span>${rDepts}</span><span>${r.date}</span></div>
+                        <div class="flex items-center gap-2 text-xs text-amber-700 font-bold"><span>${rDepts}</span><span>${r.date} (${wDay})</span></div>
                         <h4 class="text-base font-black text-amber-950 mt-1">${r.title}</h4>
                     </div>
                     <div class="flex gap-2">
