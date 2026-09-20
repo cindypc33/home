@@ -1582,10 +1582,55 @@
 
             if (totalRecEl) totalRecEl.textContent = `${records.length} 筆`;
             if (totalStaysEl) totalStaysEl.textContent = `${hospitalStays.length} 天`;
+            
+            // --- 更新「最近就診/檢查預約」的邏輯 ---
             if (latestDateEl && records.length > 0) {
-                const sorted = [...records].sort((a, b) => b.date.localeCompare(a.date));
-                latestDateEl.textContent = sorted[0].date;
+                const today = new Date();
+                const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+                
+                // 將紀錄分為「未來(含今天)」與「過去」
+                const upcoming = records.filter(r => r.date >= todayStr).sort((a, b) => a.date.localeCompare(b.date)); 
+                const past = records.filter(r => r.date < todayStr).sort((a, b) => b.date.localeCompare(a.date));     
+                
+                let targetDateStr = null;
+                let statusLabel = "";
+                let statusClass = "";
+                let targetRecords = [];
+
+                if (upcoming.length > 0) {
+                    // 取未來最靠近的「日期字串」
+                    targetDateStr = upcoming[0].date;
+                    statusLabel = "(預約)";
+                    statusClass = "text-amber-300";
+                    // 把同一天的所有紀錄都抓出來
+                    targetRecords = upcoming.filter(r => r.date === targetDateStr);
+                } else if (past.length > 0) {
+                    // 取過去最靠近的「日期字串」
+                    targetDateStr = past[0].date;
+                    statusLabel = "(最近)";
+                    statusClass = "text-slate-300";
+                    // 把同一天的所有紀錄都抓出來
+                    targetRecords = past.filter(r => r.date === targetDateStr);
+                }
+
+                if (targetDateStr && targetRecords.length > 0) {
+                    // 收集所有當天科別，並使用 Set 排除重複的科別，最後用「、」串接
+                    const depts = [...new Set(targetRecords.map(r => r.dept))];
+                    const deptsStr = depts.join('、');
+
+                    latestDateEl.innerHTML = `
+                        <span class="block">${targetDateStr} ${statusLabel}</span>
+                        <span class="block text-[11px] font-medium text-slate-400 mt-0.5 whitespace-nowrap overflow-hidden text-ellipsis" title="${deptsStr}">
+                            ${deptsStr}
+                        </span>
+                    `;
+                    latestDateEl.className = `text-xs sm:text-sm font-bold ${statusClass} mt-1 block leading-tight`;
+                }
+            } else if (latestDateEl) {
+                latestDateEl.textContent = "--";
             }
+            // ----------------------------------------
+
             if (companionSumEl) {
                 let ying = 0, hua = 0, jie = 0;
                 hospitalStays.forEach(s => {
@@ -1596,7 +1641,6 @@
                 companionSumEl.textContent = `映: ${ying} / 樺: ${hua} / 潔: ${jie}`;
             }
         }
-
         function renderRecords() {
             const listEl = document.getElementById('records-list');
             if (!listEl) return;
