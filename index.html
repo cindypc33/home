@@ -118,7 +118,7 @@
                 <div>
                     <div class="flex items-center gap-3">
                         <span class="text-3xl filter drop-shadow-sm animate-bounce">☀️</span>
-                        <h1 class="text-2xl sm:text-3xl font-black text-amber-700 tracking-wide font-serif-tc">MOM專屬天地</h1>
+                        <h1 class="text-2xl sm:text-3xl font-black text-amber-700 tracking-wide font-serif-tc">媽媽回診紀錄中心</h1>
                     </div>
                     <p class="mt-2 text-sm text-amber-800 font-bold tracking-wide">陽光、溫暖、充滿希望 🌻 陪媽媽每一天，傳遞平安喜樂</p>
                 </div>
@@ -257,8 +257,6 @@
                             <option value="腫瘤科">腫瘤科</option>
                             <option value="放射科">放射科</option>
                             <option value="感染科">感染科</option>
-                            <option value="牙科">牙科</option>
-                            <option value="專科聯合">專科聯合</option>
                             <option value="心臟科">心臟科</option>
                             <option value="皮膚科">皮膚科</option>
                             <option value="營養照護">營養照護</option>
@@ -268,6 +266,7 @@
                             <option value="映">映</option>
                             <option value="潔">潔</option>
                             <option value="樺">樺</option>
+                            <option value="娟">娟</option>
                             <option value="待定">待定 (協調中)</option>
                         </select>
                     </div>
@@ -305,6 +304,7 @@
                             <option value="映">映 陪同</option>
                             <option value="樺">樺 陪同</option>
                             <option value="潔">潔 陪同</option>
+                            <option value="娟">娟 陪同</option>
                         </select>
                     </div>
 
@@ -322,14 +322,15 @@
                     <div class="bg-white/90 p-4 rounded-3xl border border-amber-200 mb-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm">
                         <div class="flex items-center gap-3">
                             <button onclick="changeCalMonth(-1)" class="p-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-xl transition font-bold px-3">◀ 上個月</button>
-                            <h2 id="calendar-current-month-label" class="text-xl font-black text-amber-700 min-w-[140px] text-center font-serif-tc">2026 年 8 月</h2>
+                            <h2 id="calendar-current-month-label" class="text-xl font-black text-amber-700 min-w-[140px] text-center font-serif-tc">2026 年 5 月</h2>
                             <button onclick="changeCalMonth(1)" class="p-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-xl transition font-bold px-3">下個月 ▶</button>
                         </div>
                         <div class="flex items-center gap-2 flex-wrap">
                             <span class="text-xs text-amber-800 font-bold">快速跳轉：</span>
-                            <button onclick="jumpCalMonth(2026, 4)" class="px-3 py-1 bg-white hover:bg-amber-50 text-amber-900 text-xs font-bold rounded-lg transition border border-amber-300">2026/04</button>
-                            <button onclick="jumpCalMonth(2026, 5)" class="px-3 py-1 bg-white hover:bg-amber-50 text-amber-900 text-xs font-bold rounded-lg transition border border-amber-300">2026/05</button>
-                            <button onclick="jumpCalMonth(2026, 8)" class="px-3 py-1 bg-amber-600 text-white text-xs font-bold rounded-lg transition shadow-sm">2026/08</button>
+                            <button onclick="jumpCalMonth(2026, 5)" class="px-3 py-1 bg-amber-600 text-white text-xs font-bold rounded-lg transition shadow-sm">2026/05</button>
+                            <button onclick="jumpCalMonth(2026, 6)" class="px-3 py-1 bg-white hover:bg-amber-50 text-amber-900 text-xs font-bold rounded-lg transition border border-amber-300">2026/06</button>
+                            <button onclick="jumpCalMonth(2026, 7)" class="px-3 py-1 bg-white hover:bg-amber-50 text-amber-900 text-xs font-bold rounded-lg transition border border-amber-300">2026/07</button>
+                            <button onclick="jumpCalMonth(2026, 8)" class="px-3 py-1 bg-white hover:bg-amber-50 text-amber-900 text-xs font-bold rounded-lg transition border border-amber-300">2026/08</button>
                         </div>
                     </div>
 
@@ -776,6 +777,7 @@
                         <option value="映">映</option>
                         <option value="樺">樺</option>
                         <option value="潔">潔 (ruby)</option>
+                        <option value="娟">娟</option>
                         <option value="全家">全家</option>
                         <option value="待定">待定 (協調中)</option>
                     </select>
@@ -842,7 +844,7 @@
                             <option value="映">映</option>
                             <option value="潔">潔 (ruby)</option>
                             <option value="樺">樺</option>
-                             <option value="娟">娟</option>
+                            <option value="娟">娟</option>
                             <option value="待定">待定 (協調中)</option>
                             <option value="全家">全家</option>
                         </select>
@@ -991,6 +993,40 @@
         ];
 
         const SEED_RECORDS = [
+            { id: 'r_20260512', date: '2026-05-12', dept: '腫瘤科', category: '專科門診', companion: '娟', title: '媽媽出院回診-陳醫生', detail: '媽媽出院回診與陳醫師評估。' },
+            { id: 'r_20260513', date: '2026-05-13', dept: '放射科', category: '重大檢查', companion: '樺', title: '骨骼腫瘤+發炎造影檢查 (全身骨頭掃描)', detail: '9:00整天 全身骨頭掃描。正常吃，晚上12:00過後空腹。' },
+            { id: 'r_20260514', date: '2026-05-14', dept: '放射科', category: '重大檢查', companion: '潔', title: '9:30 放射定位', detail: '放射治療前置模擬定位。' },
+            { id: 'r_20260522', date: '2026-05-22', dept: '放射科', category: '放射治療', companion: '樺', title: '8:30 放射拍片確認', detail: '放射拍片確認。' },
+            { id: 'r_20260525', date: '2026-05-25', dept: '放射科', category: '放射治療', companion: '潔', title: '8:30 放射1', detail: '放射治療第 1 次。' },
+            { id: 'r_20260526', date: '2026-05-26', dept: '放射科', category: '放射治療', companion: '樺', title: '8:30 放射2', detail: '放射治療第 2 次。' },
+            { id: 'r_20260527', date: '2026-05-27', dept: '腫瘤科', category: '免疫治療', companion: '映', title: '8:30 放射3 + 免疫#21 + 回診', detail: '放射治療第 3 次、免疫治療第 21 次與門診回診。' },
+            { id: 'r_20260528', date: '2026-05-28', dept: '放射科', category: '放射治療', companion: '樺', title: '8:30 放射4 + 放射回診', detail: '放射治療第 4 次與放射科回診。' },
+            { id: 'r_20260529', date: '2026-05-29', dept: '放射科', category: '放射治療', companion: '映', title: '8:30 放射5', detail: '放射治療第 5 次。' },
+            { id: 'r_20260601', date: '2026-06-01', dept: '放射科', category: '放射治療', companion: '潔', title: '8:30 放射6', detail: '放射治療第 6 次。' },
+            { id: 'r_20260602', date: '2026-06-02', dept: '放射科', category: '放射治療', companion: '映', title: '8:30 放射7', detail: '放射治療第 7 次。' },
+            { id: 'r_20260603', date: '2026-06-03', dept: '放射科', category: '放射治療', companion: '潔', title: '8:30 放射8', detail: '放射治療第 8 次。' },
+            { id: 'r_20260604', date: '2026-06-04', dept: '放射科', category: '放射治療', companion: '潔', title: '8:30 放射9 + 回診 (請黃醫師開抽血單)', detail: '放射治療第 9 次與回診，請黃醫師開立抽血單。' },
+            { id: 'r_20260605', date: '2026-06-05', dept: '放射科', category: '放射治療', companion: '映', title: '8:30 放射10', detail: '放射治療第 10 次。' },
+            { id: 'r_20260608', date: '2026-06-08', dept: '放射科', category: '放射治療', companion: '潔', title: '8:00 放射11', detail: '放射治療第 11 次。' },
+            { id: 'r_20260609', date: '2026-06-09', dept: '放射科', category: '放射治療', companion: '樺', title: '8:00 放射12', detail: '放射治療第 12 次。' },
+            { id: 'r_20260610', date: '2026-06-10', dept: '腫瘤科', category: '免疫治療', companion: '潔', title: '8:00 放射13 + 免疫#22 + 回診', detail: '放射治療第 13 次、免疫治療第 22 次與回診。' },
+            { id: 'r_20260611', date: '2026-06-11', dept: '放射科', category: '放射治療', companion: '樺', title: '8:00 放射14 + 回診', detail: '放射治療第 14 次與回診。' },
+            { id: 'r_20260612', date: '2026-06-12', dept: '放射科', category: '放射治療', companion: '映', title: '8:00 放射15', detail: '放射治療第 15 次。' },
+            { id: 'r_20260615', date: '2026-06-15', dept: '放射科', category: '放射治療', companion: '潔', title: '8:00 放射16', detail: '放射治療第 16 次。' },
+            { id: 'r_20260616', date: '2026-06-16', dept: '放射科', category: '放射治療', companion: '樺', title: '8:00 放射17', detail: '放射治療第 17 次。' },
+            { id: 'r_20260617', date: '2026-06-17', dept: '放射科', category: '放射治療', companion: '潔', title: '8:00 放射18', detail: '放射治療第 18 次。' },
+            { id: 'r_20260618', date: '2026-06-18', dept: '放射科', category: '放射治療', companion: '潔', title: '8:00 放射19 + 回診', detail: '放射治療第 19 次與回診。' },
+            { id: 'r_20260622', date: '2026-06-22', dept: '放射科', category: '放射治療', companion: '潔', title: '8:00 放射20', detail: '放射治療第 20 次。' },
+            { id: 'r_20260623', date: '2026-06-23', dept: '放射科', category: '放射治療', companion: '映', title: '8:00 放射21', detail: '放射治療第 21 次。' },
+            { id: 'r_20260624', date: '2026-06-24', dept: '專科聯合', category: '免疫治療', companion: '樺', title: '8:00 放射22 + 9:00 腰椎磁振 + 免疫#23 + 回診 + 皮膚科回診', detail: '放射22 + 9:00 腰椎磁振+免疫#23+回診+皮膚科回診。' },
+            { id: 'r_20260625', date: '2026-06-25', dept: '放射科', category: '放射治療', companion: '映', title: '8:00 放射23 + 回診', detail: '放射治療第 23 次與回診。' },
+            { id: 'r_20260626', date: '2026-06-26', dept: '放射科', category: '放射治療', companion: '樺', title: '8:00 放射24', detail: '放射治療第 24 次。' },
+            { id: 'r_20260629', date: '2026-06-29', dept: '放射科', category: '放射治療', companion: '潔', title: '8:00 放射25', detail: '放射治療第 25 次。' },
+            { id: 'r_20260708', date: '2026-07-08', dept: '心臟科', category: '專科門診', companion: '映', title: '心臟科現場掛號 + 免疫#24 + 回診', detail: '心臟科現場掛號(6:30抽號碼牌7:30掛號)+回診+免疫#24(療程結束，要申請新的)+回診。' },
+            { id: 'r_20260711', date: '2026-07-11', dept: '皮膚科', category: '專科門診', companion: '待定', title: '上午皮膚科現場掛號 + 看診-陳奕先', detail: '颱風天候狀況留意。' },
+            { id: 'r_20260718', date: '2026-07-18', dept: '皮膚科', category: '專科門診', companion: '待定', title: '上午皮膚科現場掛號 + 看診-洪誌聰', detail: '皮膚科洪誌聰醫師門診。' },
+            { id: 'r_20260720', date: '2026-07-20', dept: '放射科', category: '重大檢查', companion: '潔', title: '下午 3:30 肺部斷層', detail: '下午 3:30 肺部電腦斷層造影檢查。' },
+            { id: 'r_20260729', date: '2026-07-29', dept: '腫瘤科', category: '專科門診', companion: '潔', title: '血液腫瘤科回診 + 肺部斷層報告 + 心臟科回診', detail: '血液腫瘤科回診+看肺部斷層報告+心臟科回診(已掛149號(有心臟科加號單)。' },
             {
                 id: 'r_20261116_ct',
                 date: '2026-11-16',
@@ -1091,7 +1127,6 @@
                 detail: '醫囑：先擦保濕乳液，隔 5 分鐘再擦紅癢藥膏。禁忌食物：嚴禁燥熱、補品(紅蔘)、花生堅果、芋頭竹筍芒果、帶殼海鮮。這與電療食道防護完全一致。'
             },
             {
-                
                 id: 'r_20260422_imm19',
                 date: '2026-04-22',
                 dept: '腫瘤科',
@@ -1327,7 +1362,7 @@
         let notes = [...SEED_NOTES];
         let hospitalViewMode = 'calendar';
         let calYear = 2026;
-        let calMonth = 8;
+        let calMonth = 5; // 預設跳到 5 月查看新加入的排班
         let recordToEditId = null;
         let currentConfirmAction = null;
         let currentActiveTab = 'records';
@@ -1339,7 +1374,7 @@
 
         let currentPickerTargetInputId = null;
         let dpYear = 2026;
-        let dpMonth = 9;
+        let dpMonth = 5;
         let dpSelectedDate = '';
 
         let db = null;
@@ -1349,11 +1384,11 @@
         
         let currentRecordCategoryFilter = 'all';
 
-        const STORAGE_KEY_HOSP = `care_stays_${appId}_v5`;
-        const STORAGE_KEY_REC = `care_records_${appId}_v5`;
-        const STORAGE_KEY_DEL = `care_trash_${appId}_v5`;
-        const STORAGE_KEY_NOTES = `care_notes_${appId}_v5`;
-        const STORAGE_KEY_NOTE_HEADER = `care_notes_global_header_${appId}_v5`;
+        const STORAGE_KEY_HOSP = `care_stays_${appId}_v6`;
+        const STORAGE_KEY_REC = `care_records_${appId}_v6`;
+        const STORAGE_KEY_DEL = `care_trash_${appId}_v6`;
+        const STORAGE_KEY_NOTES = `care_notes_${appId}_v6`;
+        const STORAGE_KEY_NOTE_HEADER = `care_notes_global_header_${appId}_v6`;
 
         function saveToLocal() {
             try {
@@ -1462,7 +1497,7 @@
         async function ensureCloudSeededOnce() {
             if (!db || !currentUser) return;
             try {
-                const initDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'app_metadata', 'seed_lock_v1');
+                const initDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'app_metadata', 'seed_lock_v2');
                 const initSnap = await getDoc(initDocRef);
 
                 if (!initSnap.exists()) {
@@ -1610,13 +1645,14 @@
             }
 
             if (companionSumEl) {
-                let ying = 0, hua = 0, jie = 0;
+                let ying = 0, hua = 0, jie = 0, juan = 0;
                 hospitalStays.forEach(s => {
                     if (s.companion === '映') ying++;
                     else if (s.companion === '樺') hua++;
                     else if (s.companion === '潔') jie++;
+                    else if (s.companion === '娟') juan++;
                 });
-                companionSumEl.textContent = `映: ${ying} / 樺: ${hua} / 潔: ${jie}`;
+                companionSumEl.textContent = `映: ${ying} / 樺: ${hua} / 潔: ${jie} / 娟: ${juan}`;
             }
         }
         
