@@ -14,12 +14,12 @@
                 extend: {
                     colors: {
                         brand: {
-                            50: '#ecfdf5',
-                            100: '#d1fae5',
-                            500: '#10b981',
-                            600: '#059669',
-                            700: '#047857',
-                            900: '#064e3b'
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            900: '#78350f'
                         }
                     }
                 }
@@ -27,25 +27,25 @@
         };
     </script>
     <style>
-               @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&family=Nunito:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&family=Nunito:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap');
 
         body {
             font-family: 'Nunito', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
             font-size: 15px;
             line-height: 1.7;
-            color: #4a3f35; /* 溫暖的深咖啡色取代純黑 */
+            color: #3b2f2f; /* 溫暖的深咖啡色 */
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* 陽光晨曦背景：溫暖柔和的漸層光暈，讓人心情大好 */
+        /* 陽光晨曦背景：溫暖柔和的漸層光暈維持不變 */
         .sunny-morning-bg {
             background-color: #fffdf9;
             background-image: 
-                radial-gradient(circle at 10% 0%, rgba(255, 237, 213, 0.8) 0%, transparent 45%),   /* 暖橘光 */
-                radial-gradient(circle at 90% 15%, rgba(254, 240, 138, 0.5) 0%, transparent 40%),  /* 陽光黃 */
-                radial-gradient(circle at 80% 80%, rgba(255, 228, 230, 0.6) 0%, transparent 45%),  /* 玫瑰粉暈 */
-                radial-gradient(circle at 20% 90%, rgba(254, 249, 195, 0.7) 0%, transparent 50%),  /* 奶油黃 */
-                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.8) 0%, transparent 60%);
+                radial-gradient(circle at 10% 0%, rgba(255, 237, 213, 0.9) 0%, transparent 45%),   /* 暖橘光 */
+                radial-gradient(circle at 90% 15%, rgba(254, 240, 138, 0.7) 0%, transparent 40%),  /* 陽光黃 */
+                radial-gradient(circle at 80% 80%, rgba(255, 228, 230, 0.7) 0%, transparent 45%),  /* 玫瑰粉暈 */
+                radial-gradient(circle at 20% 90%, rgba(254, 249, 195, 0.8) 0%, transparent 50%),  /* 奶油黃 */
+                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.9) 0%, transparent 60%);
             background-attachment: fixed;
             background-size: cover;
         }
@@ -54,33 +54,33 @@
             font-family: 'Noto Serif TC', serif;
         }
 
-        /* 溫暖發光的主容器 */
+        /* 溫暖發光的主容器：調亮、營造高級溫潤感 */
         .sunny-container {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            box-shadow: 0 20px 40px -15px rgba(234, 88, 12, 0.1), 0 0 15px rgba(251, 146, 60, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.15), 0 0 20px rgba(251, 191, 36, 0.08);
+            border: 1px solid rgba(255, 255, 255, 1);
         }
 
-        /* 內部白色亮麗卡片 */
+        /* 內部亮麗卡片 */
         .sunny-card {
             background: #ffffff;
-            border: 1px solid #fed7aa; /* 淡淡的橘色邊框 */
-            box-shadow: 0 4px 15px -3px rgba(251, 146, 60, 0.06);
+            border: 1px solid #fde68a;
+            box-shadow: 0 4px 20px -3px rgba(245, 158, 11, 0.08);
             transition: all 0.2s ease-out;
         }
 
         .sunny-card:hover {
-            border-color: #fb923c;
-            box-shadow: 0 8px 25px -4px rgba(251, 146, 60, 0.12);
+            border-color: #f59e0b;
+            box-shadow: 0 10px 30px -4px rgba(245, 158, 11, 0.15);
             transform: translateY(-1px);
         }
 
         /* 輸入框與次要區塊底色 */
         .sunny-input-box {
-            background: #fffaf0;
-            border: 1px solid #fed7aa;
+            background: #fffdf5;
+            border: 1px solid #fde68a;
         }
 
         /* 自訂溫暖色調捲軸 */
@@ -89,11 +89,11 @@
             height: 8px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background-color: #fbd38d;
+            background-color: #fcd34d;
             border-radius: 9999px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background-color: #f6ad55;
+            background-color: #f59e0b;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
             background-color: transparent;
@@ -110,97 +110,96 @@
 </head>
 <body class="sunny-morning-bg min-h-screen p-3 sm:p-6 lg:p-8 flex flex-col justify-start items-center">
 
-    <div class="w-full max-w-5xl sunny-container rounded-3xl overflow-hidden my-auto border-t-[6px] border-t-orange-400">
+    <div class="w-full max-w-5xl sunny-container rounded-3xl overflow-hidden my-auto border-t-[6px] border-t-amber-500">
         
         <!-- 頂端朝氣陽光 Header -->
-        <header class="p-6 sm:p-9 border-b border-orange-100 bg-white/70 relative">
+        <header class="p-6 sm:p-9 border-b border-amber-200/60 bg-gradient-to-r from-amber-50/80 via-orange-50/50 to-amber-50/80 relative">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-5">
                 <div>
                     <div class="flex items-center gap-3">
-                        <span class="text-3xl filter drop-shadow-sm">☀️</span>
-                        <h1 class="text-2xl sm:text-3xl font-black text-orange-600 tracking-wide">媽媽回診紀錄中心</h1>
+                        <span class="text-3xl filter drop-shadow-sm animate-bounce">☀️</span>
+                        <h1 class="text-2xl sm:text-3xl font-black text-amber-700 tracking-wide font-serif-tc">媽媽回診紀錄中心</h1>
                     </div>
-                    <p class="mt-2 text-sm text-orange-800/70 font-bold tracking-wide">陽光、溫暖、充滿希望 🌻 陪媽媽每一天</p>
+                    <p class="mt-2 text-sm text-amber-800 font-bold tracking-wide">陽光、溫暖、充滿希望 🌻 陪媽媽每一天，傳遞平安喜樂</p>
                 </div>
                 
                 <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
-                    <div id="cloud-sync-badge" class="px-3.5 py-2 bg-emerald-950/90 border border-emerald-500/70 rounded-xl text-xs sm:text-sm font-bold text-emerald-300 flex items-center gap-2 shadow-sm transition">
-                        <span id="cloud-sync-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <div id="cloud-sync-badge" class="px-3.5 py-2 bg-amber-900/90 border border-amber-500/70 rounded-xl text-xs sm:text-sm font-bold text-amber-200 flex items-center gap-2 shadow-sm transition">
+                        <span id="cloud-sync-dot" class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
                         <span id="cloud-sync-text">連線至家庭雲端...</span>
                     </div>
-                    </button>
-                    <button onclick="forceSyncLatest()" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-slate-700 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="立即從雲端拉取最新資料">
+                    <button onclick="forceSyncLatest()" class="px-3.5 py-2 bg-amber-600 hover:bg-amber-500 text-white border border-amber-500 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="立即從雲端拉取最新資料">
                         <span>🔄</span> <span>同步最新</span>
                     </button>
-                    <button id="tab-records" onclick="switchTab('records')" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="首頁紀錄">
+                    <button id="tab-records" onclick="switchTab('records')" class="px-3.5 py-2 bg-amber-600 text-white border border-amber-500 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="首頁紀錄">
                         <span>🏥</span> <span>首頁</span>
                     </button>
-                    <button id="tab-hospital" onclick="switchTab('hospital')" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="住院排班">
+                    <button id="tab-hospital" onclick="switchTab('hospital')" class="px-3.5 py-2 bg-white/80 hover:bg-white text-amber-900 border border-amber-300 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="住院排班">
                         <span>🛌</span> <span>住院排班</span>
                     </button>
-                    <button id="tab-notes" onclick="switchTab('notes')" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="注意事項">
+                    <button id="tab-notes" onclick="switchTab('notes')" class="px-3.5 py-2 bg-white/80 hover:bg-white text-amber-900 border border-amber-300 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="注意事項">
                         <span>📌</span> <span>注意事項</span>
                     </button>
-                    <button id="tab-health_food" onclick="switchTab('health_food')" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="營養食材">
+                    <button id="tab-health_food" onclick="switchTab('health_food')" class="px-3.5 py-2 bg-white/80 hover:bg-white text-amber-900 border border-amber-300 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="營養食材">
                         <span>🌿</span> <span>營養食材</span>
                     </button>
-                    <button id="tab-diet" onclick="switchTab('diet')" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="飲食紅綠燈">
+                    <button id="tab-diet" onclick="switchTab('diet')" class="px-3.5 py-2 bg-white/80 hover:bg-white text-amber-900 border border-amber-300 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="飲食紅綠燈">
                         <span>🚦</span> <span>飲食紅綠燈</span>
                     </button>
-                    <button id="tab-sop" onclick="switchTab('sop')" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="醫療 SOP">
+                    <button id="tab-sop" onclick="switchTab('sop')" class="px-3.5 py-2 bg-white/80 hover:bg-white text-amber-900 border border-amber-300 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="醫療 SOP">
                         <span>📋</span> <span>醫療 SOP</span>
                     </button>
-                    <button id="tab-history" onclick="switchTab('history')" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="資源回收桶">
+                    <button id="tab-history" onclick="switchTab('history')" class="px-3.5 py-2 bg-white/80 hover:bg-white text-amber-900 border border-amber-300 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm" title="資源回收桶">
                         <span>🗑️</span> <span>回收桶</span>
                     </button>
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 pt-3 border-t border-emerald-800/40 text-left">
-                <div class="bg-slate-800/70 p-3 rounded-xl border border-slate-700/60">
-                    <span class="text-xs text-slate-400 block font-semibold">就醫歷程累積</span>
-                    <span id="stat-total-records" class="text-lg sm:text-xl font-extrabold text-emerald-400 mt-0.5 block">載入中...</span>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5 pt-4 border-t border-amber-200/60 text-left">
+                <div class="bg-white/90 p-3.5 rounded-2xl border border-amber-200 shadow-sm">
+                    <span class="text-xs text-amber-800/80 block font-bold">就醫歷程累積</span>
+                    <span id="stat-total-records" class="text-lg sm:text-xl font-black text-amber-600 mt-0.5 block">載入中...</span>
                 </div>
-                <div class="bg-slate-800/70 p-3 rounded-xl border border-slate-700/60">
-                    <span class="text-xs text-slate-400 block font-semibold">全期住院排班</span>
-                    <span id="stat-total-stays" class="text-lg sm:text-xl font-extrabold text-teal-300 mt-0.5 block">38 天</span>
+                <div class="bg-white/90 p-3.5 rounded-2xl border border-amber-200 shadow-sm">
+                    <span class="text-xs text-amber-800/80 block font-bold">全期住院排班</span>
+                    <span id="stat-total-stays" class="text-lg sm:text-xl font-black text-orange-600 mt-0.5 block">38 天</span>
                 </div>
-                <div class="bg-slate-800/70 p-3 rounded-xl border border-slate-700/60">
-                    <span class="text-xs text-slate-400 block font-semibold">最近就診/檢查預約</span>
-                    <span id="stat-latest-date" class="text-xs sm:text-sm font-bold text-amber-300 mt-1 block">2026-11-16</span>
+                <div class="bg-white/90 p-3.5 rounded-2xl border border-amber-200 shadow-sm">
+                    <span class="text-xs text-amber-800/80 block font-bold">最近就診/檢查預約</span>
+                    <span id="stat-latest-date" class="text-xs sm:text-sm font-bold text-amber-900 mt-1 block">載入中...</span>
                 </div>
-                <div class="bg-slate-800/70 p-3 rounded-xl border border-slate-700/60">
-                    <span class="text-xs text-slate-400 block font-semibold">三姊妹陪伴輪值天數</span>
-                    <div id="stat-companion-summary" class="text-xs sm:text-sm font-bold text-slate-200 mt-1">映: 15 / 樺: 14 / 潔: 9</div>
+                <div class="bg-white/90 p-3.5 rounded-2xl border border-amber-200 shadow-sm">
+                    <span class="text-xs text-amber-800/80 block font-bold">輪值天數</span>
+                    <div id="stat-companion-summary" class="text-xs sm:text-sm font-bold text-amber-900 mt-1">映: 15 / 樺: 14 / 潔: 9</div>
                 </div>
             </div>
         </header>
 
-        <main class="p-3 sm:p-7 min-h-[600px]">
+        <main class="p-4 sm:p-8 min-h-[600px]">
 
             <section id="content-records" class="block animate-fade-in">
-                <div class="bg-slate-800/80 p-4 sm:p-6 rounded-2xl mb-7 border border-slate-700 shadow-md">
+                <div class="bg-white/90 p-5 sm:p-7 rounded-3xl mb-7 border border-amber-200 shadow-lg">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-black text-emerald-400 text-lg sm:text-xl flex items-center gap-2">
+                        <h3 class="font-black text-amber-700 text-lg sm:text-xl flex items-center gap-2">
                             <span>📝</span> 新增就醫、檢查或護理紀錄
                         </h3>
-                        <span class="text-xs text-emerald-400 font-semibold">雲端自動推播至全家人手機</span>
+                        <span class="text-xs text-amber-600 font-bold bg-amber-50 px-3 py-1 rounded-full border border-amber-200">雲端自動同步</span>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div>
-                            <label class="block text-xs text-slate-300 font-bold mb-1.5">日期 (點選開啟大字月曆)</label>
+                            <label class="block text-xs text-amber-900 font-bold mb-1.5">日期 (點選開啟大字月曆)</label>
                             <div class="flex items-center gap-1.5">
-                                <input type="text" id="record-date" placeholder="YYYY-MM-DD" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium focus:ring-2 focus:ring-emerald-500 outline-none cursor-pointer" onclick="openDatePickerModal('record-date')" readonly>
-                                <button type="button" onclick="openDatePickerModal('record-date')" class="px-3 py-2.5 bg-slate-700 hover:bg-slate-600 text-emerald-300 rounded-xl text-sm font-bold transition flex items-center gap-1" title="開啟大字月曆選取">
+                                <input type="text" id="record-date" placeholder="YYYY-MM-DD" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold focus:ring-2 focus:ring-amber-500 outline-none cursor-pointer" onclick="openDatePickerModal('record-date')" readonly>
+                                <button type="button" onclick="openDatePickerModal('record-date')" class="px-3.5 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-sm font-bold transition flex items-center gap-1 shadow-sm" title="開啟大字月曆選取">
                                     📅
                                 </button>
                             </div>
                         </div>
 
                         <div>
-                            <label class="block text-xs text-slate-300 font-bold mb-1.5">科別 / 類別</label>
-                            <select id="record-dept" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium focus:ring-2 focus:ring-emerald-500 outline-none">
+                            <label class="block text-xs text-amber-900 font-bold mb-1.5">科別 / 類別</label>
+                            <select id="record-dept" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold focus:ring-2 focus:ring-amber-500 outline-none">
                                 <option value="腫瘤科">腫瘤科 (免疫/放療/化學)</option>
                                 <option value="放射科">放射科 (放療/CT/PET-CT)</option>
                                 <option value="感染科">感染科 (抗生素/隱球菌)</option>
@@ -215,44 +214,43 @@
                         </div>
 
                         <div>
-                            <label class="block text-xs text-slate-300 font-bold mb-1.5">陪診人</label>
-                            <select id="record-companion" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium focus:ring-2 focus:ring-emerald-500 outline-none">
+                            <label class="block text-xs text-amber-900 font-bold mb-1.5">陪診人</label>
+                            <select id="record-companion" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold focus:ring-2 focus:ring-amber-500 outline-none">
                                 <option value="映">映</option>
                                 <option value="潔">潔</option>
                                 <option value="樺">樺</option>
                                 <option value="待定">待定 (協調中)</option>
-                                                            
-                        </select>
+                            </select>
                         </div>
 
                         <div>
-                            <label class="block text-xs text-slate-300 font-bold mb-1.5">看診重點 / 檢查項目</label>
-                            <input type="text" id="record-title" placeholder="例: 胸部電腦斷層 (下午 3:30)" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium focus:ring-2 focus:ring-emerald-500 outline-none">
+                            <label class="block text-xs text-amber-900 font-bold mb-1.5">看診重點 / 檢查項目</label>
+                            <input type="text" id="record-title" placeholder="例: 胸部電腦斷層 (下午 3:30)" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold focus:ring-2 focus:ring-amber-500 outline-none">
                         </div>
                     </div>
 
                     <div class="mt-4">
-                        <label class="block text-xs text-slate-300 font-bold mb-1.5">詳細醫囑、用藥或檢查規範備忘</label>
-                        <textarea id="record-detail" placeholder="輸入醫師指示、檢驗指數、禁食規則、抗生素或用藥時間..." class="bg-slate-900 border border-slate-700 p-3.5 rounded-xl w-full h-28 text-slate-100 font-normal focus:ring-2 focus:ring-emerald-500 outline-none resize-none leading-relaxed"></textarea>
+                        <label class="block text-xs text-amber-900 font-bold mb-1.5">詳細醫囑、用藥或檢查規範備忘</label>
+                        <textarea id="record-detail" placeholder="輸入醫師指示、檢驗指數、禁食規則、抗生素或用藥時間..." class="sunny-input-box p-3.5 rounded-xl w-full h-28 text-amber-950 font-medium focus:ring-2 focus:ring-amber-500 outline-none resize-none leading-relaxed"></textarea>
                     </div>
 
                     <div class="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                        <div class="text-xs text-slate-400">
-                            💡 提示：儲存後，在各處裝置皆會透過雲端同步更新。
+                        <div class="text-xs text-amber-700 font-semibold">
+                            💡 提示：儲存後，全家人隨時隨地同步掌握最新狀況。
                         </div>
-                        <button onclick="addRecord()" id="btn-add-record" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-7 py-2.5 rounded-xl shadow-lg transition flex items-center justify-center gap-2 active:scale-95">
+                        <button onclick="addRecord()" id="btn-add-record" class="bg-amber-600 hover:bg-amber-500 text-white font-extrabold px-8 py-3 rounded-xl shadow-lg transition flex items-center justify-center gap-2 active:scale-95">
                             <span>➕</span> 儲存並歸檔至雲端
                         </button>
                     </div>
                 </div>
 
-                <div class="bg-slate-800/60 p-4 rounded-2xl mb-6 border border-slate-700/80 flex flex-col md:flex-row gap-3 items-center justify-between">
+                <div class="bg-white/90 p-4 rounded-2xl mb-6 border border-amber-200 shadow-sm flex flex-col md:flex-row gap-3 items-center justify-between">
                     <div class="flex items-center gap-2 w-full md:w-auto flex-1">
-                        <span class="text-slate-400 text-base">🔍</span>
-                        <input type="text" id="filter-search-input" oninput="renderRecords()" placeholder="搜尋醫囑、檢查項目、用藥或科別關鍵字..." class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl w-full text-slate-200 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                        <span class="text-amber-700 text-lg">🔍</span>
+                        <input type="text" id="filter-search-input" oninput="renderRecords()" placeholder="搜尋醫囑、檢查項目、用藥或科別關鍵字..." class="sunny-input-box p-2.5 rounded-xl w-full text-amber-950 text-sm focus:ring-2 focus:ring-amber-500 outline-none">
                     </div>
                     <div class="flex items-center gap-2 w-full md:w-auto flex-wrap justify-end">
-                        <select id="filter-dept-select" onchange="renderRecords()" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl text-sm text-slate-200 outline-none">
+                        <select id="filter-dept-select" onchange="renderRecords()" class="sunny-input-box p-2.5 rounded-xl text-sm text-amber-950 font-bold outline-none">
                             <option value="">全部科別</option>
                             <option value="重大檢查">重大檢查 / 影像造影</option>
                             <option value="腫瘤科">腫瘤科</option>
@@ -264,7 +262,7 @@
                             <option value="皮膚科">皮膚科</option>
                             <option value="營養照護">營養照護</option>
                         </select>
-                        <select id="filter-companion-select" onchange="renderRecords()" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl text-sm text-slate-200 outline-none">
+                        <select id="filter-companion-select" onchange="renderRecords()" class="sunny-input-box p-2.5 rounded-xl text-sm text-amber-950 font-bold outline-none">
                             <option value="">全部陪同人</option>
                             <option value="映">映</option>
                             <option value="潔">潔</option>
@@ -275,33 +273,33 @@
                 </div>
 
                 <div class="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-2 mb-4">
-                    <button onclick="quickFilterRecordCategory('all')" class="quick-filter-btn px-3.5 py-1.5 rounded-lg bg-emerald-600 text-white font-bold text-xs whitespace-nowrap">全部紀錄</button>
-                    <button onclick="quickFilterRecordCategory('放射治療')" class="quick-filter-btn px-3.5 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-emerald-300 font-bold text-xs whitespace-nowrap border border-slate-700">⚡ 放射治療療程</button>
-                    <button onclick="quickFilterRecordCategory('免疫治療')" class="quick-filter-btn px-3.5 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-emerald-300 font-bold text-xs whitespace-nowrap border border-slate-700">💉 免疫治療循環</button>
-                    <button onclick="quickFilterRecordCategory('重大檢查')" class="quick-filter-btn px-3.5 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-emerald-300 font-bold text-xs whitespace-nowrap border border-slate-700">🔬 重大影像/檢查</button>
-                    <button onclick="quickFilterRecordCategory('專科門診')" class="quick-filter-btn px-3.5 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-emerald-300 font-bold text-xs whitespace-nowrap border border-slate-700">🩺 專科門診追蹤</button>
+                    <button id="quick-filter-all" onclick="quickFilterRecordCategory('all')" class="quick-filter-btn px-4 py-2 rounded-xl bg-amber-600 text-white font-extrabold text-xs whitespace-nowrap shadow-sm">全部紀錄</button>
+                    <button id="quick-filter-放射治療" onclick="quickFilterRecordCategory('放射治療')" class="quick-filter-btn px-4 py-2 rounded-xl bg-white text-amber-900 hover:bg-amber-50 font-bold text-xs whitespace-nowrap border border-amber-300 shadow-sm">⚡ 放射治療療程</button>
+                    <button id="quick-filter-免疫治療" onclick="quickFilterRecordCategory('免疫治療')" class="quick-filter-btn px-4 py-2 rounded-xl bg-white text-amber-900 hover:bg-amber-50 font-bold text-xs whitespace-nowrap border border-amber-300 shadow-sm">💉 免疫治療循環</button>
+                    <button id="quick-filter-重大檢查" onclick="quickFilterRecordCategory('重大檢查')" class="quick-filter-btn px-4 py-2 rounded-xl bg-white text-amber-900 hover:bg-amber-50 font-bold text-xs whitespace-nowrap border border-amber-300 shadow-sm">🔬 重大影像/檢查</button>
+                    <button id="quick-filter-專科門診" onclick="quickFilterRecordCategory('專科門診')" class="quick-filter-btn px-4 py-2 rounded-xl bg-white text-amber-900 hover:bg-amber-50 font-bold text-xs whitespace-nowrap border border-amber-300 shadow-sm">🩺 專科門診追蹤</button>
                 </div>
 
                 <div id="records-list" class="space-y-4">
-                    <div class="flex items-center justify-center py-16 text-slate-400 gap-3">
+                    <div class="flex items-center justify-center py-16 text-amber-800 gap-3">
                         <div class="spinner"></div> 正在連線並載入最新就醫紀錄...
                     </div>
                 </div>
             </section>
 
             <section id="content-hospital" class="hidden animate-fade-in">
-                <div class="bg-slate-800/80 p-4 rounded-2xl mb-6 border border-slate-700 flex flex-col md:flex-row items-center justify-between gap-3">
+                <div class="bg-white/90 p-4 rounded-3xl mb-6 border border-amber-200 shadow-md flex flex-col md:flex-row items-center justify-between gap-3">
                     <div class="flex items-center gap-3 flex-wrap">
-                        <div class="inline-flex bg-slate-900 p-1 rounded-xl border border-slate-700">
-                            <button onclick="switchHospitalView('calendar')" id="btn-hosp-calendar" class="px-4 py-2 rounded-lg text-sm font-extrabold bg-emerald-600 text-white shadow transition flex items-center gap-1.5">
+                        <div class="inline-flex bg-amber-50 p-1 rounded-2xl border border-amber-300">
+                            <button onclick="switchHospitalView('calendar')" id="btn-hosp-calendar" class="px-4 py-2 rounded-xl text-sm font-extrabold bg-amber-600 text-white shadow transition flex items-center gap-1.5">
                                 <span>📅</span> 月曆式
                             </button>
-                            <button onclick="switchHospitalView('list')" id="btn-hosp-list" class="px-4 py-2 rounded-lg text-sm font-extrabold text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
+                            <button onclick="switchHospitalView('list')" id="btn-hosp-list" class="px-4 py-2 rounded-xl text-sm font-extrabold text-amber-800 hover:text-amber-950 transition flex items-center gap-1.5">
                                 <span>📋</span> 清單式
                             </button>
                         </div>
 
-                        <select id="filter-hosp-companion" onchange="filterHospitalStays()" class="bg-slate-900 border border-slate-700 px-3.5 py-2 rounded-xl text-sm font-bold text-slate-200 outline-none">
+                        <select id="filter-hosp-companion" onchange="filterHospitalStays()" class="sunny-input-box px-3.5 py-2 rounded-xl text-sm font-bold text-amber-950 outline-none">
                             <option value="">全部陪同人</option>
                             <option value="映">映 陪同</option>
                             <option value="樺">樺 陪同</option>
@@ -310,38 +308,38 @@
                     </div>
 
                     <div class="flex items-center gap-2 flex-wrap justify-end w-full md:w-auto">
-                        <button onclick="copyHospitalListForLine()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-emerald-300 font-bold rounded-xl text-sm transition flex items-center gap-1.5 border border-slate-600">
+                        <button onclick="copyHospitalListForLine()" class="px-4 py-2 bg-white hover:bg-amber-50 text-amber-800 font-bold rounded-xl text-sm transition flex items-center gap-1.5 border border-amber-300 shadow-sm">
                             <span>💬</span> 複製 LINE 清單
                         </button>
-                        <button onclick="openAddHospitalModal()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold rounded-xl text-sm transition flex items-center gap-1.5 shadow active:scale-95">
+                        <button onclick="openAddHospitalModal()" class="px-5 py-2 bg-amber-600 hover:bg-amber-500 text-white font-extrabold rounded-xl text-sm transition flex items-center gap-1.5 shadow active:scale-95">
                             <span>➕</span> 新增住院日程
                         </button>
                     </div>
                 </div>
 
                 <div id="hospital-calendar-container" class="block">
-                    <div class="bg-slate-800/60 p-4 rounded-2xl border border-slate-700 mb-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <div class="bg-white/90 p-4 rounded-3xl border border-amber-200 mb-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm">
                         <div class="flex items-center gap-3">
-                            <button onclick="changeCalMonth(-1)" class="p-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-xl transition font-bold px-3">◀ 上個月</button>
-                            <h2 id="calendar-current-month-label" class="text-xl font-extrabold text-emerald-400 min-w-[140px] text-center">2026 年 8 月</h2>
-                            <button onclick="changeCalMonth(1)" class="p-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-xl transition font-bold px-3">下個月 ▶</button>
+                            <button onclick="changeCalMonth(-1)" class="p-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-xl transition font-bold px-3">◀ 上個月</button>
+                            <h2 id="calendar-current-month-label" class="text-xl font-black text-amber-700 min-w-[140px] text-center font-serif-tc">2026 年 8 月</h2>
+                            <button onclick="changeCalMonth(1)" class="p-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-xl transition font-bold px-3">下個月 ▶</button>
                         </div>
                         <div class="flex items-center gap-2 flex-wrap">
-                            <span class="text-xs text-slate-400 font-semibold">快速跳轉：</span>
-                            <button onclick="jumpCalMonth(2026, 4)" class="px-3 py-1 bg-slate-700 hover:bg-emerald-800 text-slate-200 text-xs font-bold rounded-lg transition border border-slate-600">2026/04</button>
-                            <button onclick="jumpCalMonth(2026, 5)" class="px-3 py-1 bg-slate-700 hover:bg-emerald-800 text-slate-200 text-xs font-bold rounded-lg transition border border-slate-600">2026/05</button>
-                            <button onclick="jumpCalMonth(2026, 8)" class="px-3 py-1 bg-emerald-700 text-white text-xs font-bold rounded-lg transition border border-emerald-500">2026/08</button>
+                            <span class="text-xs text-amber-800 font-bold">快速跳轉：</span>
+                            <button onclick="jumpCalMonth(2026, 4)" class="px-3 py-1 bg-white hover:bg-amber-50 text-amber-900 text-xs font-bold rounded-lg transition border border-amber-300">2026/04</button>
+                            <button onclick="jumpCalMonth(2026, 5)" class="px-3 py-1 bg-white hover:bg-amber-50 text-amber-900 text-xs font-bold rounded-lg transition border border-amber-300">2026/05</button>
+                            <button onclick="jumpCalMonth(2026, 8)" class="px-3 py-1 bg-amber-600 text-white text-xs font-bold rounded-lg transition shadow-sm">2026/08</button>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-7 gap-1.5 sm:gap-2 text-center text-xs sm:text-sm font-bold text-slate-400 mb-1.5">
-                        <div class="py-1 text-rose-400">週日</div>
+                    <div class="grid grid-cols-7 gap-1.5 sm:gap-2 text-center text-xs sm:text-sm font-extrabold text-amber-800 mb-1.5">
+                        <div class="py-1 text-rose-600">週日</div>
                         <div class="py-1">週一</div>
                         <div class="py-1">週二</div>
                         <div class="py-1">週三</div>
                         <div class="py-1">週四</div>
                         <div class="py-1">週五</div>
-                        <div class="py-1 text-teal-400">週六</div>
+                        <div class="py-1 text-teal-700">週六</div>
                     </div>
 
                     <div id="hospital-calendar-grid" class="grid grid-cols-7 gap-1.5 sm:gap-2">
@@ -350,20 +348,20 @@
                 </div>
 
                 <div id="hospital-list-container" class="hidden">
-                    <div class="bg-slate-800/80 rounded-2xl border border-slate-700 overflow-hidden shadow-lg">
+                    <div class="bg-white/95 rounded-3xl border border-amber-200 overflow-hidden shadow-lg">
                         <div class="overflow-x-auto custom-scrollbar">
                             <table class="w-full text-left text-sm sm:text-base border-collapse">
                                 <thead>
-                                    <tr class="bg-slate-900/90 text-slate-300 font-extrabold border-b border-slate-700">
-                                        <th class="p-3.5">日期</th>
-                                        <th class="p-3.5">星期</th>
-                                        <th class="p-3.5">行程項目</th>
-                                        <th class="p-3.5">陪同人</th>
-                                        <th class="p-3.5 min-w-[200px]">重要備註 / 檢查事項</th>
-                                        <th class="p-3.5 text-center">操作</th>
+                                    <tr class="bg-amber-100/80 text-amber-900 font-black border-b border-amber-200">
+                                        <th class="p-4">日期</th>
+                                        <th class="p-4">星期</th>
+                                        <th class="p-4">行程項目</th>
+                                        <th class="p-4">陪同人</th>
+                                        <th class="p-4 min-w-[200px]">重要備註 / 檢查事項</th>
+                                        <th class="p-4 text-center">操作</th>
                                     </tr>
                                 </thead>
-                                <tbody id="hospital-list-tbody" class="divide-y divide-slate-700/60">
+                                <tbody id="hospital-list-tbody" class="divide-y divide-amber-100">
                                     <!-- 動態生成表格列 -->
                                 </tbody>
                             </table>
@@ -374,58 +372,58 @@
 
             <section id="content-notes" class="hidden animate-fade-in">
                 <!-- 注意事項頂部全局大圖區塊 -->
-                <div class="bg-slate-800/80 p-4 sm:p-6 rounded-2xl mb-7 border border-slate-700 shadow-md">
+                <div class="bg-white/90 p-5 sm:p-7 rounded-3xl mb-7 border border-amber-200 shadow-md">
                     <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-lg sm:text-xl font-black text-emerald-400 border-l-4 border-emerald-500 pl-3">總覽首圖 / 照護指南</h2>
+                        <h2 class="text-lg sm:text-xl font-black text-amber-700 border-l-4 border-amber-500 pl-3 font-serif-tc">總覽首圖 / 照護指南</h2>
                         <div id="global-note-header-actions" class="hidden flex items-center gap-2">
-                            <label for="global-note-header-upload" class="cursor-pointer px-3.5 py-1.5 bg-slate-700 hover:bg-slate-600 text-emerald-300 text-xs font-bold rounded-xl transition border border-slate-600">
+                            <label for="global-note-header-upload" class="cursor-pointer px-3.5 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold rounded-xl transition border border-amber-300">
                                 🔄 更換
                             </label>
-                            <button onclick="deleteGlobalNoteHeader()" class="px-3.5 py-1.5 bg-rose-950/80 hover:bg-rose-900 text-rose-300 text-xs font-bold rounded-xl transition border border-rose-800">
+                            <button onclick="deleteGlobalNoteHeader()" class="px-3.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold rounded-xl transition border border-rose-300">
                                 🗑️ 刪除
                             </button>
                         </div>
                     </div>
 
-                    <div id="global-note-header-empty" class="w-full h-32 sm:h-48 border-2 border-dashed border-slate-600 rounded-xl flex items-center justify-center hover:bg-slate-800/50 transition">
-                        <label for="global-note-header-upload" class="cursor-pointer flex flex-col items-center justify-center w-full h-full text-slate-400 hover:text-emerald-400 transition">
+                    <div id="global-note-header-empty" class="w-full h-32 sm:h-48 border-2 border-dashed border-amber-300 rounded-2xl flex items-center justify-center hover:bg-amber-50/50 transition">
+                        <label for="global-note-header-upload" class="cursor-pointer flex flex-col items-center justify-center w-full h-full text-amber-800 hover:text-amber-950 transition">
                             <span class="text-4xl mb-3">🖼️</span>
                             <span class="text-sm font-bold">點擊上傳放置於頂部的完整首圖</span>
                         </label>
                     </div>
 
-                    <div id="global-note-header-preview" class="hidden w-full overflow-hidden rounded-xl border border-slate-700 shadow-sm relative text-center bg-slate-900/50">
-                        <img id="global-note-header-img" src="" class="max-w-full max-h-[60vh] mx-auto object-contain cursor-pointer hover:opacity-90 transition" onclick="openLightbox(this.src)">
+                    <div id="global-note-header-preview" class="hidden w-full overflow-hidden rounded-2xl border border-amber-200 shadow-sm relative text-center bg-amber-50/50">
+                        <img id="global-note-header-img" src="" class="max-w-full max-h-[60vh] mx-auto object-contain cursor-pointer hover:opacity-95 transition" onclick="openLightbox(this.src)">
                     </div>
 
                     <input type="file" id="global-note-header-upload" accept="image/*" class="hidden" onchange="uploadGlobalNoteHeader(event)">
                 </div>
 
                 <!-- 新增注意事項表單 -->
-                <div class="bg-slate-800/80 p-4 sm:p-6 rounded-2xl mb-7 border border-slate-700 shadow-md">
+                <div class="bg-white/90 p-5 sm:p-7 rounded-3xl mb-7 border border-amber-200 shadow-md">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-black text-emerald-400 text-lg sm:text-xl flex items-center gap-2">
+                        <h3 class="font-black text-amber-700 text-lg sm:text-xl flex items-center gap-2">
                             <span>📌</span> 新增注意事項與備忘
                         </h3>
                     </div>
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-xs text-slate-300 font-bold mb-1.5">標題 / 重點</label>
-                            <input type="text" id="note-title" placeholder="例: 藥膏塗抹順序 / 食物打泥規範" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium focus:ring-2 focus:ring-emerald-500 outline-none">
+                            <label class="block text-xs text-amber-900 font-bold mb-1.5">標題 / 重點</label>
+                            <input type="text" id="note-title" placeholder="例: 藥膏塗抹順序 / 食物打泥規範" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold focus:ring-2 focus:ring-amber-500 outline-none">
                         </div>
                         <div>
-                            <label class="block text-xs text-slate-300 font-bold mb-1.5">詳細說明 (選填)</label>
-                            <textarea id="note-content" placeholder="輸入詳細的操作步驟或備忘內容..." class="bg-slate-900 border border-slate-700 p-3.5 rounded-xl w-full h-28 text-slate-100 font-normal focus:ring-2 focus:ring-emerald-500 outline-none resize-none leading-relaxed"></textarea>
+                            <label class="block text-xs text-amber-900 font-bold mb-1.5">詳細說明 (選填)</label>
+                            <textarea id="note-content" placeholder="輸入詳細的操作步驟或備忘內容..." class="sunny-input-box p-3.5 rounded-xl w-full h-28 text-amber-950 font-medium focus:ring-2 focus:ring-amber-500 outline-none resize-none leading-relaxed"></textarea>
                         </div>
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
                             <div class="flex items-center gap-3 flex-wrap">
-                                <label class="block text-xs text-slate-300 font-bold">附加圖文解說</label>
-                                <label for="note-images" class="cursor-pointer bg-slate-700 hover:bg-slate-600 text-emerald-300 px-4 py-2 rounded-xl text-sm font-bold transition flex items-center gap-1.5 border border-slate-600 shadow-sm">
+                                <label class="block text-xs text-amber-900 font-bold">附加圖文解說</label>
+                                <label for="note-images" class="cursor-pointer bg-amber-100 hover:bg-amber-200 text-amber-900 px-4 py-2 rounded-xl text-sm font-bold transition flex items-center gap-1.5 border border-amber-300 shadow-sm">
                                     <span>📷</span> 上傳圖片
                                 </label>
                                 <input type="file" id="note-images" accept="image/*" multiple class="hidden" onchange="handleNoteImageSelect(event)">
                             </div>
-                            <button onclick="addNote()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-7 py-2.5 rounded-xl shadow-lg transition flex items-center justify-center gap-2 active:scale-95">
+                            <button onclick="addNote()" class="bg-amber-600 hover:bg-amber-500 text-white font-extrabold px-8 py-3 rounded-xl shadow-lg transition flex items-center justify-center gap-2 active:scale-95">
                                 <span>➕</span> 儲存注意事項
                             </button>
                         </div>
@@ -437,162 +435,162 @@
                 <!-- 注意事項列表容器 -->
                 <div id="notes-list" class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <!-- JS 動態生成 -->
-                    <div class="flex items-center justify-center py-16 text-slate-400 gap-3 col-span-full">
+                    <div class="flex items-center justify-center py-16 text-amber-800 gap-3 col-span-full">
                         <div class="spinner"></div> 載入注意事項中...
                     </div>
                 </div>
             </section>
 
             <section id="content-health_food" class="hidden animate-fade-in">
-                <div class="bg-gradient-to-br from-emerald-950/70 to-slate-900 p-5 rounded-2xl border border-emerald-800/50 mb-6">
-                    <div class="flex items-center gap-3">
-                        <span class="text-3xl">🥦</span>
+                <div class="bg-gradient-to-br from-amber-600 to-orange-700 p-6 rounded-3xl text-white mb-6 shadow-lg">
+                    <div class="flex items-center gap-4">
+                        <span class="text-4xl bg-white/20 p-3 rounded-2xl">🥦</span>
                         <div>
-                            <h2 class="text-xl sm:text-2xl font-black text-emerald-300">劉博仁醫師公開：抗癌湯與細胞養護食材庫</h2>
-                            <p class="text-sm text-slate-300 mt-1">針對黏膜修復、抑制發炎、去渣打泥與提高造血防禦完整整理</p>
+                            <h2 class="text-xl sm:text-2xl font-black font-serif-tc">抗癌湯與細胞養護食材庫</h2>
+                            <p class="text-sm text-amber-100 mt-1">針對黏膜修復、抑制發炎、去渣打泥與提高造血防禦完整整理</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="mb-5">
-                    <input type="text" id="food-search-input" oninput="filterHealthFoodCards()" placeholder="搜尋食材（例如：高麗菜、冬粉、南瓜、大蒜、初榨橄欖油...）" class="bg-slate-900 border border-slate-700 p-3 rounded-xl w-full text-slate-200 text-sm font-medium focus:ring-2 focus:ring-emerald-500 outline-none">
+                    <input type="text" id="food-search-input" oninput="filterHealthFoodCards()" placeholder="搜尋食材（例如：高麗菜、冬粉、南瓜、大蒜、初榨橄欖油...）" class="sunny-input-box p-3.5 rounded-2xl w-full text-amber-950 font-bold text-sm focus:ring-2 focus:ring-amber-500 outline-none shadow-sm">
                 </div>
 
                 <div id="health-food-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                    <div class="food-card bg-slate-800/80 p-5 rounded-2xl border border-slate-700 shadow-sm flex flex-col justify-between">
+                    <div class="food-card bg-white/95 p-5 rounded-3xl border border-amber-200 shadow-sm flex flex-col justify-between">
                         <div>
-                            <div class="flex items-center justify-between mb-3 border-b border-slate-700 pb-2.5">
-                                <h3 class="text-lg font-black text-emerald-300 flex items-center gap-2"><span>🥬</span> 一、蔬菜與蕈菇類</h3>
-                                <span class="text-xs bg-emerald-900/80 text-emerald-300 px-2 py-0.5 rounded-full font-bold">顧黏膜/解毒</span>
+                            <div class="flex items-center justify-between mb-3 border-b border-amber-100 pb-3">
+                                <h3 class="text-lg font-black text-amber-800 flex items-center gap-2"><span>🥬</span> 一、蔬菜與蕈菇類</h3>
+                                <span class="text-xs bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full font-bold">顧黏膜/解毒</span>
                             </div>
-                            <ul class="space-y-3 text-sm text-slate-200">
+                            <ul class="space-y-3 text-sm text-amber-950">
                                 <li>
-                                    <strong class="text-emerald-400">十字花科蔬菜 (高麗菜、綠白花椰菜、青江菜)：</strong>
-                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">幫助肝臟解毒。高麗菜富含「維生素 U」，能保護胃壁與食道黏膜。建議煮爛打泥。</p>
+                                    <strong class="text-amber-700">十字花科蔬菜 (高麗菜、綠白花椰菜、青江菜)：</strong>
+                                    <p class="text-amber-900/80 text-xs mt-0.5 leading-relaxed">幫助肝臟解毒。高麗菜富含「維生素 U」，能保護胃壁與食道黏膜。建議煮爛打泥。</p>
                                 </li>
                                 <li>
-                                    <strong class="text-amber-400">南瓜 (低 GI 澱粉)：</strong>
-                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">富含 β-胡蘿蔔素與葉黃素。<span class="text-amber-300 font-bold">⚠️ 媽媽叮嚀：嚴禁連皮！必須削皮蒸透打泥，防止硬皮刮傷食道。</span></p>
+                                    <strong class="text-orange-700">南瓜 (低 GI 澱粉)：</strong>
+                                    <p class="text-amber-900/80 text-xs mt-0.5 leading-relaxed">富含 β-胡蘿蔔素與葉黃素。<span class="text-orange-700 font-bold">⚠️ 媽媽叮嚀：嚴禁連皮！必須削皮蒸透打泥，防止硬皮刮傷食道。</span></p>
                                 </li>
                                 <li>
-                                    <strong class="text-emerald-400">番茄與紅蘿蔔 (脂溶性好物)：</strong>
-                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">茄紅素能保護口腔黏膜。需搭配油脂烹調；番茄需先燙去外皮去酸打泥。</p>
+                                    <strong class="text-amber-700">番茄與紅蘿蔔 (脂溶性好物)：</strong>
+                                    <p class="text-amber-900/80 text-xs mt-0.5 leading-relaxed">茄紅素能保護口腔黏膜。需搭配油脂烹調；番茄需先燙去外皮去酸打泥。</p>
                                 </li>
                                 <li>
-                                    <strong class="text-amber-400">蕈菇類 (金針菇、香菇、蘑菇)：</strong>
-                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">富含多醣體能調節免疫。<span class="text-amber-300 font-bold">⚠️ 媽媽叮嚀：纖維堅韌，嚴禁整朵食用！必須高速破壁打成濃湯濾渣。</span></p>
+                                    <strong class="text-orange-700">蕈菇類 (金針菇、香菇、蘑菇)：</strong>
+                                    <p class="text-amber-900/80 text-xs mt-0.5 leading-relaxed">富含多醣體能調節免疫。<span class="text-orange-700 font-bold">⚠️ 媽媽叮嚀：纖維堅韌，嚴禁整朵食用！必須高速破壁打成濃湯濾渣。</span></p>
                                 </li>
                                 <li>
-                                    <strong class="text-emerald-400">深綠色蔬菜：</strong>
-                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">含天然「鎂」，有助放鬆神經、改善睡眠與穩定情緒。</p>
+                                    <strong class="text-amber-700">深綠色蔬菜：</strong>
+                                    <p class="text-amber-900/80 text-xs mt-0.5 leading-relaxed">含天然「鎂」，有助放鬆神經、改善睡眠與穩定情緒。</p>
                                 </li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="food-card bg-slate-800/80 p-5 rounded-2xl border border-slate-700 shadow-sm flex flex-col justify-between">
+                    <div class="food-card bg-white/95 p-5 rounded-3xl border border-amber-200 shadow-sm flex flex-col justify-between">
                         <div>
-                            <div class="flex items-center justify-between mb-3 border-b border-slate-700 pb-2.5">
-                                <h3 class="text-lg font-black text-amber-300 flex items-center gap-2"><span>🧄</span> 二、辛香料點綴 (慎用)</h3>
-                                <span class="text-xs bg-rose-950 text-rose-300 border border-rose-800 px-2 py-0.5 rounded-full font-bold">喉痛期禁辛辣</span>
+                            <div class="flex items-center justify-between mb-3 border-b border-amber-100 pb-3">
+                                <h3 class="text-lg font-black text-orange-700 flex items-center gap-2"><span>🧄</span> 二、辛香料點綴 (慎用)</h3>
+                                <span class="text-xs bg-rose-100 text-rose-800 px-2.5 py-1 rounded-full font-bold">喉痛期禁辛辣</span>
                             </div>
-                            <ul class="space-y-3 text-sm text-slate-200">
+                            <ul class="space-y-3 text-sm text-amber-950">
                                 <li>
-                                    <strong class="text-rose-400">大蒜 (大蒜素 Allicin)：</strong>
-                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">能降低息肉風險與抗菌。但具辛辣刺激性，<span class="text-rose-300 font-bold">目前放療黏膜破洞與皮膚發炎期嚴禁食用！</span></p>
+                                    <strong class="text-rose-700">大蒜 (大蒜素 Allicin)：</strong>
+                                    <p class="text-amber-900/80 text-xs mt-0.5 leading-relaxed">能降低息肉風險與抗菌。但具辛辣刺激性，<span class="text-rose-700 font-bold">目前放療黏膜破洞與皮膚發炎期嚴禁食用！</span></p>
                                 </li>
                                 <li>
-                                    <strong class="text-emerald-400">枸杞：</strong>
-                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">富含多醣體與抗氧化物質，對眼睛明目及肝臟解毒有益，可微量泡軟打泥入湯。</p>
+                                    <strong class="text-amber-700">枸杞：</strong>
+                                    <p class="text-amber-900/80 text-xs mt-0.5 leading-relaxed">富含多醣體與抗氧化物質，對眼睛明目及肝臟解毒有益，可微量泡軟打泥入湯。</p>
                                 </li>
                                 <li>
-                                    <strong class="text-rose-400">胡椒粉：</strong>
-                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">天然抗氧化劑能提味減鹽。<span class="text-rose-300 font-bold">⚠️ 現階段易引發食道充血與劇烈咳嗽，暫時嚴格禁用。</span></p>
+                                    <strong class="text-rose-700">胡椒粉：</strong>
+                                    <p class="text-amber-900/80 text-xs mt-0.5 leading-relaxed">天然抗氧化劑能提味減鹽。<span class="text-rose-700 font-bold">⚠️ 現階段易引發食道充血與劇烈咳嗽，暫時嚴格禁用。</span></p>
                                 </li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="food-card bg-slate-800/80 p-5 rounded-2xl border border-slate-700 shadow-sm flex flex-col justify-between">
+                    <div class="food-card bg-white/95 p-5 rounded-3xl border border-amber-200 shadow-sm flex flex-col justify-between">
                         <div>
-                            <div class="flex items-center justify-between mb-3 border-b border-slate-700 pb-2.5">
-                                <h3 class="text-lg font-black text-teal-300 flex items-center gap-2"><span>🐟</span> 三、優質蛋白質</h3>
-                                <span class="text-xs bg-teal-950 text-teal-300 px-2 py-0.5 rounded-full font-bold">多白肉・少紅肉</span>
+                            <div class="flex items-center justify-between mb-3 border-b border-amber-100 pb-3">
+                                <h3 class="text-lg font-black text-amber-700 flex items-center gap-2"><span>🐟</span> 三、優質蛋白質</h3>
+                                <span class="text-xs bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full font-bold">多白肉・少紅肉</span>
                             </div>
-                            <ul class="space-y-3 text-sm text-slate-200">
+                            <ul class="space-y-3 text-sm text-amber-950">
                                 <li>
-                                    <strong class="text-teal-300">白肉與植物性蛋白 (魚肉、雞肉、豆腐、毛豆)：</strong>
-                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">減少肝臟負擔，避免紅肉過多鐵蛋白促發炎。鱸魚、午仔魚去骨打泥，豆腐提供極佳嫩質蛋白。</p>
+                                    <strong class="text-amber-800">白肉與植物性蛋白 (魚肉、雞肉、豆腐、毛豆)：</strong>
+                                    <p class="text-amber-900/80 text-xs mt-0.5 leading-relaxed">減少肝臟負擔，避免紅肉過多鐵蛋白促發炎。鱸魚、午仔魚去骨打泥，豆腐提供極佳嫩質蛋白。</p>
                                 </li>
                                 <li>
-                                    <strong class="text-teal-300">深海魚與牛奶：</strong>
-                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">天然維生素 D3 來源，維持骨質與增強造血白血球。</p>
+                                    <strong class="text-amber-800">深海魚與牛奶：</strong>
+                                    <p class="text-amber-900/80 text-xs mt-0.5 leading-relaxed">天然維生素 D3 來源，維持骨質與增強造血白血球。</p>
                                 </li>
                                 <li>
-                                    <strong class="text-teal-300">雞蛋：</strong>
-                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">建議做成無渣蒸蛋，溫潤好吞，避免乾硬茶葉蛋黃嗆咳。</p>
+                                    <strong class="text-amber-800">雞蛋：</strong>
+                                    <p class="text-amber-900/80 text-xs mt-0.5 leading-relaxed">建議做成無渣蒸蛋，溫潤好吞，避免乾硬茶葉蛋黃嗆咳。</p>
                                 </li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="food-card bg-slate-800/80 p-5 rounded-2xl border border-slate-700 shadow-sm flex flex-col justify-between">
+                    <div class="food-card bg-white/95 p-5 rounded-3xl border border-amber-200 shadow-sm flex flex-col justify-between">
                         <div>
-                            <div class="flex items-center justify-between mb-3 border-b border-slate-700 pb-2.5">
-                                <h3 class="text-lg font-black text-yellow-300 flex items-center gap-2"><span>🥑</span> 四、護腦抗發炎好油</h3>
-                                <span class="text-xs bg-yellow-950 text-yellow-300 px-2 py-0.5 rounded-full font-bold">Omega-3/9</span>
+                            <div class="flex items-center justify-between mb-3 border-b border-amber-100 pb-3">
+                                <h3 class="text-lg font-black text-amber-700 flex items-center gap-2"><span>🥑</span> 四、護腦抗發炎好油</h3>
+                                <span class="text-xs bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full font-bold">Omega-3/9</span>
                             </div>
-                            <ul class="space-y-3 text-sm text-slate-200">
+                            <ul class="space-y-3 text-sm text-amber-950">
                                 <li>
-                                    <strong class="text-yellow-300">Omega-9 油品 (冷壓初榨橄欖油、苦茶油、酪梨油)：</strong>
-                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">抗發炎、保護心血管與大腦神經。起鍋後淋入溫湯，潤滑食道利於吞嚥。</p>
+                                    <strong class="text-amber-800">Omega-9 油品 (冷壓初榨橄欖油、苦茶油、酪梨油)：</strong>
+                                    <p class="text-amber-900/80 text-xs mt-0.5 leading-relaxed">抗發炎、保護心血管與大腦神經。起鍋後淋入溫湯，潤滑食道利於吞嚥。</p>
                                 </li>
                                 <li>
-                                    <strong class="text-yellow-300">Omega-3 油品 (魚油 EPA/DHA、海藻油)：</strong>
-                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">強力抗炎細胞保護，有效緩解放療後的組織發炎反應。</p>
+                                    <strong class="text-amber-800">Omega-3 油品 (魚油 EPA/DHA、海藻油)：</strong>
+                                    <p class="text-amber-900/80 text-xs mt-0.5 leading-relaxed">強力抗炎細胞保護，有效緩解放療後的組織發炎反應。</p>
                                 </li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="food-card bg-slate-800/80 p-5 rounded-2xl border border-slate-700 shadow-sm flex flex-col justify-between">
+                    <div class="food-card bg-white/95 p-5 rounded-3xl border border-amber-200 shadow-sm flex flex-col justify-between">
                         <div>
-                            <div class="flex items-center justify-between mb-3 border-b border-slate-700 pb-2.5">
-                                <h3 class="text-lg font-black text-indigo-300 flex items-center gap-2"><span>🥣</span> 五、低 GI 澱粉與穀物</h3>
-                                <span class="text-xs bg-indigo-950 text-indigo-300 px-2 py-0.5 rounded-full font-bold">穩定血糖</span>
+                            <div class="flex items-center justify-between mb-3 border-b border-amber-100 pb-3">
+                                <h3 class="text-lg font-black text-amber-700 flex items-center gap-2"><span>🥣</span> 五、低 GI 澱粉與穀物</h3>
+                                <span class="text-xs bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full font-bold">穩定血糖</span>
                             </div>
-                            <ul class="space-y-3 text-sm text-slate-200">
+                            <ul class="space-y-3 text-sm text-amber-950">
                                 <li>
-                                    <strong class="text-indigo-300">冬粉 (綠豆製純粉)：</strong>
-                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">極佳的低 GI 澱粉，血糖穩定不易飆升堆積脂肪。可剪細碎浸於清魚湯，順滑好吸入。</p>
+                                    <strong class="text-amber-800">冬粉 (綠豆製純粉)：</strong>
+                                    <p class="text-amber-900/80 text-xs mt-0.5 leading-relaxed">極佳的低 GI 澱粉，血糖穩定不易飆升堆積脂肪。可剪細碎浸於清魚湯，順滑好吸入。</p>
                                 </li>
                                 <li>
-                                    <strong class="text-indigo-300">全穀雜糧 (燕麥、糙米、小麥)：</strong>
-                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">富含 B 群維持神經機能。<span class="text-amber-300 font-bold">⚠️ 需煮成去渣濃米湯，避開乾硬全穀顆粒。</span></p>
+                                    <strong class="text-amber-800">全穀雜糧 (燕麥、糙米、小麥)：</strong>
+                                    <p class="text-amber-900/80 text-xs mt-0.5 leading-relaxed">富含 B 群維持神經機能。<span class="text-orange-700 font-bold">⚠️ 需煮成去渣濃米湯，避開乾硬全穀顆粒。</span></p>
                                 </li>
                                 <li>
-                                    <strong class="text-amber-400">堅果種子與豆類：</strong>
-                                    <p class="text-slate-300 text-xs mt-0.5 leading-relaxed">富含好油與「鎂」。但烘焙堅果性燥，媽媽暫不宜整顆嚼食，可使用純堅果醬微量調味。</p>
+                                    <strong class="text-orange-700">堅果種子與豆類：</strong>
+                                    <p class="text-amber-900/80 text-xs mt-0.5 leading-relaxed">富含好油與「鎂」。但烘焙堅果性燥，媽媽暫不宜整顆嚼食，可使用純堅果醬微量調味。</p>
                                 </li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="food-card bg-slate-800/80 p-5 rounded-2xl border border-emerald-700/60 shadow-sm flex flex-col justify-between bg-emerald-950/20">
+                    <div class="food-card bg-amber-50/90 p-5 rounded-3xl border border-amber-300 shadow-sm flex flex-col justify-between">
                         <div>
-                            <div class="flex items-center justify-between mb-3 border-b border-slate-700 pb-2.5">
-                                <h3 class="text-lg font-black text-emerald-300 flex items-center gap-2"><span>🥛</span> 六、早晨細胞特調飲品</h3>
-                                <span class="text-xs bg-emerald-900 text-emerald-200 px-2 py-0.5 rounded-full font-bold">劉醫師推薦</span>
+                            <div class="flex items-center justify-between mb-3 border-b border-amber-200 pb-3">
+                                <h3 class="text-lg font-black text-amber-800 flex items-center gap-2"><span>🥛</span> 六、早晨細胞特調飲品</h3>
+                                <span class="text-xs bg-amber-600 text-white px-2.5 py-1 rounded-full font-bold">醫師推薦</span>
                             </div>
-                            <div class="text-sm text-slate-200 space-y-2 leading-relaxed">
-                                <p class="text-emerald-400 font-bold">劉醫師早晨健康飲配方：</p>
-                                <div class="bg-slate-900/90 p-3.5 rounded-xl border border-emerald-800/50 text-xs space-y-1.5 text-slate-300 font-medium">
-                                    <p>• <span class="text-emerald-300 font-bold">無糖溫豆漿</span> 為基底</p>
-                                    <p>• 添入 <span class="text-emerald-300 font-bold">黑芝麻粉</span> (補鈣與花青素)</p>
-                                    <p>• 添入 <span class="text-emerald-300 font-bold">卵磷脂粉 ＋ 優質蛋白質粉</span></p>
-                                    <p>• 起杯前滴入數滴 <span class="text-emerald-300 font-bold">冷壓初榨橄欖油</span></p>
+                            <div class="text-sm text-amber-950 space-y-2 leading-relaxed">
+                                <p class="text-amber-800 font-bold">早晨健康飲配方：</p>
+                                <div class="bg-white p-3.5 rounded-2xl border border-amber-200 text-xs space-y-1.5 text-amber-900 font-semibold shadow-sm">
+                                    <p>• <span class="text-amber-700 font-bold">無糖溫豆漿</span> 為基底</p>
+                                    <p>• 添入 <span class="text-amber-700 font-bold">黑芝麻粉</span> (補鈣與花青素)</p>
+                                    <p>• 添入 <span class="text-amber-700 font-bold">卵磷脂粉 ＋ 優質蛋白質粉</span></p>
+                                    <p>• 起杯前滴入數滴 <span class="text-amber-700 font-bold">冷壓初榨橄欖油</span></p>
                                 </div>
-                                <p class="text-xs text-slate-400 pt-1">全液態溫順好吞嚥，補充足量卵磷脂與健康脂肪酸，養護黏膜上皮細胞。</p>
+                                <p class="text-xs text-amber-800 pt-1">全液態溫順好吞嚥，補充足量卵磷脂與健康脂肪酸，養護黏膜上皮細胞。</p>
                             </div>
                         </div>
                     </div>
@@ -600,48 +598,48 @@
             </section>
 
             <section id="content-diet" class="hidden animate-fade-in">
-                <h2 class="text-xl sm:text-2xl font-black text-emerald-400 mb-5 border-l-4 border-emerald-500 pl-3">全期飲食護理紅綠燈 (電療修復 / 防過敏期)</h2>
+                <h2 class="text-xl sm:text-2xl font-black text-amber-700 mb-5 border-l-4 border-amber-500 pl-3 font-serif-tc">全期飲食護理紅綠燈 (電療修復 / 防過敏期)</h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                    <div class="bg-rose-950/40 rounded-2xl border border-rose-800/60 overflow-hidden shadow-md">
-                        <div class="bg-rose-900 text-white p-3.5 font-black text-center text-lg">🚨 紅燈：嚴禁進場 (全面封存)</div>
+                    <div class="bg-rose-50/90 rounded-3xl border border-rose-200 overflow-hidden shadow-md">
+                        <div class="bg-rose-600 text-white p-4 font-black text-center text-lg">🚨 紅燈：嚴禁進場 (全面封存)</div>
                         <div class="p-5 text-sm space-y-3">
-                            <p class="text-rose-300 font-bold border-b border-rose-800/60 pb-2">極易加重皮膚發癢、食道充血與劇咳</p>
-                            <ul class="space-y-2.5 text-slate-300 text-xs sm:text-sm">
-                                <li><strong class="text-rose-400">🔥 燥熱辛辣：</strong> 辣椒、生蒜、老薑(炸薑絲)、胡椒粉</li>
-                                <li><strong class="text-rose-400">🥭 燥熱水果：</strong> 榴槤、芒果、龍眼、荔枝、鳳梨</li>
-                                <li><strong class="text-rose-400">🥜 烘焙堅果：</strong> 花生(醬)、核桃、腰果 (顆粒黏喉易嗆)</li>
-                                <li><strong class="text-rose-400">🌿 補品補藥：</strong> 紅蔘、當歸、十全、麻油雞</li>
-                                <li><strong class="text-rose-400">🦐 帶殼海鮮：</strong> 蝦、蟹、蛤蜊、蚵仔、XO醬</li>
-                                <li><strong class="text-rose-400">🍯 其他禁忌：</strong> 生生蜂蜜(帶菌風險)、高溫油炸重鹹</li>
+                            <p class="text-rose-800 font-bold border-b border-rose-200 pb-2">極易加重皮膚發癢、食道充血與劇咳</p>
+                            <ul class="space-y-2.5 text-amber-950 text-xs sm:text-sm font-medium">
+                                <li><strong class="text-rose-700">🔥 燥熱辛辣：</strong> 辣椒、生蒜、老薑(炸薑絲)、胡椒粉</li>
+                                <li><strong class="text-rose-700">🥭 燥熱水果：</strong> 榴槤、芒果、龍眼、荔枝、鳳梨</li>
+                                <li><strong class="text-rose-700">🥜 烘焙堅果：</strong> 花生(醬)、核桃、腰果 (顆粒黏喉易嗆)</li>
+                                <li><strong class="text-rose-700">🌿 補品補藥：</strong> 紅蔘、當歸、十全、麻油雞</li>
+                                <li><strong class="text-rose-700">🦐 帶殼海鮮：</strong> 蝦、蟹、蛤蜊、蚵仔、XO醬</li>
+                                <li><strong class="text-rose-700">🍯 其他禁忌：</strong> 生蜂蜜(帶菌風險)、高溫油炸重鹹</li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="bg-amber-950/30 rounded-2xl border border-amber-700/60 overflow-hidden shadow-md">
-                        <div class="bg-amber-800 text-white p-3.5 font-black text-center text-lg">⚠️ 黃燈：謹慎對沖 (去渣去粗)</div>
+                    <div class="bg-amber-50/90 rounded-3xl border border-amber-300 overflow-hidden shadow-md">
+                        <div class="bg-amber-600 text-white p-4 font-black text-center text-lg">⚠️ 黃燈：謹慎對沖 (去渣去粗)</div>
                         <div class="p-5 text-sm space-y-3">
-                            <p class="text-amber-300 font-bold border-b border-amber-800/60 pb-2">需去纖維、去粗梗、煮透打滑泥</p>
-                            <ul class="space-y-2.5 text-slate-300 text-xs sm:text-sm">
-                                <li><strong class="text-amber-400">🎃 南瓜：</strong> 必須徹底去皮去籽！煮爛過篩成細泥。</li>
-                                <li><strong class="text-amber-400">🥦 地瓜葉/青菜：</strong> 嚴禁粗梗，只取嫩葉並以果汁機高速打泥濾渣。</li>
-                                <li><strong class="text-amber-400">🍲 苦瓜清湯：</strong> 必須撈乾淨浮油，去籽煮透打泥，減輕負擔。</li>
-                                <li><strong class="text-amber-400">🍄 蕈菇類：</strong> 纖維極韌易卡喉，只可少許入湯打成無顆粒細湯。</li>
-                                <li><strong class="text-amber-400">🥑 酪梨藍莓：</strong> 需徹底濾掉藍莓皮與籽渣，去酸度後溫順飲用。</li>
+                            <p class="text-amber-800 font-bold border-b border-amber-200 pb-2">需去纖維、去粗梗、煮透打滑泥</p>
+                            <ul class="space-y-2.5 text-amber-950 text-xs sm:text-sm font-medium">
+                                <li><strong class="text-amber-700">🎃 南瓜：</strong> 必須徹底去皮去籽！煮爛過篩成細泥。</li>
+                                <li><strong class="text-amber-700">🥦 地瓜葉/青菜：</strong> 嚴禁粗梗，只取嫩葉並以果汁機高速打泥濾渣。</li>
+                                <li><strong class="text-amber-700">🍲 苦瓜清湯：</strong> 必須撈乾淨浮油，去籽煮透打泥，減輕負擔。</li>
+                                <li><strong class="text-amber-700">🍄 蕈菇類：</strong> 纖維極韌易卡喉，只可少許入湯打成無顆粒細湯。</li>
+                                <li><strong class="text-amber-700">🥑 酪梨藍莓：</strong> 需徹底濾掉藍莓皮與籽渣，去酸度後溫順飲用。</li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="bg-emerald-950/40 rounded-2xl border border-emerald-700/60 overflow-hidden shadow-md">
-                        <div class="bg-emerald-800 text-white p-3.5 font-black text-center text-lg">✅ 綠燈：黃金選股 (護理專用)</div>
+                    <div class="bg-emerald-50/90 rounded-3xl border border-emerald-200 overflow-hidden shadow-md">
+                        <div class="bg-emerald-600 text-white p-4 font-black text-center text-lg">✅ 綠燈：黃金選股 (護理專用)</div>
                         <div class="p-5 text-sm space-y-3">
-                            <p class="text-emerald-300 font-bold border-b border-emerald-800/60 pb-2">平性溫和、修復黏膜、優質蛋白質</p>
-                            <ul class="space-y-2.5 text-slate-300 text-xs sm:text-sm">
-                                <li><strong class="text-emerald-400">🛡️ 黏膜修復：</strong> 純蓮藕粉 (微溫/常溫無糖)、百合銀耳露 (打泥)。</li>
-                                <li><strong class="text-emerald-400">🐟 優質白肉：</strong> 鱸魚/午仔魚清湯 (細心去刺打泥)、嫩豆腐、無渣蒸蛋。</li>
-                                <li><strong class="text-emerald-400">🥣 低GI主食：</strong> 綠豆冬粉 (剪碎吸高湯)、日本山藥泥、馬鈴薯泥。</li>
-                                <li><strong class="text-emerald-400">🥑 護腦好油：</strong> 起鍋淋冷壓初榨橄欖油、苦茶油潤喉。</li>
-                                <li><strong class="text-emerald-400">💧 醫療營養：</strong> 速養遼 (L-Glutamine 漱口含服)、速癒素。</li>
+                            <p class="text-emerald-800 font-bold border-b border-emerald-200 pb-2">平性溫和、修復黏膜、優質蛋白質</p>
+                            <ul class="space-y-2.5 text-amber-950 text-xs sm:text-sm font-medium">
+                                <li><strong class="text-emerald-700">🛡️ 黏膜修復：</strong> 純蓮藕粉 (微溫/常溫無糖)、百合銀耳露 (打泥)。</li>
+                                <li><strong class="text-emerald-700">🐟 優質白肉：</strong> 鱸魚/午仔魚清湯 (細心去刺打泥)、嫩豆腐、無渣蒸蛋。</li>
+                                <li><strong class="text-emerald-700">🥣 低GI主食：</strong> 綠豆冬粉 (剪碎吸高湯)、日本山藥泥、馬鈴薯泥。</li>
+                                <li><strong class="text-emerald-700">🥑 護腦好油：</strong> 起鍋淋冷壓初榨橄欖油、苦茶油潤喉。</li>
+                                <li><strong class="text-emerald-700">💧 醫療營養：</strong> 速養遼 (L-Glutamine 漱口含服)、速癒素。</li>
                             </ul>
                         </div>
                     </div>
@@ -649,49 +647,49 @@
             </section>
 
             <section id="content-sop" class="hidden animate-fade-in">
-                <h2 class="text-xl sm:text-2xl font-black text-emerald-400 mb-5 border-l-4 border-emerald-500 pl-3">醫療級照護標準作業流程 (SOP)</h2>
+                <h2 class="text-xl sm:text-2xl font-black text-amber-700 mb-5 border-l-4 border-amber-500 pl-3 font-serif-tc">醫療級照護標準作業流程 (SOP)</h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <div class="bg-slate-800/80 p-5 rounded-2xl border border-blue-800/60 relative">
-                        <span class="absolute top-3 right-3 text-xs bg-blue-900 text-blue-300 px-2.5 py-1 rounded-full font-bold">食道黏膜防護</span>
-                        <h3 class="text-lg font-black text-blue-400 mb-3 flex items-center gap-2"><span>💧</span> 速養遼 (L-Glutamine) 標準服法</h3>
-                        <ol class="list-decimal list-inside space-y-2 text-sm text-slate-200">
-                            <li>1 平匙粉末加入 100~200cc <strong class="text-rose-400">常溫水或微涼水 (嚴禁熱水)</strong>。</li>
+                    <div class="bg-white/95 p-6 rounded-3xl border border-blue-200 shadow-sm relative">
+                        <span class="absolute top-4 right-4 text-xs bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-bold">食道黏膜防護</span>
+                        <h3 class="text-lg font-black text-blue-700 mb-3 flex items-center gap-2"><span>💧</span> 速養遼 (L-Glutamine) 標準服法</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-sm text-amber-950 font-medium">
+                            <li>1 平匙粉末加入 100~200cc <strong class="text-rose-600">常溫水或微涼水 (嚴禁熱水)</strong>。</li>
                             <li>建議於飯前 30 分鐘或睡前空腹時給予。</li>
-                            <li>讓媽媽含在口中 <strong class="text-amber-300">輕柔漱口含留 15~30 秒</strong>。</li>
+                            <li>讓媽媽含在口中 <strong class="text-amber-700">輕柔漱口含留 15~30 秒</strong>。</li>
                             <li>極小口、慢慢吞嚥，讓液體均勻敷貼在食道與潰瘍傷口表面。</li>
                         </ol>
                     </div>
 
-                    <div class="bg-slate-800/80 p-5 rounded-2xl border border-pink-800/60 relative">
-                        <span class="absolute top-3 right-3 text-xs bg-pink-900 text-pink-300 px-2.5 py-1 rounded-full font-bold">皮膚止癢保養</span>
-                        <h3 class="text-lg font-black text-pink-400 mb-3 flex items-center gap-2"><span>🧴</span> 皮膚科擦藥（嚴格間隔 5 分鐘）</h3>
-                        <ol class="list-decimal list-inside space-y-2 text-sm text-slate-200">
+                    <div class="bg-white/95 p-6 rounded-3xl border border-pink-200 shadow-sm relative">
+                        <span class="absolute top-4 right-4 text-xs bg-pink-100 text-pink-800 px-3 py-1 rounded-full font-bold">皮膚止癢保養</span>
+                        <h3 class="text-lg font-black text-pink-700 mb-3 flex items-center gap-2"><span>🧴</span> 皮膚科擦藥（嚴格間隔 5 分鐘）</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-sm text-amber-950 font-medium">
                             <li>每日 3~4 次，先均勻塗抹「保濕乳液」打底打潤。</li>
-                            <li><strong class="text-pink-300">手機設定計時器，嚴格靜待 5 分鐘</strong>，確保水分吸收。</li>
+                            <li><strong class="text-pink-700">手機設定計時器，嚴格靜待 5 分鐘</strong>，確保水分吸收。</li>
                             <li>再針對發紅、會癢之局部皮膚，薄塗專用藥膏。</li>
                             <li>切勿洗太熱的水，以免洗去油脂加劇乾燥脫屑。</li>
                         </ol>
                     </div>
 
-                    <div class="bg-slate-800/80 p-5 rounded-2xl border border-amber-800/60 relative">
-                        <span class="absolute top-3 right-3 text-xs bg-amber-900 text-amber-300 px-2.5 py-1 rounded-full font-bold">防嗆防卡喉</span>
-                        <h3 class="text-lg font-black text-amber-400 mb-3 flex items-center gap-2"><span>🥣</span> 蔬菜與肉類打泥去渣工序</h3>
-                        <ol class="list-decimal list-inside space-y-2 text-sm text-slate-200">
+                    <div class="bg-white/95 p-6 rounded-3xl border border-amber-200 shadow-sm relative">
+                        <span class="absolute top-4 right-4 text-xs bg-amber-100 text-amber-800 px-3 py-1 rounded-full font-bold">防嗆防卡喉</span>
+                        <h3 class="text-lg font-black text-amber-800 mb-3 flex items-center gap-2"><span>🥣</span> 蔬菜與肉類打泥去渣工序</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-sm text-amber-950 font-medium">
                             <li>徹底去骨、去魚刺、去粗梗、南瓜徹底削皮。</li>
                             <li>蒸煮至完全軟爛無硬塊。</li>
                             <li>加入溫鮮魚湯或蔬菜清湯，破壁調理機高速攪打 2 分鐘。</li>
-                            <li><strong class="text-amber-300">關鍵：必須過細網篩濾</strong>，確保無任何小纖維殘留。</li>
+                            <li><strong class="text-amber-700">關鍵：必須過細網篩濾</strong>，確保無任何小纖維殘留。</li>
                         </ol>
                     </div>
 
-                    <div class="bg-slate-800/80 p-5 rounded-2xl border border-purple-800/60 relative">
-                        <span class="absolute top-3 right-3 text-xs bg-purple-900 text-purple-300 px-2.5 py-1 rounded-full font-bold">隱球菌追蹤</span>
-                        <h3 class="text-lg font-black text-purple-400 mb-3 flex items-center gap-2"><span>💊</span> 隱球菌口服抗生素觀察</h3>
-                        <ol class="list-decimal list-inside space-y-2 text-sm text-slate-200">
+                    <div class="bg-white/95 p-6 rounded-3xl border border-purple-200 shadow-sm relative">
+                        <span class="absolute top-4 right-4 text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-bold">隱球菌追蹤</span>
+                        <h3 class="text-lg font-black text-purple-700 mb-3 flex items-center gap-2"><span>💊</span> 隱球菌口服抗生素觀察</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-sm text-amber-950 font-medium">
                             <li>每 12 小時準時服藥，預計服用 6~12 個月（先至二月）。</li>
                             <li>每 3 個月定期安排胸部 X 光或 CT 追蹤。</li>
-                            <li><strong class="text-rose-400">絕對不可發燒</strong>，若有體溫升高或畏寒寒顫應即時就醫。</li>
+                            <li><strong class="text-rose-600">絕對不可發燒</strong>，若有體溫升高或畏寒寒顫應即時就醫。</li>
                             <li>後續若施打免疫治療，務必主動請陳醫師開立肺囊蟲預防藥。</li>
                         </ol>
                     </div>
@@ -701,10 +699,10 @@
             <section id="content-history" class="hidden animate-fade-in">
                 <div class="flex items-center justify-between mb-5">
                     <div>
-                        <h2 class="text-xl sm:text-2xl font-black text-emerald-400 border-l-4 border-emerald-500 pl-3">資源回收桶 (已刪除之紀錄)</h2>
-                        <p class="text-xs sm:text-sm text-slate-400 mt-1">此處保存已撤除或已替換之紀錄（包含正子攝影備忘），可隨時一鍵還原或永久清理。</p>
+                        <h2 class="text-xl sm:text-2xl font-black text-amber-700 border-l-4 border-amber-500 pl-3 font-serif-tc">資源回收桶 (已刪除之紀錄)</h2>
+                        <p class="text-xs sm:text-sm text-amber-800/80 mt-1 font-semibold">此處保存已撤除或已替換之紀錄（包含正子攝影備忘），可隨時一鍵還原或永久清理。</p>
                     </div>
-                    <button onclick="clearAllHistoryModal()" id="btn-clear-trash" class="text-xs sm:text-sm font-bold text-rose-400 hover:text-rose-300 border border-rose-700/60 px-3.5 py-2 rounded-xl bg-rose-950/30 transition">
+                    <button onclick="clearAllHistoryModal()" id="btn-clear-trash" class="text-xs sm:text-sm font-bold text-rose-700 hover:text-rose-900 border border-rose-300 px-4 py-2 rounded-xl bg-rose-50 transition shadow-sm">
                         🗑️ 清空所有歷史
                     </button>
                 </div>
@@ -718,62 +716,62 @@
 
     <!-- 圖片放大檢視 Modal (Lightbox) -->
     <div id="lightbox-modal" class="hidden fixed inset-0 bg-black/95 z-[100] flex items-center justify-center p-4 animate-fade-in" onclick="closeLightbox()">
-        <img id="lightbox-img" src="" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl cursor-zoom-out" onclick="event.stopPropagation(); closeLightbox()">
-        <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white hover:text-emerald-400 bg-slate-800/50 hover:bg-slate-800 p-2 rounded-full transition text-2xl w-10 h-10 flex items-center justify-center">&times;</button>
+        <img id="lightbox-img" src="" class="max-w-full max-h-full object-contain rounded-2xl shadow-2xl cursor-zoom-out" onclick="event.stopPropagation(); closeLightbox()">
+        <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white hover:text-amber-400 bg-black/50 hover:bg-black p-2 rounded-full transition text-2xl w-12 h-12 flex items-center justify-center">&times;</button>
     </div>
 
     <!-- 視覺化大字月曆選取器 Modal -->
     <div id="date-picker-modal" class="hidden fixed inset-0 bg-black/80 z-[80] flex items-center justify-center p-3 animate-fade-in">
-        <div class="bg-slate-900 border border-slate-700 rounded-3xl p-5 sm:p-6 w-full max-w-md shadow-2xl text-slate-100">
-            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
-                <button type="button" onclick="changePickerMonth(-1)" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 font-bold px-3 transition">◀</button>
+        <div class="bg-white border border-amber-200 rounded-3xl p-6 w-full max-w-md shadow-2xl text-amber-950">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-amber-100">
+                <button type="button" onclick="changePickerMonth(-1)" class="p-2 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold px-3 transition">◀</button>
                 <div class="flex items-center gap-2">
-                    <select id="dp-year-select" onchange="onPickerSelectChange()" class="bg-slate-800 border border-slate-700 text-emerald-400 font-black rounded-xl p-2 text-base outline-none"></select>
-                    <select id="dp-month-select" onchange="onPickerSelectChange()" class="bg-slate-800 border border-slate-700 text-emerald-400 font-black rounded-xl p-2 text-base outline-none"></select>
+                    <select id="dp-year-select" onchange="onPickerSelectChange()" class="bg-amber-50 border border-amber-300 text-amber-900 font-black rounded-xl p-2 text-base outline-none"></select>
+                    <select id="dp-month-select" onchange="onPickerSelectChange()" class="bg-amber-50 border border-amber-300 text-amber-900 font-black rounded-xl p-2 text-base outline-none"></select>
                 </div>
-                <button type="button" onclick="changePickerMonth(1)" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 font-bold px-3 transition">▶</button>
+                <button type="button" onclick="changePickerMonth(1)" class="p-2 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold px-3 transition">▶</button>
             </div>
 
-            <div class="grid grid-cols-7 gap-1 text-center text-xs font-bold text-slate-400 mb-2">
-                <div class="text-rose-400">日</div>
+            <div class="grid grid-cols-7 gap-1 text-center text-xs font-extrabold text-amber-800 mb-2">
+                <div class="text-rose-600">日</div>
                 <div>一</div>
                 <div>二</div>
                 <div>三</div>
                 <div>四</div>
                 <div>五</div>
-                <div class="text-teal-400">六</div>
+                <div class="text-teal-700">六</div>
             </div>
 
-            <div id="dp-calendar-grid" class="grid grid-cols-7 gap-1 sm:gap-1.5 mb-4"></div>
+            <div id="dp-calendar-grid" class="grid grid-cols-7 gap-1.5 mb-4"></div>
 
-            <div class="flex items-center justify-between pt-3 border-t border-slate-800 gap-2">
+            <div class="flex items-center justify-between pt-3 border-t border-amber-100 gap-2">
                 <div class="flex items-center gap-1.5">
-                    <button type="button" onclick="selectQuickDay('yesterday')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300">昨天</button>
-                    <button type="button" onclick="selectQuickDay('today')" class="px-2.5 py-1.5 bg-emerald-800 hover:bg-emerald-700 text-xs font-bold rounded-lg text-emerald-200">今天</button>
-                    <button type="button" onclick="selectQuickDay('tomorrow')" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs rounded-lg text-slate-300">明天</button>
+                    <button type="button" onclick="selectQuickDay('yesterday')" class="px-3 py-2 bg-amber-100 hover:bg-amber-200 text-xs rounded-xl font-bold text-amber-900">昨天</button>
+                    <button type="button" onclick="selectQuickDay('today')" class="px-3 py-2 bg-amber-600 hover:bg-amber-500 text-xs font-extrabold rounded-xl text-white shadow-sm">今天</button>
+                    <button type="button" onclick="selectQuickDay('tomorrow')" class="px-3 py-2 bg-amber-100 hover:bg-amber-200 text-xs rounded-xl font-bold text-amber-900">明天</button>
                 </div>
-                <button type="button" onclick="closeDatePickerModal()" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-bold rounded-xl transition">關閉</button>
+                <button type="button" onclick="closeDatePickerModal()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-bold rounded-xl transition">關閉</button>
             </div>
         </div>
     </div>
 
     <!-- 新增 / 編輯 住院日程 Modal -->
     <div id="hosp-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-3 animate-fade-in">
-        <div class="bg-slate-900 border border-slate-700 rounded-3xl p-5 sm:p-7 w-full max-w-lg shadow-2xl text-left">
-            <h3 id="hosp-modal-title" class="text-xl font-black text-emerald-400 mb-4 border-l-4 border-emerald-500 pl-3">編輯住院日程</h3>
+        <div class="bg-white border border-amber-200 rounded-3xl p-6 sm:p-7 w-full max-w-lg shadow-2xl text-left text-amber-950">
+            <h3 id="hosp-modal-title" class="text-xl font-black text-amber-700 mb-4 border-l-4 border-amber-500 pl-3 font-serif-tc">編輯住院日程</h3>
             
             <div class="space-y-4">
                 <div>
-                    <label class="block text-xs text-slate-300 font-bold mb-1.5">日期 (點選開啟月曆)</label>
+                    <label class="block text-xs text-amber-900 font-bold mb-1.5">日期 (點選開啟月曆)</label>
                     <div class="flex items-center gap-1.5">
-                        <input type="text" id="hosp-input-date" placeholder="YYYY-MM-DD" class="bg-slate-800 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium outline-none cursor-pointer" onclick="openDatePickerModal('hosp-input-date')" readonly>
-                        <button type="button" onclick="openDatePickerModal('hosp-input-date')" class="px-3 py-2.5 bg-slate-700 text-emerald-300 rounded-xl font-bold">📅</button>
+                        <input type="text" id="hosp-input-date" placeholder="YYYY-MM-DD" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold outline-none cursor-pointer" onclick="openDatePickerModal('hosp-input-date')" readonly>
+                        <button type="button" onclick="openDatePickerModal('hosp-input-date')" class="px-3.5 py-3 bg-amber-600 text-white rounded-xl font-bold">📅</button>
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-xs text-slate-300 font-bold mb-1.5">陪同照顧人</label>
-                    <select id="hosp-input-companion" class="bg-slate-800 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium outline-none">
+                    <label class="block text-xs text-amber-900 font-bold mb-1.5">陪同照顧人</label>
+                    <select id="hosp-input-companion" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold outline-none">
                         <option value="映">映</option>
                         <option value="樺">樺</option>
                         <option value="潔">潔 (ruby)</option>
@@ -783,23 +781,23 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs text-slate-300 font-bold mb-1.5">行程項目名稱</label>
-                    <input type="text" id="hosp-input-title" placeholder="例: 媽媽住院、急診住院、胃鏡檢查..." class="bg-slate-800 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium outline-none">
+                    <label class="block text-xs text-amber-900 font-bold mb-1.5">行程項目名稱</label>
+                    <input type="text" id="hosp-input-title" placeholder="例: 媽媽住院、急診住院、胃鏡檢查..." class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold outline-none">
                 </div>
 
                 <div>
-                    <label class="block text-xs text-slate-300 font-bold mb-1.5">備註 / 重要檢查事項 (可空白)</label>
-                    <textarea id="hosp-input-note" placeholder="例如：09:30 照胃鏡、前晚 12:00 嚴格禁食禁水、抽血指標..." class="bg-slate-800 border border-slate-700 p-3 rounded-xl w-full h-24 text-slate-100 font-normal outline-none resize-none"></textarea>
+                    <label class="block text-xs text-amber-900 font-bold mb-1.5">備註 / 重要檢查事項 (可空白)</label>
+                    <textarea id="hosp-input-note" placeholder="例如：09:30 照胃鏡、前晚 12:00 嚴格禁食禁水、抽血指標..." class="sunny-input-box p-3 rounded-xl w-full h-24 text-amber-950 font-medium outline-none resize-none"></textarea>
                 </div>
             </div>
 
-            <div class="flex items-center justify-between gap-3 mt-6 pt-4 border-t border-slate-800">
-                <button type="button" id="btn-hosp-delete-in-modal" onclick="onDeleteHospitalStayFromModal()" class="px-4 py-2 bg-rose-950/80 hover:bg-rose-900 text-rose-300 border border-rose-800 text-sm font-bold rounded-xl transition hidden">
+            <div class="flex items-center justify-between gap-3 mt-6 pt-4 border-t border-amber-100">
+                <button type="button" id="btn-hosp-delete-in-modal" onclick="onDeleteHospitalStayFromModal()" class="px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 text-sm font-bold rounded-xl transition hidden">
                     🗑️ 刪除此日程
                 </button>
                 <div class="flex items-center gap-2 ml-auto">
-                    <button type="button" onclick="closeHospitalModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-bold rounded-xl transition">取消</button>
-                    <button type="button" onclick="saveHospitalStayModal()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-extrabold rounded-xl transition shadow">儲存日程至雲端</button>
+                    <button type="button" onclick="closeHospitalModal()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-bold rounded-xl transition">取消</button>
+                    <button type="button" onclick="saveHospitalStayModal()" class="px-6 py-2.5 bg-amber-600 hover:bg-amber-500 text-white text-sm font-extrabold rounded-xl transition shadow">儲存日程至雲端</button>
                 </div>
             </div>
         </div>
@@ -807,21 +805,21 @@
 
     <!-- 編輯病歷紀錄 Modal -->
     <div id="edit-record-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-3 animate-fade-in">
-        <div class="bg-slate-900 border border-slate-700 rounded-3xl p-5 sm:p-7 w-full max-w-xl shadow-2xl text-left text-slate-100">
-            <h3 class="text-xl font-black text-emerald-400 mb-4 border-l-4 border-emerald-500 pl-3">編輯就醫與護理紀錄</h3>
+        <div class="bg-white border border-amber-200 rounded-3xl p-6 sm:p-7 w-full max-w-xl shadow-2xl text-left text-amber-950">
+            <h3 class="text-xl font-black text-amber-700 mb-4 border-l-4 border-amber-500 pl-3 font-serif-tc">編輯就醫與護理紀錄</h3>
             
             <div class="space-y-4">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs text-slate-300 font-bold mb-1.5">日期 (點選開啟月曆)</label>
+                        <label class="block text-xs text-amber-900 font-bold mb-1.5">日期 (點選開啟月曆)</label>
                         <div class="flex items-center gap-1.5">
-                            <input type="text" id="edit-rec-date" placeholder="YYYY-MM-DD" class="bg-slate-800 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium outline-none cursor-pointer" onclick="openDatePickerModal('edit-rec-date')" readonly>
-                            <button type="button" onclick="openDatePickerModal('edit-rec-date')" class="px-3 py-2.5 bg-slate-700 text-emerald-300 rounded-xl font-bold">📅</button>
+                            <input type="text" id="edit-rec-date" placeholder="YYYY-MM-DD" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold outline-none cursor-pointer" onclick="openDatePickerModal('edit-rec-date')" readonly>
+                            <button type="button" onclick="openDatePickerModal('edit-rec-date')" class="px-3.5 py-3 bg-amber-600 text-white rounded-xl font-bold">📅</button>
                         </div>
                     </div>
                     <div>
-                        <label class="block text-xs text-slate-300 font-bold mb-1.5">科別</label>
-                        <select id="edit-rec-dept" class="bg-slate-800 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium outline-none">
+                        <label class="block text-xs text-amber-900 font-bold mb-1.5">科別</label>
+                        <select id="edit-rec-dept" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold outline-none">
                             <option value="腫瘤科">腫瘤科</option>
                             <option value="放射科">放射科</option>
                             <option value="感染科">感染科</option>
@@ -838,8 +836,8 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs text-slate-300 font-bold mb-1.5">陪診人</label>
-                        <select id="edit-rec-companion" class="bg-slate-800 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium outline-none">
+                        <label class="block text-xs text-amber-900 font-bold mb-1.5">陪診人</label>
+                        <select id="edit-rec-companion" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold outline-none">
                             <option value="映">映</option>
                             <option value="潔">潔 (ruby)</option>
                             <option value="樺">樺</option>
@@ -848,61 +846,61 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs text-slate-300 font-bold mb-1.5">重點標題</label>
-                        <input type="text" id="edit-rec-title" class="bg-slate-800 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium outline-none">
+                        <label class="block text-xs text-amber-900 font-bold mb-1.5">重點標題</label>
+                        <input type="text" id="edit-rec-title" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold outline-none">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-xs text-slate-300 font-bold mb-1.5">詳細醫囑與用藥備忘</label>
-                    <textarea id="edit-rec-detail" class="bg-slate-800 border border-slate-700 p-3 rounded-xl w-full h-28 text-slate-100 font-normal outline-none resize-none leading-relaxed"></textarea>
+                    <label class="block text-xs text-amber-900 font-bold mb-1.5">詳細醫囑與用藥備忘</label>
+                    <textarea id="edit-rec-detail" class="sunny-input-box p-3.5 rounded-xl w-full h-28 text-amber-950 font-medium outline-none resize-none leading-relaxed"></textarea>
                 </div>
             </div>
 
-            <div class="flex items-center justify-end gap-3 mt-6 pt-4 border-t border-slate-800">
-                <button type="button" onclick="closeEditRecordModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-bold rounded-xl transition">取消</button>
-                <button type="button" onclick="saveEditRecordModal()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-extrabold rounded-xl transition shadow">儲存修改至雲端</button>
+            <div class="flex items-center justify-end gap-3 mt-6 pt-4 border-t border-amber-100">
+                <button type="button" onclick="closeEditRecordModal()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-bold rounded-xl transition">取消</button>
+                <button type="button" onclick="saveEditRecordModal()" class="px-6 py-2.5 bg-amber-600 hover:bg-amber-500 text-white text-sm font-extrabold rounded-xl transition shadow">儲存修改至雲端</button>
             </div>
         </div>
     </div>
 
     <!-- 自訂刪除與操作確認 Modal -->
     <div id="confirm-modal" class="hidden fixed inset-0 bg-black/80 z-[90] flex items-center justify-center p-3 animate-fade-in">
-        <div class="bg-slate-900 border border-slate-700 rounded-3xl p-6 w-full max-w-sm shadow-2xl text-center">
+        <div class="bg-white border border-amber-200 rounded-3xl p-6 w-full max-w-sm shadow-2xl text-center text-amber-950">
             <div class="text-4xl mb-3" id="confirm-modal-icon">🗑️</div>
-            <h3 id="confirm-modal-title" class="text-lg font-black text-slate-100 mb-2">確認要執行刪除？</h3>
-            <p id="confirm-modal-desc" class="text-xs sm:text-sm text-slate-400 mb-6 leading-relaxed">此操作會移至資源回收桶，之後可再進行復原。</p>
+            <h3 id="confirm-modal-title" class="text-lg font-black text-amber-900 mb-2">確認要執行刪除？</h3>
+            <p id="confirm-modal-desc" class="text-xs sm:text-sm text-amber-800 mb-6 leading-relaxed">此操作會移至資源回收桶，之後可再進行復原。</p>
             <div class="flex items-center justify-center gap-3">
-                <button onclick="closeConfirmModal()" class="px-5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-sm transition">取消</button>
+                <button onclick="closeConfirmModal()" class="px-5 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold rounded-xl text-sm transition">取消</button>
                 <button id="confirm-modal-ok-btn" class="px-5 py-2 bg-rose-600 hover:bg-rose-500 text-white font-extrabold rounded-xl text-sm transition shadow">確認</button>
             </div>
         </div>
     </div>
 
     <!-- 通知 Toast 浮籤 -->
-    <div id="toast-badge" class="fixed bottom-6 right-6 transform translate-y-24 opacity-0 transition-all duration-300 bg-emerald-600 text-white px-5 py-3 rounded-2xl shadow-2xl font-extrabold text-sm z-[110] pointer-events-none flex items-center gap-2 border border-emerald-400/40">
+    <div id="toast-badge" class="fixed bottom-6 right-6 transform translate-y-24 opacity-0 transition-all duration-300 bg-amber-600 text-white px-5 py-3 rounded-2xl shadow-2xl font-extrabold text-sm z-[110] pointer-events-none flex items-center gap-2 border border-amber-400/40">
         <span id="toast-text">已更新</span>
     </div>
 
     <!-- 編輯注意事項 Modal -->
     <div id="edit-note-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-3 animate-fade-in">
-        <div class="bg-slate-900 border border-slate-700 rounded-3xl p-5 sm:p-7 w-full max-w-xl shadow-2xl text-left text-slate-100 max-h-[90vh] overflow-y-auto custom-scrollbar">
-            <h3 class="text-xl font-black text-emerald-400 mb-4 border-l-4 border-emerald-500 pl-3">編輯注意事項</h3>
+        <div class="bg-white border border-amber-200 rounded-3xl p-6 sm:p-7 w-full max-w-xl shadow-2xl text-left text-amber-950 max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <h3 class="text-xl font-black text-amber-700 mb-4 border-l-4 border-amber-500 pl-3 font-serif-tc">編輯注意事項</h3>
             
             <div class="space-y-4">
                 <div>
-                    <label class="block text-xs text-slate-300 font-bold mb-1.5">標題 / 重點</label>
-                    <input type="text" id="edit-note-title" class="bg-slate-800 border border-slate-700 p-2.5 rounded-xl w-full text-slate-100 font-medium outline-none">
+                    <label class="block text-xs text-amber-900 font-bold mb-1.5">標題 / 重點</label>
+                    <input type="text" id="edit-note-title" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold outline-none">
                 </div>
                 <div>
-                    <label class="block text-xs text-slate-300 font-bold mb-1.5">詳細說明</label>
-                    <textarea id="edit-note-content" class="bg-slate-800 border border-slate-700 p-3 rounded-xl w-full h-28 text-slate-100 font-normal outline-none resize-none leading-relaxed"></textarea>
+                    <label class="block text-xs text-amber-900 font-bold mb-1.5">詳細說明</label>
+                    <textarea id="edit-note-content" class="sunny-input-box p-3.5 rounded-xl w-full h-28 text-amber-950 font-medium outline-none resize-none leading-relaxed"></textarea>
                 </div>
                 
                 <div>
                     <div class="flex items-center justify-between mb-1.5">
-                        <label class="block text-xs text-slate-300 font-bold">附加圖文解說</label>
-                        <label for="edit-note-images" class="cursor-pointer text-emerald-400 text-xs font-bold hover:text-emerald-300">
+                        <label class="block text-xs text-amber-900 font-bold">附加圖文解說</label>
+                        <label for="edit-note-images" class="cursor-pointer text-amber-700 text-xs font-bold hover:text-amber-900">
                             + 新增附圖
                         </label>
                         <input type="file" id="edit-note-images" accept="image/*" multiple class="hidden" onchange="handleEditNoteImagesSelect(event)">
@@ -911,9 +909,9 @@
                 </div>
             </div>
 
-            <div class="flex items-center justify-end gap-3 mt-6 pt-4 border-t border-slate-800">
-                <button type="button" onclick="closeEditNoteModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-bold rounded-xl transition">取消</button>
-                <button type="button" onclick="saveEditNoteModal()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-extrabold rounded-xl transition shadow">儲存修改至雲端</button>
+            <div class="flex items-center justify-end gap-3 mt-6 pt-4 border-t border-amber-100">
+                <button type="button" onclick="closeEditNoteModal()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-bold rounded-xl transition">取消</button>
+                <button type="button" onclick="saveEditNoteModal()" class="px-6 py-2.5 bg-amber-600 hover:bg-amber-500 text-white text-sm font-extrabold rounded-xl transition shadow">儲存修改至雲端</button>
             </div>
         </div>
     </div>
@@ -1345,6 +1343,8 @@
         let auth = null;
         let currentUser = null;
         let isCloudActive = false;
+        
+        let currentRecordCategoryFilter = 'all';
 
         const STORAGE_KEY_HOSP = `care_stays_${appId}_v5`;
         const STORAGE_KEY_REC = `care_records_${appId}_v5`;
@@ -1413,7 +1413,6 @@
             renderGlobalNoteHeaderUI();
         }
 
-        // ⚠️ 真實 Firebase 專案設定（已寫死，GitHub Pages 等任何靜態網域皆可正確初始化雲端連線）
         const firebaseConfig = {
             apiKey: "AIzaSyCfuMk_o3bteqa4i4Crezti56Vn8fsT4IQ",
             authDomain: "mom-care-hub.firebaseapp.com",
@@ -1427,7 +1426,7 @@
             updateCloudStatusBadge('connecting', '連線家庭雲端...');
 
             if (!firebaseConfig || !firebaseConfig.apiKey) {
-                updateCloudStatusBadge('local', '🟢 本機儲存已就緒 (獨立模式)');
+                updateCloudStatusBadge('local', '🟢 本機儲存已就緒');
                 return;
             }
 
@@ -1540,12 +1539,7 @@
             const textEl = document.getElementById('cloud-sync-text');
             if (!dot || !textEl) return;
             textEl.textContent = text;
-            dot.className = state === 'synced' ? 'w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse' : 'w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse';
-        }
-
-        function copyShareableSyncLink() {
-            copyTextToClipboard(window.location.href);
-            showToast('🔗 已複製全家人同步網址！');
+            dot.className = state === 'synced' ? 'w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse' : 'w-2.5 h-2.5 rounded-full bg-orange-400 animate-pulse';
         }
 
         function switchTab(tabId) {
@@ -1557,11 +1551,9 @@
                 if (el) el.classList.toggle('hidden', id !== tabId);
                 if (btn) {
                     if (id === tabId) {
-                        btn.classList.add('bg-emerald-600', 'text-white');
-                        btn.classList.remove('bg-slate-800', 'text-slate-300');
+                        btn.className = 'px-3.5 py-2 bg-amber-600 text-white border border-amber-500 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm';
                     } else {
-                        btn.classList.remove('bg-emerald-600', 'text-white');
-                        btn.classList.add('bg-slate-800', 'text-slate-300');
+                        btn.className = 'px-3.5 py-2 bg-white/80 hover:bg-white text-amber-900 border border-amber-300 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-sm';
                     }
                 }
             });
@@ -1583,53 +1575,36 @@
             if (totalRecEl) totalRecEl.textContent = `${records.length} 筆`;
             if (totalStaysEl) totalStaysEl.textContent = `${hospitalStays.length} 天`;
             
-            // --- 更新「最近就診/檢查預約」的邏輯 ---
             if (latestDateEl && records.length > 0) {
                 const today = new Date();
                 const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
                 
-                // 將紀錄分為「未來(含今天)」與「過去」
                 const upcoming = records.filter(r => r.date >= todayStr).sort((a, b) => a.date.localeCompare(b.date)); 
                 const past = records.filter(r => r.date < todayStr).sort((a, b) => b.date.localeCompare(a.date));     
                 
                 let targetDateStr = null;
-                let statusLabel = "";
-                let statusClass = "";
                 let targetRecords = [];
 
                 if (upcoming.length > 0) {
-                    // 取未來最靠近的「日期字串」
                     targetDateStr = upcoming[0].date;
-                    statusLabel = "(預約)";
-                    statusClass = "text-amber-300";
-                    // 把同一天的所有紀錄都抓出來
                     targetRecords = upcoming.filter(r => r.date === targetDateStr);
                 } else if (past.length > 0) {
-                    // 取過去最靠近的「日期字串」
                     targetDateStr = past[0].date;
-                    statusLabel = "(最近)";
-                    statusClass = "text-slate-300";
-                    // 把同一天的所有紀錄都抓出來
                     targetRecords = past.filter(r => r.date === targetDateStr);
                 }
 
                 if (targetDateStr && targetRecords.length > 0) {
-                    // 收集所有當天科別，並使用 Set 排除重複的科別，最後用「、」串接
                     const depts = [...new Set(targetRecords.map(r => r.dept))];
                     const deptsStr = depts.join('、');
 
-                    latestDateEl.innerHTML = `
-                        <span class="block">${targetDateStr} ${statusLabel}</span>
-                        <span class="block text-[11px] font-medium text-slate-400 mt-0.5 whitespace-nowrap overflow-hidden text-ellipsis" title="${deptsStr}">
-                            ${deptsStr}
-                        </span>
-                    `;
-                    latestDateEl.className = `text-xs sm:text-sm font-bold ${statusClass} mt-1 block leading-tight`;
+                    latestDateEl.innerHTML = `${targetDateStr} ${deptsStr}`;
+                    latestDateEl.className = `text-xs sm:text-sm font-bold text-amber-900 mt-1 block whitespace-normal break-words leading-tight`;
+                } else {
+                    latestDateEl.textContent = "--";
                 }
             } else if (latestDateEl) {
                 latestDateEl.textContent = "--";
             }
-            // ----------------------------------------
 
             if (companionSumEl) {
                 let ying = 0, hua = 0, jie = 0;
@@ -1641,6 +1616,7 @@
                 companionSumEl.textContent = `映: ${ying} / 樺: ${hua} / 潔: ${jie}`;
             }
         }
+        
         function renderRecords() {
             const listEl = document.getElementById('records-list');
             if (!listEl) return;
@@ -1648,8 +1624,9 @@
             const searchKey = (document.getElementById('filter-search-input')?.value || '').trim().toLowerCase();
             const deptFilter = document.getElementById('filter-dept-select')?.value || '';
             const compFilter = document.getElementById('filter-companion-select')?.value || '';
-
+            
             let filtered = records.filter(r => {
+                if (currentRecordCategoryFilter !== 'all' && r.category !== currentRecordCategoryFilter) return false;
                 if (deptFilter && r.dept !== deptFilter && r.category !== deptFilter) return false;
                 if (compFilter && r.companion !== compFilter) return false;
                 if (searchKey) {
@@ -1662,37 +1639,37 @@
             });
 
             if (filtered.length === 0) {
-                listEl.innerHTML = `<div class="bg-slate-800/40 p-10 rounded-2xl border border-slate-700 text-center text-slate-400 font-bold">沒有符合條件的就醫紀錄</div>`;
+                listEl.innerHTML = `<div class="bg-white p-10 rounded-3xl border border-amber-200 text-center text-amber-800 font-bold shadow-sm">沒有符合條件的就醫紀錄</div>`;
                 return;
             }
 
             listEl.innerHTML = filtered.map(r => {
-                let deptColor = 'bg-slate-700 text-slate-200';
-                if (r.dept === '腫瘤科') deptColor = 'bg-blue-900/80 text-blue-200 border border-blue-600/60';
-                else if (r.dept === '放射科') deptColor = 'bg-indigo-900/80 text-indigo-200 border border-indigo-600/60';
-                else if (r.dept === '感染科') deptColor = 'bg-purple-900/80 text-purple-200 border border-purple-600/60';
-                else if (r.dept === '牙科') deptColor = 'bg-teal-900/80 text-teal-200 border border-teal-600/60';
-                else if (r.dept === '皮膚科') deptColor = 'bg-pink-900/80 text-pink-200 border border-pink-600/60';
-                else if (r.dept === '專科聯合') deptColor = 'bg-amber-900/80 text-amber-200 border border-amber-600/60';
+                let deptColor = 'bg-amber-100 text-amber-900 border border-amber-300';
+                if (r.dept === '腫瘤科') deptColor = 'bg-blue-100 text-blue-900 border border-blue-300';
+                else if (r.dept === '放射科') deptColor = 'bg-indigo-100 text-indigo-900 border border-indigo-300';
+                else if (r.dept === '感染科') deptColor = 'bg-purple-100 text-purple-900 border border-purple-300';
+                else if (r.dept === '牙科') deptColor = 'bg-teal-100 text-teal-900 border border-teal-300';
+                else if (r.dept === '皮膚科') deptColor = 'bg-pink-100 text-pink-900 border border-pink-300';
+                else if (r.dept === '專科聯合') deptColor = 'bg-amber-100 text-amber-900 border border-amber-300';
 
                 return `
-                    <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 shadow-md hover:border-emerald-600/70 transition relative">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-slate-700/80">
+                    <div class="sunny-card p-5 sm:p-6 rounded-3xl relative">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-amber-100">
                             <div class="flex items-center gap-2 flex-wrap">
                                 <span class="px-3 py-1 rounded-xl text-xs font-black ${deptColor}">${r.dept}</span>
-                                <span class="text-sm sm:text-base font-bold text-slate-300">🗓️ ${r.date}</span>
-                                <span class="px-2.5 py-0.5 rounded-xl text-xs font-bold border bg-emerald-950 text-emerald-300 border-emerald-600/70">👥 陪同：${r.companion || '未定'}</span>
-                                ${r.category ? `<span class="px-2 py-0.5 bg-slate-900 text-slate-400 text-xs rounded-lg">${r.category}</span>` : ''}
+                                <span class="text-sm sm:text-base font-bold text-amber-900">🗓️ ${r.date}</span>
+                                <span class="px-3 py-1 rounded-xl text-xs font-bold border bg-amber-50 text-amber-900 border-amber-300">👥 陪同：${r.companion || '未定'}</span>
+                                ${r.category ? `<span class="px-2.5 py-1 bg-amber-100 text-amber-900 text-xs font-bold rounded-lg">${r.category}</span>` : ''}
                             </div>
                             <div class="flex items-center gap-1.5 ml-auto">
-                                <button onclick="copyLineReport('${r.id}')" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-emerald-300 text-xs font-bold rounded-lg transition border border-slate-600">💬 LINE 回報</button>
-                                <button onclick="openEditRecordModal('${r.id}')" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-bold rounded-lg transition border border-slate-600">✏️ 編輯</button>
-                                <button onclick="promptDeleteRecord('${r.id}')" class="px-2.5 py-1 bg-rose-950/80 hover:bg-rose-900 text-rose-300 text-xs font-bold rounded-lg transition border border-rose-800">🗑️ 刪除</button>
+                                <button onclick="copyLineReport('${r.id}')" class="px-3 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold rounded-xl transition border border-amber-300">💬 LINE 回報</button>
+                                <button onclick="openEditRecordModal('${r.id}')" class="px-3 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold rounded-xl transition border border-amber-300">✏️ 編輯</button>
+                                <button onclick="promptDeleteRecord('${r.id}')" class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold rounded-xl transition border border-rose-300">🗑️ 刪除</button>
                             </div>
                         </div>
                         <div class="mt-3">
-                            <h4 class="text-lg font-black text-slate-100">${r.title}</h4>
-                            <p class="mt-2 text-sm sm:text-base text-slate-300 leading-relaxed whitespace-pre-wrap">${r.detail || '無特別醫囑'}</p>
+                            <h4 class="text-lg font-black text-amber-950">${r.title}</h4>
+                            <p class="mt-2 text-sm sm:text-base text-amber-900/90 leading-relaxed whitespace-pre-wrap">${r.detail || '無特別醫囑'}</p>
                         </div>
                     </div>
                 `;
@@ -1782,7 +1759,7 @@
             });
 
             for (let i = firstDay - 1; i >= 0; i--) {
-                gridEl.innerHTML += `<div class="bg-slate-900/40 p-2 rounded-xl min-h-[90px] border border-slate-800/60 opacity-30 text-xs font-bold">${prevMonthDays - i}</div>`;
+                gridEl.innerHTML += `<div class="bg-white/40 p-2 rounded-2xl min-h-[90px] border border-amber-200/50 opacity-40 text-xs font-bold text-amber-900">${prevMonthDays - i}</div>`;
             }
 
             for (let d = 1; d <= totalDays; d++) {
@@ -1792,26 +1769,26 @@
                 if (stay) {
                     const hasHighlight = stay.note && stay.note.length > 0;
                     gridEl.innerHTML += `
-                        <div onclick="openEditHospitalModal('${stay.id}')" class="bg-slate-800 p-2 sm:p-2.5 rounded-xl min-h-[95px] sm:min-h-[115px] border ${hasHighlight ? 'border-amber-500/80 bg-slate-800' : 'border-slate-700 bg-slate-800/90'} hover:border-emerald-500 transition cursor-pointer flex flex-col justify-between shadow-sm relative group">
+                        <div onclick="openEditHospitalModal('${stay.id}')" class="bg-white p-2.5 sm:p-3 rounded-2xl min-h-[100px] sm:min-h-[120px] border ${hasHighlight ? 'border-amber-500 shadow-md' : 'border-amber-300 shadow-sm'} hover:border-amber-600 transition cursor-pointer flex flex-col justify-between group">
                             <div>
                                 <div class="flex items-center justify-between">
-                                    <span class="text-sm sm:text-base font-black text-slate-100">${d}</span>
-                                    <span class="px-2 py-0.5 rounded-md text-[11px] font-black bg-emerald-900/80 text-emerald-300 border border-emerald-600/80">${stay.companion}</span>
+                                    <span class="text-sm sm:text-base font-black text-amber-950">${d}</span>
+                                    <span class="px-2 py-0.5 rounded-lg text-[11px] font-black bg-amber-100 text-amber-900 border border-amber-300">${stay.companion}</span>
                                 </div>
-                                <div class="text-xs font-bold text-slate-200 mt-1 line-clamp-1">${stay.title}</div>
-                                ${hasHighlight ? `<div class="text-[11px] text-amber-300 font-medium mt-1 line-clamp-2">⚠️ ${stay.note}</div>` : ''}
+                                <div class="text-xs font-bold text-amber-900 mt-1.5 line-clamp-1">${stay.title}</div>
+                                ${hasHighlight ? `<div class="text-[11px] text-amber-700 font-semibold mt-1 line-clamp-2">⚠️ ${stay.note}</div>` : ''}
                             </div>
-                            <div class="flex items-center justify-between pt-1.5 mt-1 border-t border-slate-700/60">
-                                <span class="text-[10px] text-slate-400">點擊編輯</span>
-                                <button onclick="event.stopPropagation(); promptDeleteHospitalStay('${stay.id}')" class="text-xs text-rose-400 hover:text-rose-200 font-bold px-1.5 py-0.5 rounded bg-rose-950/60 border border-rose-800">🗑️</button>
+                            <div class="flex items-center justify-between pt-1.5 mt-1 border-t border-amber-100">
+                                <span class="text-[10px] text-amber-700 font-semibold">點擊編輯</span>
+                                <button onclick="event.stopPropagation(); promptDeleteHospitalStay('${stay.id}')" class="text-xs text-rose-600 hover:text-rose-800 font-bold px-1.5 py-0.5 rounded bg-rose-50 border border-rose-200">🗑️</button>
                             </div>
                         </div>
                     `;
                 } else {
                     gridEl.innerHTML += `
-                        <div onclick="quickAddHospitalDay('${dateKey}')" class="bg-slate-900/60 p-2 sm:p-2.5 rounded-xl min-h-[95px] sm:min-h-[115px] border border-slate-800/70 hover:border-slate-600 transition cursor-pointer flex flex-col justify-between group">
-                            <span class="text-xs sm:text-sm font-bold text-slate-400">${d}</span>
-                            <span class="text-[10px] text-slate-400 opacity-0 group-hover:opacity-100 transition text-center">+ 排班</span>
+                        <div onclick="quickAddHospitalDay('${dateKey}')" class="bg-white/60 p-2.5 sm:p-3 rounded-2xl min-h-[100px] sm:min-h-[120px] border border-amber-200 hover:border-amber-400 transition cursor-pointer flex flex-col justify-between group shadow-sm">
+                            <span class="text-xs sm:text-sm font-extrabold text-amber-900">${d}</span>
+                            <span class="text-[11px] text-amber-700 font-bold opacity-0 group-hover:opacity-100 transition text-center bg-amber-100 py-1 rounded-xl">+ 排班</span>
                         </div>
                     `;
                 }
@@ -1826,20 +1803,20 @@
             const filtered = hospitalStays.filter(s => !compFilter || s.companion === compFilter);
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400 font-bold">沒有符合條件的住院排班紀錄</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-amber-800 font-bold">沒有符合條件的住院排班紀錄</td></tr>`;
                 return;
             }
 
             tbody.innerHTML = filtered.map(s => `
-                <tr class="hover:bg-slate-800/50 transition">
-                    <td class="p-3.5 font-bold text-slate-200 whitespace-nowrap">${s.date}</td>
-                    <td class="p-3.5 font-medium text-slate-400 whitespace-nowrap">${s.weekday || ''}</td>
-                    <td class="p-3.5 font-bold text-emerald-400">${s.title}</td>
-                    <td class="p-3.5 whitespace-nowrap"><span class="px-2.5 py-1 rounded-lg text-xs font-black border bg-emerald-950 text-emerald-300 border-emerald-600/70">${s.companion}</span></td>
-                    <td class="p-3.5 text-sm text-slate-300">${s.note ? `<span class="text-amber-300 font-medium">⚠️ ${s.note}</span>` : '--'}</td>
-                    <td class="p-3.5 text-center whitespace-nowrap">
-                        <button onclick="openEditHospitalModal('${s.id}')" class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-bold rounded-lg border border-slate-600 transition">✏️ 編輯</button>
-                        <button onclick="promptDeleteHospitalStay('${s.id}')" class="px-2.5 py-1 bg-rose-950/80 hover:bg-rose-900 text-rose-300 text-xs font-bold rounded-lg border border-rose-800 transition">🗑️ 刪除</button>
+                <tr class="hover:bg-amber-50/50 transition">
+                    <td class="p-4 font-bold text-amber-950 whitespace-nowrap">${s.date}</td>
+                    <td class="p-4 font-semibold text-amber-800 whitespace-nowrap">${s.weekday || ''}</td>
+                    <td class="p-4 font-black text-amber-700">${s.title}</td>
+                    <td class="p-4 whitespace-nowrap"><span class="px-3 py-1 rounded-xl text-xs font-black border bg-amber-100 text-amber-900 border-amber-300">${s.companion}</span></td>
+                    <td class="p-4 text-sm text-amber-900 font-medium">${s.note ? `<span class="text-amber-800 font-bold">⚠️ ${s.note}</span>` : '--'}</td>
+                    <td class="p-4 text-center whitespace-nowrap">
+                        <button onclick="openEditHospitalModal('${s.id}')" class="px-3 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold rounded-xl border border-amber-300 transition mr-1">✏️ 編輯</button>
+                        <button onclick="promptDeleteHospitalStay('${s.id}')" class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold rounded-xl border border-rose-300 transition">🗑️ 刪除</button>
                     </td>
                 </tr>
             `).join('');
@@ -1849,8 +1826,17 @@
             hospitalViewMode = mode;
             document.getElementById('hospital-calendar-container')?.classList.toggle('hidden', mode !== 'calendar');
             document.getElementById('hospital-list-container')?.classList.toggle('hidden', mode !== 'list');
-            if (mode === 'calendar') renderHospitalCalendar();
-            else renderHospitalTable();
+            const btnCal = document.getElementById('btn-hosp-calendar');
+            const btnList = document.getElementById('btn-hosp-list');
+            if (mode === 'calendar') {
+                btnCal.className = 'px-4 py-2 rounded-xl text-sm font-extrabold bg-amber-600 text-white shadow transition flex items-center gap-1.5';
+                btnList.className = 'px-4 py-2 rounded-xl text-sm font-extrabold text-amber-800 hover:text-amber-950 transition flex items-center gap-1.5';
+                renderHospitalCalendar();
+            } else {
+                btnList.className = 'px-4 py-2 rounded-xl text-sm font-extrabold bg-amber-600 text-white shadow transition flex items-center gap-1.5';
+                btnCal.className = 'px-4 py-2 rounded-xl text-sm font-extrabold text-amber-800 hover:text-amber-950 transition flex items-center gap-1.5';
+                renderHospitalTable();
+            }
         }
 
         function changeCalMonth(delta) {
@@ -1976,11 +1962,13 @@
         }
 
         function closeDatePickerModal() { document.getElementById('date-picker-modal')?.classList.add('hidden'); }
+        
         function onPickerSelectChange() {
             dpYear = parseInt(document.getElementById('dp-year-select').value, 10);
             dpMonth = parseInt(document.getElementById('dp-month-select').value, 10);
             renderDatePickerGrid();
         }
+        
         function changePickerMonth(delta) {
             dpMonth += delta;
             if (dpMonth > 12) { dpMonth = 1; dpYear++; }
@@ -1989,6 +1977,7 @@
             document.getElementById('dp-month-select').value = dpMonth;
             renderDatePickerGrid();
         }
+        
         function renderDatePickerGrid() {
             const grid = document.getElementById('dp-calendar-grid');
             if (!grid) return;
@@ -1997,13 +1986,14 @@
             const daysInMonth = new Date(dpYear, dpMonth, 0).getDate();
             const prevDays = new Date(dpYear, dpMonth - 1, 0).getDate();
 
-            for (let i = firstDay - 1; i >= 0; i--) grid.innerHTML += `<div class="p-2 text-center text-xs text-slate-600">${prevDays - i}</div>`;
+            for (let i = firstDay - 1; i >= 0; i--) grid.innerHTML += `<div class="p-2 text-center text-xs text-gray-400">${prevDays - i}</div>`;
             for (let d = 1; d <= daysInMonth; d++) {
                 const formatted = `${dpYear}-${String(dpMonth).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
                 const isSelected = dpSelectedDate === formatted || dpSelectedDate === formatted.replace(/-/g, '/');
-                grid.innerHTML += `<button type="button" onclick="confirmDateFromPicker('${formatted}')" class="p-2.5 rounded-xl text-sm font-bold transition flex items-center justify-center ${isSelected ? 'bg-emerald-600 text-white font-black' : 'bg-slate-800 text-slate-200 hover:bg-slate-700'}">${d}</button>`;
+                grid.innerHTML += `<button type="button" onclick="confirmDateFromPicker('${formatted}')" class="p-2.5 rounded-xl text-sm font-bold transition flex items-center justify-center ${isSelected ? 'bg-amber-600 text-white font-black shadow-sm' : 'bg-amber-50 text-amber-950 hover:bg-amber-100'}">${d}</button>`;
             }
         }
+        
         function confirmDateFromPicker(formattedDate) {
             if (currentPickerTargetInputId) {
                 const input = document.getElementById(currentPickerTargetInputId);
@@ -2011,6 +2001,7 @@
             }
             closeDatePickerModal();
         }
+        
         function selectQuickDay(type) {
             const today = new Date();
             if (type === 'yesterday') today.setDate(today.getDate() - 1);
@@ -2029,7 +2020,9 @@
             document.getElementById('edit-rec-detail').value = rec.detail || '';
             document.getElementById('edit-record-modal')?.classList.remove('hidden');
         }
+        
         function closeEditRecordModal() { recordToEditId = null; document.getElementById('edit-record-modal')?.classList.add('hidden'); }
+        
         async function saveEditRecordModal() {
             if (!recordToEditId) return;
             const rec = records.find(r => String(r.id) === String(recordToEditId));
@@ -2059,12 +2052,14 @@
             copyTextToClipboard(`【媽媽護理與就醫回報】\n🗓️ 日期：${rec.date}\n🏥 科別：${rec.dept}\n👥 陪診人：${rec.companion}\n📌 重點：${rec.title}\n📋 醫囑：\n${rec.detail || '無'}`);
             showToast('💬 已複製 LINE 格式摘要！');
         }
+        
         function copyHospitalListForLine() {
             let out = `🏥【媽媽住院與陪伴輪值清單】\n`;
             hospitalStays.forEach(s => out += `${s.date} (${s.weekday}) - ${s.companion} 陪同 | ${s.title}\n`);
             copyTextToClipboard(out);
             showToast('💬 已複製住院清單！');
         }
+        
         function copyTextToClipboard(text) {
             const ta = document.createElement('textarea'); ta.value = text;
             document.body.appendChild(ta); ta.select();
@@ -2075,16 +2070,16 @@
         function renderHistoryList() {
             const listEl = document.getElementById('history-list');
             if (!listEl) return;
-            if (deletedRecords.length === 0) { listEl.innerHTML = `<div class="p-10 text-center text-slate-400 font-bold bg-slate-800/40 rounded-2xl border border-slate-700">回收桶目前沒有紀錄</div>`; return; }
+            if (deletedRecords.length === 0) { listEl.innerHTML = `<div class="p-10 text-center text-amber-800 font-bold bg-white/80 rounded-3xl border border-amber-200">回收桶目前沒有紀錄</div>`; return; }
             listEl.innerHTML = deletedRecords.map(r => `
-                <div class="bg-slate-800/60 p-4 rounded-2xl border border-slate-700 flex items-center justify-between gap-3">
+                <div class="bg-white p-5 rounded-3xl border border-amber-200 flex items-center justify-between gap-3 shadow-sm">
                     <div>
-                        <div class="flex items-center gap-2 text-xs text-slate-400"><span>${r.dept}</span><span>${r.date}</span></div>
-                        <h4 class="text-base font-bold text-slate-200 mt-1">${r.title}</h4>
+                        <div class="flex items-center gap-2 text-xs text-amber-700 font-bold"><span>${r.dept}</span><span>${r.date}</span></div>
+                        <h4 class="text-base font-black text-amber-950 mt-1">${r.title}</h4>
                     </div>
                     <div class="flex gap-2">
-                        <button onclick="restoreRecord('${r.id}')" class="px-3 py-1.5 bg-emerald-900 text-emerald-300 text-xs font-bold rounded-xl">還原</button>
-                        <button onclick="promptPermanentDelete('${r.id}')" class="px-3 py-1.5 bg-rose-950 text-rose-300 text-xs font-bold rounded-xl">永久刪除</button>
+                        <button onclick="restoreRecord('${r.id}')" class="px-3.5 py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold rounded-xl transition border border-amber-300">還原</button>
+                        <button onclick="promptPermanentDelete('${r.id}')" class="px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold rounded-xl transition border border-rose-300">永久刪除</button>
                     </div>
                 </div>
             `).join('');
@@ -2150,8 +2145,16 @@
         }
 
         function quickFilterRecordCategory(cat) {
-            const dept = document.getElementById('filter-dept-select');
-            if (dept) dept.value = cat === 'all' ? '' : cat;
+            currentRecordCategoryFilter = cat;
+            
+            const buttons = document.querySelectorAll('.quick-filter-btn');
+            buttons.forEach(btn => {
+                btn.className = 'quick-filter-btn px-4 py-2 rounded-xl bg-white text-amber-900 hover:bg-amber-50 font-bold text-xs whitespace-nowrap border border-amber-300 shadow-sm';
+                if (btn.id === `quick-filter-${cat}`) {
+                    btn.className = 'quick-filter-btn px-4 py-2 rounded-xl bg-amber-600 text-white font-extrabold text-xs whitespace-nowrap shadow-sm';
+                }
+            });
+
             renderRecords();
         }
 
@@ -2231,7 +2234,7 @@
             const container = document.getElementById('note-images-preview');
             if (!container) return;
             container.innerHTML = pendingNoteImages.map((src, i) => `
-                <div class="relative w-20 h-20 rounded-xl overflow-hidden border border-slate-600">
+                <div class="relative w-20 h-20 rounded-2xl overflow-hidden border border-amber-300 shadow-sm">
                     <img src="${src}" class="w-full h-full object-cover">
                     <button onclick="removePendingNoteImage(${i})" class="absolute top-1 right-1 bg-black/70 hover:bg-rose-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">&times;</button>
                 </div>
@@ -2260,21 +2263,21 @@
         function renderNotes() {
             const list = document.getElementById('notes-list');
             if (!list) return;
-            if (notes.length === 0) { list.innerHTML = `<div class="col-span-full p-10 text-center text-slate-400 font-bold bg-slate-800/40 rounded-2xl border border-slate-700">目前沒有注意事項</div>`; return; }
+            if (notes.length === 0) { list.innerHTML = `<div class="col-span-full p-10 text-center text-amber-800 font-bold bg-white/90 rounded-3xl border border-amber-200">目前沒有注意事項</div>`; return; }
 
             list.innerHTML = notes.map(n => `
-                <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 shadow-md flex flex-col h-full hover:border-emerald-600/50 transition">
-                    <div class="flex items-start justify-between gap-3 mb-3 pb-3 border-b border-slate-700/60">
-                        <h4 class="text-lg font-black text-emerald-300 flex-1">${escapeHtml(n.title)}</h4>
+                <div class="sunny-card p-6 rounded-3xl flex flex-col h-full">
+                    <div class="flex items-start justify-between gap-3 mb-3 pb-3 border-b border-amber-100">
+                        <h4 class="text-lg font-black text-amber-900 flex-1">${escapeHtml(n.title)}</h4>
                         <div class="flex gap-1.5">
-                            <button onclick="openEditNoteModal('${n.id}')" class="text-slate-300 hover:text-emerald-300 bg-slate-900 p-1.5 rounded-lg border border-slate-700">✏️</button>
-                            <button onclick="promptDeleteNote('${n.id}')" class="text-rose-400 bg-rose-950/50 p-1.5 rounded-lg border border-rose-900">🗑️</button>
+                            <button onclick="openEditNoteModal('${n.id}')" class="text-amber-800 hover:text-amber-950 bg-amber-50 p-2 rounded-xl border border-amber-200 transition">✏️</button>
+                            <button onclick="promptDeleteNote('${n.id}')" class="text-rose-600 bg-rose-50 p-2 rounded-xl border border-rose-200 transition">🗑️</button>
                         </div>
                     </div>
-                    ${n.content ? `<p class="text-sm text-slate-300 whitespace-pre-wrap leading-relaxed mb-4 flex-1">${escapeHtml(n.content)}</p>` : '<div class="flex-1"></div>'}
+                    ${n.content ? `<p class="text-sm text-amber-900/90 whitespace-pre-wrap leading-relaxed mb-4 flex-1">${escapeHtml(n.content)}</p>` : '<div class="flex-1"></div>'}
                     ${n.images && n.images.length > 0 ? `
-                        <div class="flex flex-wrap gap-2 mt-auto pt-3 border-t border-slate-700/60">
-                            ${n.images.map(img => `<img src="${img}" onclick="openLightbox('${img}')" class="w-16 h-16 object-cover rounded-lg border border-slate-600 cursor-pointer hover:opacity-80">`).join('')}
+                        <div class="flex flex-wrap gap-2.5 mt-auto pt-3 border-t border-amber-100">
+                            ${n.images.map(img => `<img src="${img}" onclick="openLightbox('${img}')" class="w-16 h-16 object-cover rounded-xl border border-amber-300 cursor-pointer hover:opacity-90 transition shadow-sm">`).join('')}
                         </div>
                     ` : ''}
                 </div>
@@ -2302,7 +2305,9 @@
             renderEditNoteImagesPreview();
             document.getElementById('edit-note-modal')?.classList.remove('hidden');
         }
+        
         function closeEditNoteModal() { editingNoteId = null; editNotePendingImages = []; document.getElementById('edit-note-modal')?.classList.add('hidden'); }
+        
         async function handleEditNoteImagesSelect(event) {
             for (const f of Array.from(event.target.files || [])) {
                 if (editNotePendingImages.length >= 6) break;
@@ -2311,16 +2316,18 @@
             event.target.value = '';
             renderEditNoteImagesPreview();
         }
+        
         function renderEditNoteImagesPreview() {
             const container = document.getElementById('edit-note-images-preview');
             if (!container) return;
             container.innerHTML = editNotePendingImages.map((src, i) => `
-                <div class="relative w-16 h-16 rounded-xl overflow-hidden border border-slate-600">
+                <div class="relative w-16 h-16 rounded-2xl overflow-hidden border border-amber-300 shadow-sm">
                     <img src="${src}" class="w-full h-full object-cover">
                     <button onclick="removeEditNoteImage(${i})" class="absolute top-0.5 right-0.5 bg-black/70 hover:bg-rose-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px]">&times;</button>
                 </div>
             `).join('');
         }
+        
         window.removeEditNoteImage = (i) => { editNotePendingImages.splice(i, 1); renderEditNoteImagesPreview(); };
 
         async function saveEditNoteModal() {
@@ -2346,11 +2353,11 @@
             if (!str) return '';
             return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
         }
+        
         function closeLightbox() { document.getElementById('lightbox-modal')?.classList.add('hidden'); }
 
         window.switchTab = switchTab;
         window.forceSyncLatest = forceSyncLatest;
-        window.copyShareableSyncLink = copyShareableSyncLink;
         window.renderRecords = renderRecords;
         window.addRecord = addRecord;
         window.openEditRecordModal = openEditRecordModal;
