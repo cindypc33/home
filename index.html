@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>媽媽專屬紀錄中心</title>
+    <title>MoM專屬紀錄中心</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -118,7 +118,7 @@
                 <div>
                     <div class="flex items-center gap-3">
                         <span class="text-3xl filter drop-shadow-sm animate-bounce">☀️</span>
-                        <h1 class="text-2xl sm:text-3xl font-black text-amber-700 tracking-wide font-serif-tc">MoM專屬</h1>
+                        <h1 class="text-2xl sm:text-3xl font-black text-amber-700 tracking-wide font-serif-tc">MoM專屬紀錄中心</h1>
                     </div>
                     <p class="mt-2 text-sm text-amber-800 font-bold tracking-wide">陽光、溫暖、充滿希望 🌻 陪媽媽每一天，傳遞平安喜樂</p>
                 </div>
@@ -157,15 +157,15 @@
 
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5 pt-4 border-t border-amber-200/60 text-left">
                 <div class="bg-white/90 p-3.5 rounded-2xl border border-amber-200 shadow-sm">
-                    <span class="text-xs text-amber-800/80 block font-bold">就醫歷程</span>
+                    <span class="text-xs text-amber-800/80 block font-bold">就醫歷程累積</span>
                     <span id="stat-total-records" class="text-lg sm:text-xl font-black text-amber-600 mt-0.5 block">載入中...</span>
                 </div>
                 <div class="bg-white/90 p-3.5 rounded-2xl border border-amber-200 shadow-sm">
-                    <span class="text-xs text-amber-800/80 block font-bold">住院排班</span>
+                    <span class="text-xs text-amber-800/80 block font-bold">全期住院排班</span>
                     <span id="stat-total-stays" class="text-lg sm:text-xl font-black text-orange-600 mt-0.5 block">38 天</span>
                 </div>
                 <div class="bg-white/90 p-3.5 rounded-2xl border border-amber-200 shadow-sm">
-                    <span class="text-xs text-amber-800/80 block font-bold">最近回診/檢查預約</span>
+                    <span class="text-xs text-amber-800/80 block font-bold">最近就診/檢查預約</span>
                     <span id="stat-latest-date" class="text-xs sm:text-sm font-bold text-amber-900 mt-1 block">載入中...</span>
                 </div>
                 <div class="bg-white/90 p-3.5 rounded-2xl border border-amber-200 shadow-sm">
@@ -184,9 +184,9 @@
                     <div>
                         <h4 class="text-base sm:text-lg font-black text-amber-800 tracking-wide font-serif-tc">每日吃藥與用藥溫馨提醒</h4>
                         <p class="text-xs sm:text-sm text-amber-900/90 font-bold mt-0.5 leading-relaxed">
-                            • 早起空腹：血壓藥（請依照當天量測血壓判定是否服用）及胃食道逆流藥<br>
+                            • 早起空腹：血壓藥（依照當天血壓判定要不要吃）及胃食道逆流藥<br>
+                            • 類固醇：早、晚各一顆，可以跟抗生素一起服用<br>
                             • 隱球菌口服抗生素：每 12 小時準時服藥（請持續至 2 月評估）<br>
-                            • 類固醇：早、晚各一顆，可與抗生素一起服用<br>
                             • 皮膚科外用藥膏：每日 3~4 次，<span class="text-rose-600 underline">先擦保濕乳液打底，嚴格靜待 5 分鐘後</span>再薄塗專用藥膏
                         </p>
                     </div>
@@ -211,20 +211,25 @@
                             </div>
                         </div>
 
-                        <div>
-                            <label class="block text-xs text-amber-900 font-bold mb-1.5">科別 / 類別</label>
-                            <select id="record-dept" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold focus:ring-2 focus:ring-amber-500 outline-none">
-                                <option value="腫瘤科">腫瘤科 (免疫/放療/化學)</option>
-                                <option value="放射科">放射科 (放療/CT/PET-CT)</option>
-                                <option value="感染科">感染科 (抗生素/隱球菌)</option>
-                                <option value="心臟科">心臟科</option>
-                                <option value="神經外科">神經外科</option>
-                                <option value="腎臟科">腎臟科</option>
-                                <option value="皮膚科">皮膚科</option>
-                                <option value="牙科">牙科 (三和牙醫)</option>
-                                <option value="專科聯合">專科聯合門診</option>
-                                <option value="營養照護">營養與生活護理</option>
-                            </select>
+                        <!-- 可收合複選下拉選單：科別 -->
+                        <div class="relative">
+                            <label class="block text-xs text-amber-900 font-bold mb-1.5">科別 / 類別 (可複選)</label>
+                            <div id="record-dept-dropdown" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold cursor-pointer flex items-center justify-between shadow-sm" onclick="toggleDropdown('record-dept')">
+                                <span id="record-dept-label">請選擇科別</span>
+                                <span class="text-xs">▼</span>
+                            </div>
+                            <div id="record-dept-menu" class="hidden absolute z-30 mt-1 w-full bg-white border border-amber-300 rounded-2xl shadow-xl p-3 max-h-48 overflow-y-auto custom-scrollbar space-y-1.5">
+                                <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1.5 hover:bg-amber-50 rounded"><input type="checkbox" name="rec-dept" value="腫瘤科" class="rounded text-amber-600 focus:ring-amber-500" onchange="updateDropdownLabel('record-dept')"> 腫瘤科</label>
+                                <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1.5 hover:bg-amber-50 rounded"><input type="checkbox" name="rec-dept" value="放射科" class="rounded text-amber-600 focus:ring-amber-500" onchange="updateDropdownLabel('record-dept')"> 放射科</label>
+                                <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1.5 hover:bg-amber-50 rounded"><input type="checkbox" name="rec-dept" value="感染科" class="rounded text-amber-600 focus:ring-amber-500" onchange="updateDropdownLabel('record-dept')"> 感染科</label>
+                                <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1.5 hover:bg-amber-50 rounded"><input type="checkbox" name="rec-dept" value="心臟科" class="rounded text-amber-600 focus:ring-amber-500" onchange="updateDropdownLabel('record-dept')"> 心臟科</label>
+                                <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1.5 hover:bg-amber-50 rounded"><input type="checkbox" name="rec-dept" value="神經外科" class="rounded text-amber-600 focus:ring-amber-500" onchange="updateDropdownLabel('record-dept')"> 神經外科</label>
+                                <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1.5 hover:bg-amber-50 rounded"><input type="checkbox" name="rec-dept" value="腎臟科" class="rounded text-amber-600 focus:ring-amber-500" onchange="updateDropdownLabel('record-dept')"> 腎臟科</label>
+                                <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1.5 hover:bg-amber-50 rounded"><input type="checkbox" name="rec-dept" value="皮膚科" class="rounded text-amber-600 focus:ring-amber-500" onchange="updateDropdownLabel('record-dept')"> 皮膚科</label>
+                                <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1.5 hover:bg-amber-50 rounded"><input type="checkbox" name="rec-dept" value="牙科" class="rounded text-amber-600 focus:ring-amber-500" onchange="updateDropdownLabel('record-dept')"> 牙科</label>
+                                <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1.5 hover:bg-amber-50 rounded"><input type="checkbox" name="rec-dept" value="專科聯合" class="rounded text-amber-600 focus:ring-amber-500" onchange="updateDropdownLabel('record-dept')"> 專科聯合</label>
+                                <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1.5 hover:bg-amber-50 rounded"><input type="checkbox" name="rec-dept" value="營養照護" class="rounded text-amber-600 focus:ring-amber-500" onchange="updateDropdownLabel('record-dept')"> 營養照護</label>
+                            </div>
                         </div>
 
                         <div>
@@ -238,10 +243,26 @@
                             </select>
                         </div>
 
-                        <div>
-                            <label class="block text-xs text-amber-900 font-bold mb-1.5">看診重點 / 檢查項目</label>
-                            <input type="text" id="record-title" placeholder="例: 胸部電腦斷層 (下午 3:30)" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold focus:ring-2 focus:ring-amber-500 outline-none">
+                        <!-- 可收合複選下拉選單：重大檢查 / 分類 -->
+                        <div class="relative">
+                            <label class="block text-xs text-amber-900 font-bold mb-1.5">重大檢查 / 分類 (可複選)</label>
+                            <div id="record-cat-dropdown" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold cursor-pointer flex items-center justify-between shadow-sm" onclick="toggleDropdown('record-cat')">
+                                <span id="record-cat-label">請選擇分類</span>
+                                <span class="text-xs">▼</span>
+                            </div>
+                            <div id="record-cat-menu" class="hidden absolute z-30 mt-1 w-full bg-white border border-amber-300 rounded-2xl shadow-xl p-3 max-h-48 overflow-y-auto custom-scrollbar space-y-1.5">
+                                <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1.5 hover:bg-amber-50 rounded"><input type="checkbox" name="rec-cat" value="專科門診" class="rounded text-amber-600 focus:ring-amber-500" onchange="updateDropdownLabel('record-cat')"> 專科門診</label>
+                                <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1.5 hover:bg-amber-50 rounded"><input type="checkbox" name="rec-cat" value="重大檢查" class="rounded text-amber-600 focus:ring-amber-500" onchange="updateDropdownLabel('record-cat')"> 重大檢查</label>
+                                <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1.5 hover:bg-amber-50 rounded"><input type="checkbox" name="rec-cat" value="放射治療" class="rounded text-amber-600 focus:ring-amber-500" onchange="updateDropdownLabel('record-cat')"> 放射治療</label>
+                                <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1.5 hover:bg-amber-50 rounded"><input type="checkbox" name="rec-cat" value="免疫治療" class="rounded text-amber-600 focus:ring-amber-500" onchange="updateDropdownLabel('record-cat')"> 免疫治療</label>
+                                <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1.5 hover:bg-amber-50 rounded"><input type="checkbox" name="rec-cat" value="住院紀錄" class="rounded text-amber-600 focus:ring-amber-500" onchange="updateDropdownLabel('record-cat')"> 住院紀錄</label>
+                            </div>
                         </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <label class="block text-xs text-amber-900 font-bold mb-1.5">看診重點 / 檢查項目標題</label>
+                        <input type="text" id="record-title" placeholder="例: 胸部電腦斷層 (下午 3:30)" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold focus:ring-2 focus:ring-amber-500 outline-none">
                     </div>
 
                     <div class="mt-4">
@@ -267,12 +288,15 @@
                     <div class="flex items-center gap-2 w-full md:w-auto flex-wrap justify-end">
                         <select id="filter-dept-select" onchange="renderRecords()" class="sunny-input-box p-2.5 rounded-xl text-sm text-amber-950 font-bold outline-none">
                             <option value="">全部科別</option>
-                            <option value="重大檢查">重大檢查 / 影像造影</option>
                             <option value="腫瘤科">腫瘤科</option>
                             <option value="放射科">放射科</option>
                             <option value="感染科">感染科</option>
                             <option value="心臟科">心臟科</option>
+                            <option value="神經外科">神經外科</option>
+                            <option value="腎臟科">腎臟科</option>
                             <option value="皮膚科">皮膚科</option>
+                            <option value="牙科">牙科</option>
+                            <option value="專科聯合">專科聯合</option>
                             <option value="營養照護">營養照護</option>
                         </select>
                         <select id="filter-companion-select" onchange="renderRecords()" class="sunny-input-box p-2.5 rounded-xl text-sm text-amber-950 font-bold outline-none">
@@ -414,7 +438,6 @@
                     <input type="file" id="global-note-header-upload" accept="image/*" class="hidden" onchange="uploadGlobalNoteHeader(event)">
                 </div>
 
-                <!-- 新增注意事項表單 -->
                 <div class="bg-white/90 p-5 sm:p-7 rounded-3xl mb-7 border border-amber-200 shadow-md">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="font-black text-amber-700 text-lg sm:text-xl flex items-center gap-2">
@@ -442,14 +465,11 @@
                                 <span>➕</span> 儲存注意事項
                             </button>
                         </div>
-                        <!-- 圖片預覽區塊 -->
                         <div id="note-images-preview" class="flex flex-wrap gap-2.5 mt-3"></div>
                     </div>
                 </div>
 
-                <!-- 注意事項列表容器 -->
                 <div id="notes-list" class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <!-- JS 動態生成 -->
                     <div class="flex items-center justify-center py-16 text-amber-800 gap-3 col-span-full">
                         <div class="spinner"></div> 載入注意事項中...
                     </div>
@@ -833,20 +853,25 @@
                             <button type="button" onclick="openDatePickerModal('edit-rec-date')" class="px-3.5 py-3 bg-amber-600 text-white rounded-xl font-bold">📅</button>
                         </div>
                     </div>
-                    <div>
-                        <label class="block text-xs text-amber-900 font-bold mb-1.5">科別</label>
-                        <select id="edit-rec-dept" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold outline-none">
-                            <option value="腫瘤科">腫瘤科</option>
-                            <option value="放射科">放射科</option>
-                            <option value="感染科">感染科</option>
-                            <option value="心臟科">心臟科</option>
-                            <option value="神經外科">神經外科</option>
-                            <option value="腎臟科">腎臟科</option>
-                            <option value="皮膚科">皮膚科</option>
-                            <option value="牙科">牙科</option>
-                            <option value="專科聯合">專科聯合</option>
-                            <option value="營養照護">營養照護</option>
-                        </select>
+                    <!-- 編輯彈窗：科別可複選 -->
+                    <div class="relative">
+                        <label class="block text-xs text-amber-900 font-bold mb-1.5">科別 (可複選)</label>
+                        <div id="edit-rec-dept-dropdown" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold cursor-pointer flex items-center justify-between shadow-sm" onclick="toggleDropdown('edit-rec-dept')">
+                            <span id="edit-rec-dept-label">請選擇科別</span>
+                            <span class="text-xs">▼</span>
+                        </div>
+                        <div id="edit-rec-dept-menu" class="hidden absolute z-30 mt-1 w-full bg-white border border-amber-300 rounded-2xl shadow-xl p-3 max-h-36 overflow-y-auto custom-scrollbar space-y-1">
+                            <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1 hover:bg-amber-100/60 rounded"><input type="checkbox" name="edit-rec-dept" value="腫瘤科" class="rounded text-amber-600" onchange="updateDropdownLabel('edit-rec-dept')"> 腫瘤科</label>
+                            <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1 hover:bg-amber-100/60 rounded"><input type="checkbox" name="edit-rec-dept" value="放射科" class="rounded text-amber-600" onchange="updateDropdownLabel('edit-rec-dept')"> 放射科</label>
+                            <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1 hover:bg-amber-100/60 rounded"><input type="checkbox" name="edit-rec-dept" value="感染科" class="rounded text-amber-600" onchange="updateDropdownLabel('edit-rec-dept')"> 感染科</label>
+                            <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1 hover:bg-amber-100/60 rounded"><input type="checkbox" name="edit-rec-dept" value="心臟科" class="rounded text-amber-600" onchange="updateDropdownLabel('edit-rec-dept')"> 心臟科</label>
+                            <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1 hover:bg-amber-100/60 rounded"><input type="checkbox" name="edit-rec-dept" value="神經外科" class="rounded text-amber-600" onchange="updateDropdownLabel('edit-rec-dept')"> 神經外科</label>
+                            <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1 hover:bg-amber-100/60 rounded"><input type="checkbox" name="edit-rec-dept" value="腎臟科" class="rounded text-amber-600" onchange="updateDropdownLabel('edit-rec-dept')"> 腎臟科</label>
+                            <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1 hover:bg-amber-100/60 rounded"><input type="checkbox" name="edit-rec-dept" value="皮膚科" class="rounded text-amber-600" onchange="updateDropdownLabel('edit-rec-dept')"> 皮膚科</label>
+                            <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1 hover:bg-amber-100/60 rounded"><input type="checkbox" name="edit-rec-dept" value="牙科" class="rounded text-amber-600" onchange="updateDropdownLabel('edit-rec-dept')"> 牙科</label>
+                            <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1 hover:bg-amber-100/60 rounded"><input type="checkbox" name="edit-rec-dept" value="專科聯合" class="rounded text-amber-600" onchange="updateDropdownLabel('edit-rec-dept')"> 專科聯合</label>
+                            <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1 hover:bg-amber-100/60 rounded"><input type="checkbox" name="edit-rec-dept" value="營養照護" class="rounded text-amber-600" onchange="updateDropdownLabel('edit-rec-dept')"> 營養照護</label>
+                        </div>
                     </div>
                 </div>
 
@@ -855,17 +880,33 @@
                         <label class="block text-xs text-amber-900 font-bold mb-1.5">陪診人</label>
                         <select id="edit-rec-companion" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold outline-none">
                             <option value="映">映</option>
-                            <option value="潔">潔</option>
+                            <option value="潔">潔 (ruby)</option>
                             <option value="樺">樺</option>
                             <option value="娟">娟</option>
                             <option value="待定">待定 (協調中)</option>
                             <option value="全家">全家</option>
                         </select>
                     </div>
-                    <div>
-                        <label class="block text-xs text-amber-900 font-bold mb-1.5">重點標題</label>
-                        <input type="text" id="edit-rec-title" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold outline-none">
+                    <!-- 編輯彈窗：重大檢查分類可複選 -->
+                    <div class="relative">
+                        <label class="block text-xs text-amber-900 font-bold mb-1.5">重大檢查 / 分類 (可複選)</label>
+                        <div id="edit-rec-cat-dropdown" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold cursor-pointer flex items-center justify-between shadow-sm" onclick="toggleDropdown('edit-rec-cat')">
+                            <span id="edit-rec-cat-label">請選擇分類</span>
+                            <span class="text-xs">▼</span>
+                        </div>
+                        <div id="edit-rec-cat-menu" class="hidden absolute z-30 mt-1 w-full bg-white border border-amber-300 rounded-2xl shadow-xl p-3 max-h-36 overflow-y-auto custom-scrollbar space-y-1">
+                            <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1 hover:bg-amber-100/60 rounded"><input type="checkbox" name="edit-rec-cat" value="專科門診" class="rounded text-amber-600" onchange="updateDropdownLabel('edit-rec-cat')"> 專科門診</label>
+                            <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1 hover:bg-amber-100/60 rounded"><input type="checkbox" name="edit-rec-cat" value="重大檢查" class="rounded text-amber-600" onchange="updateDropdownLabel('edit-rec-cat')"> 重大檢查</label>
+                            <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1 hover:bg-amber-100/60 rounded"><input type="checkbox" name="edit-rec-cat" value="放射治療" class="rounded text-amber-600" onchange="updateDropdownLabel('edit-rec-cat')"> 放射治療</label>
+                            <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1 hover:bg-amber-100/60 rounded"><input type="checkbox" name="edit-rec-cat" value="免疫治療" class="rounded text-amber-600" onchange="updateDropdownLabel('edit-rec-cat')"> 免疫治療</label>
+                            <label class="flex items-center gap-2 text-xs font-bold text-amber-950 cursor-pointer p-1 hover:bg-amber-100/60 rounded"><input type="checkbox" name="edit-rec-cat" value="住院紀錄" class="rounded text-amber-600" onchange="updateDropdownLabel('edit-rec-cat')"> 住院紀錄</label>
+                        </div>
                     </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs text-amber-900 font-bold mb-1.5">重點標題</label>
+                    <input type="text" id="edit-rec-title" class="sunny-input-box p-3 rounded-xl w-full text-amber-950 font-bold outline-none">
                 </div>
 
                 <div>
@@ -1006,45 +1047,45 @@
         ];
 
         const SEED_RECORDS = [
-            { id: 'r_20260512', date: '2026-05-12', dept: '腫瘤科', category: '專科門診', companion: '娟', title: '媽媽出院回診-陳醫生', detail: '媽媽出院回診與陳醫師評估。' },
-            { id: 'r_20260513', date: '2026-05-13', dept: '放射科', category: '重大檢查', companion: '樺', title: '骨骼腫瘤+發炎造影檢查 (全身骨頭掃描)', detail: '9:00整天 全身骨頭掃描。正常吃，晚上12:00過後空腹。' },
-            { id: 'r_20260514', date: '2026-05-14', dept: '放射科', category: '重大檢查', companion: '潔', title: '9:30 放射定位', detail: '放射治療前置模擬定位。' },
-            { id: 'r_20260522', date: '2026-05-22', dept: '放射科', category: '放射治療', companion: '樺', title: '8:30 放射拍片確認', detail: '放射拍片確認。' },
-            { id: 'r_20260525', date: '2026-05-25', dept: '放射科', category: '放射治療', companion: '潔', title: '8:30 放射1', detail: '放射治療第 1 次。' },
-            { id: 'r_20260526', date: '2026-05-26', dept: '放射科', category: '放射治療', companion: '樺', title: '8:30 放射2', detail: '放射治療第 2 次。' },
-            { id: 'r_20260527', date: '2026-05-27', dept: '腫瘤科', category: '免疫治療', companion: '映', title: '8:30 放射3 + 免疫#21 + 回診', detail: '放射治療第 3 次、免疫治療第 21 次與門診回診。' },
-            { id: 'r_20260528', date: '2026-05-28', dept: '放射科', category: '放射治療', companion: '樺', title: '8:30 放射4 + 放射回診', detail: '放射治療第 4 次與放射科回診。' },
-            { id: 'r_20260529', date: '2026-05-29', dept: '放射科', category: '放射治療', companion: '映', title: '8:30 放射5', detail: '放射治療第 5 次。' },
-            { id: 'r_20260601', date: '2026-06-01', dept: '放射科', category: '放射治療', companion: '潔', title: '8:30 放射6', detail: '放射治療第 6 次。' },
-            { id: 'r_20260602', date: '2026-06-02', dept: '放射科', category: '放射治療', companion: '映', title: '8:30 放射7', detail: '放射治療第 7 次。' },
-            { id: 'r_20260603', date: '2026-06-03', dept: '放射科', category: '放射治療', companion: '潔', title: '8:30 放射8', detail: '放射治療第 8 次。' },
-            { id: 'r_20260604', date: '2026-06-04', dept: '放射科', category: '放射治療', companion: '潔', title: '8:30 放射9 + 回診 (請黃醫師開抽血單)', detail: '放射治療第 9 次與回診，請黃醫師開立抽血單。' },
-            { id: 'r_20260605', date: '2026-06-05', dept: '放射科', category: '放射治療', companion: '映', title: '8:30 放射10', detail: '放射治療第 10 次。' },
-            { id: 'r_20260608', date: '2026-06-08', dept: '放射科', category: '放射治療', companion: '潔', title: '8:00 放射11', detail: '放射治療第 11 次。' },
-            { id: 'r_20260609', date: '2026-06-09', dept: '放射科', category: '放射治療', companion: '樺', title: '8:00 放射12', detail: '放射治療第 12 次。' },
-            { id: 'r_20260610', date: '2026-06-10', dept: '腫瘤科', category: '免疫治療', companion: '潔', title: '8:00 放射13 + 免疫#22 + 回診', detail: '放射治療第 13 次、免疫治療第 22 次與回診。' },
-            { id: 'r_20260611', date: '2026-06-11', dept: '放射科', category: '放射治療', companion: '樺', title: '8:00 放射14 + 回診', detail: '放射治療第 14 次與回診。' },
-            { id: 'r_20260612', date: '2026-06-12', dept: '放射科', category: '放射治療', companion: '映', title: '8:00 放射15', detail: '放射治療第 15 次。' },
-            { id: 'r_20260615', date: '2026-06-15', dept: '放射科', category: '放射治療', companion: '潔', title: '8:00 放射16', detail: '放射治療第 16 次。' },
-            { id: 'r_20260616', date: '2026-06-16', dept: '放射科', category: '放射治療', companion: '樺', title: '8:00 放射17', detail: '放射治療第 17 次。' },
-            { id: 'r_20260617', date: '2026-06-17', dept: '放射科', category: '放射治療', companion: '潔', title: '8:00 放射18', detail: '放射治療第 18 次。' },
-            { id: 'r_20260618', date: '2026-06-18', dept: '放射科', category: '放射治療', companion: '潔', title: '8:00 放射19 + 回診', detail: '放射治療第 19 次與回診。' },
-            { id: 'r_20260622', date: '2026-06-22', dept: '放射科', category: '放射治療', companion: '潔', title: '8:00 放射20', detail: '放射治療第 20 次。' },
-            { id: 'r_20260623', date: '2026-06-23', dept: '放射科', category: '放射治療', companion: '映', title: '8:00 放射21', detail: '放射治療第 21 次。' },
-            { id: 'r_20260624', date: '2026-06-24', dept: '專科聯合', category: '免疫治療', companion: '樺', title: '8:00 放射22 + 9:00 腰椎磁振 + 免疫#23 + 回診 + 皮膚科回診', detail: '放射22 + 9:00 腰椎磁振+免疫#23+回診+皮膚科回診。' },
-            { id: 'r_20260625', date: '2026-06-25', dept: '放射科', category: '放射治療', companion: '映', title: '8:00 放射23 + 回診', detail: '放射治療第 23 次與回診。' },
-            { id: 'r_20260626', date: '2026-06-26', dept: '放射科', category: '放射治療', companion: '樺', title: '8:00 放射24', detail: '放射治療第 24 次。' },
-            { id: 'r_20260629', date: '2026-06-29', dept: '放射科', category: '放射治療', companion: '潔', title: '8:00 放射25', detail: '放射治療第 25 次。' },
-            { id: 'r_20260708', date: '2026-07-08', dept: '心臟科', category: '免疫治療', companion: '映', title: '心臟科現場掛號 + 免疫#24 + 回診', detail: '心臟科現場掛號(6:30抽號碼牌7:30掛號)+回診+免疫#24(療程結束，要申請新的)+回診。' },
-            { id: 'r_20260711', date: '2026-07-11', dept: '皮膚科', category: '專科門診', companion: '待定', title: '上午皮膚科現場掛號 + 看診-陳奕先 (颱風)', detail: '颱風天候狀況留意。' },
-            { id: 'r_20260718', date: '2026-07-18', dept: '皮膚科', category: '專科門診', companion: '待定', title: '上午皮膚科現場掛號 + 看診-洪誌聰', detail: '皮膚科洪誌聰醫師門診。' },
-            { id: 'r_20260720', date: '2026-07-20', dept: '放射科', category: '重大檢查', companion: '潔', title: '下午 3:30 肺部斷層', detail: '下午 3:30 肺部電腦斷層造影檢查。' },
-            { id: 'r_20260729', date: '2026-07-29', dept: '腫瘤科', category: '專科門診', companion: '潔', title: '血液腫瘤科回診 + 肺部斷層報告 + 心臟科回診', detail: '血液腫瘤科回診+看肺部斷層報告+心臟科回診(已掛149號(有心臟科加號單)。' },
+            { id: 'r_20260512', date: '2026-05-12', dept: ['腫瘤科'], category: ['專科門診'], companion: '娟', title: '媽媽出院回診-陳醫生', detail: '媽媽出院回診與陳醫師評估。' },
+            { id: 'r_20260513', date: '2026-05-13', dept: ['放射科'], category: ['重大檢查'], companion: '樺', title: '9:00整天 骨骼腫瘤+發炎造影檢查 (全身骨頭掃描)', detail: '9:00整天 全身骨頭掃描。正常吃，晚上12:00過後空腹。' },
+            { id: 'r_20260514', date: '2026-05-14', dept: ['放射科'], category: ['放射治療'], companion: '潔', title: '9:30 放射定位', detail: '放射治療前置模擬定位。' },
+            { id: 'r_20260522', date: '2026-05-22', dept: ['放射科'], category: ['放射治療'], companion: '樺', title: '8:30 放射拍片確認', detail: '放射拍片確認。' },
+            { id: 'r_20260525', date: '2026-05-25', dept: ['放射科'], category: ['放射治療'], companion: '潔', title: '8:30 放射1', detail: '放射治療第 1 次。' },
+            { id: 'r_20260526', date: '2026-05-26', dept: ['放射科'], category: ['放射治療'], companion: '樺', title: '8:30 放射2', detail: '放射治療第 2 次。' },
+            { id: 'r_20260527', date: '2026-05-27', dept: ['腫瘤科', '放射科'], category: ['免疫治療', '放射治療'], companion: '映', title: '8:30 放射3 + 免疫#21 + 回診', detail: '放射治療第 3 次、免疫治療第 21 次與門診回診。' },
+            { id: 'r_20260528', date: '2026-05-28', dept: ['放射科'], category: ['放射治療', '專科門診'], companion: '樺', title: '8:30 放射4 + 放射回診', detail: '放射治療第 4 次與放射科回診。' },
+            { id: 'r_20260529', date: '2026-05-29', dept: ['放射科'], category: ['放射治療'], companion: '映', title: '8:30 放射5', detail: '放射治療第 5 次。' },
+            { id: 'r_20260601', date: '2026-06-01', dept: ['放射科'], category: ['放射治療'], companion: '潔', title: '8:30 放射6', detail: '放射治療第 6 次。' },
+            { id: 'r_20260602', date: '2026-06-02', dept: ['放射科'], category: ['放射治療'], companion: '映', title: '8:30 放射7', detail: '放射治療第 7 次。' },
+            { id: 'r_20260603', date: '2026-06-03', dept: ['放射科'], category: ['放射治療'], companion: '潔', title: '8:30 放射8', detail: '放射治療第 8 次。' },
+            { id: 'r_20260604', date: '2026-06-04', dept: ['放射科'], category: ['放射治療', '專科門診'], companion: '潔', title: '8:30 放射9 + 回診 (請黃醫師開抽血單)', detail: '放射治療第 9 次與回診，請黃醫師開立抽血單。' },
+            { id: 'r_20260605', date: '2026-06-05', dept: ['放射科'], category: ['放射治療'], companion: '映', title: '8:30 放射10', detail: '放射治療第 10 次。' },
+            { id: 'r_20260608', date: '2026-06-08', dept: ['放射科'], category: ['放射治療'], companion: '潔', title: '8:00 放射11', detail: '放射治療第 11 次。' },
+            { id: 'r_20260609', date: '2026-06-09', dept: ['放射科'], category: ['放射治療'], companion: '樺', title: '8:00 放射12', detail: '放射治療第 12 次。' },
+            { id: 'r_20260610', date: '2026-06-10', dept: ['腫瘤科', '放射科'], category: ['放射治療', '免疫治療', '專科門診'], companion: '潔', title: '8:00 放射13 + 免疫#22 + 回診', detail: '放射治療第 13 次、免疫治療第 22 次與回診。' },
+            { id: 'r_20260611', date: '2026-06-11', dept: ['放射科'], category: ['放射治療', '專科門診'], companion: '樺', title: '8:00 放射14 + 回診', detail: '放射治療第 14 次與回診。' },
+            { id: 'r_20260612', date: '2026-06-12', dept: ['放射科'], category: ['放射治療'], companion: '映', title: '8:00 放射15', detail: '放射治療第 15 次。' },
+            { id: 'r_20260615', date: '2026-06-15', dept: ['放射科'], category: ['放射治療'], companion: '潔', title: '8:00 放射16', detail: '放射治療第 16 次。' },
+            { id: 'r_20260616', date: '2026-06-16', dept: ['放射科'], category: ['放射治療'], companion: '樺', title: '8:00 放射17', detail: '放射治療第 17 次。' },
+            { id: 'r_20260617', date: '2026-06-17', dept: ['放射科'], category: ['放射治療'], companion: '潔', title: '8:00 放射18', detail: '放射治療第 18 次。' },
+            { id: 'r_20260618', date: '2026-06-18', dept: ['放射科'], category: ['放射治療', '專科門診'], companion: '潔', title: '8:00 放射19 + 回診', detail: '放射治療第 19 次與回診。' },
+            { id: 'r_20260622', date: '2026-06-22', dept: ['放射科'], category: ['放射治療'], companion: '潔', title: '8:00 放射20', detail: '放射治療第 20 次。' },
+            { id: 'r_20260623', date: '2026-06-23', dept: ['放射科'], category: ['放射治療'], companion: '映', title: '8:00 放射21', detail: '放射治療第 21 次。' },
+            { id: 'r_20260624', date: '2026-06-24', dept: ['放射科', '腫瘤科', '皮膚科', '專科聯合'], category: ['放射治療', '重大檢查', '免疫治療', '專科門診'], companion: '樺', title: '8:00 放射22 + 9:00 腰椎磁振 + 免疫#23 + 回診 + 皮膚科回診', detail: '放射22 + 9:00 腰椎磁振+免疫#23+回診+皮膚科回診。' },
+            { id: 'r_20260625', date: '2026-06-25', dept: ['放射科'], category: ['放射治療', '專科門診'], companion: '映', title: '8:00 放射23 + 回診', detail: '放射治療第 23 次與回診。' },
+            { id: 'r_20260626', date: '2026-06-26', dept: ['放射科'], category: ['放射治療'], companion: '樺', title: '8:00 放射24', detail: '放射治療第 24 次。' },
+            { id: 'r_20260629', date: '2026-06-29', dept: ['放射科'], category: ['放射治療'], companion: '潔', title: '8:00 放射25', detail: '放射治療第 25 次。' },
+            { id: 'r_20260708', date: '2026-07-08', dept: ['心臟科', '腫瘤科'], category: ['專科門診', '免疫治療'], companion: '映', title: '心臟科現場掛號 + 免疫#24 + 回診', detail: '心臟科現場掛號(6:30抽號碼牌7:30掛號)+回診+免疫#24(療程結束，要申請新的)+回診。' },
+            { id: 'r_20260711', date: '2026-07-11', dept: ['皮膚科'], category: ['專科門診'], companion: '待定', title: '上午皮膚科現場掛號 + 看診-陳怡穎 (颱風)', detail: '颱風天候狀況留意。' },
+            { id: 'r_20260718', date: '2026-07-18', dept: ['皮膚科'], category: ['專科門診'], companion: '待定', title: '上午皮膚科現場掛號 + 看診-洪誌聰', detail: '皮膚科洪誌聰醫師門診。' },
+            { id: 'r_20260720', date: '2026-07-20', dept: ['放射科'], category: ['重大檢查'], companion: '潔', title: '下午 3:30 肺部斷層', detail: '下午 3:30 肺部電腦斷層造影檢查。' },
+            { id: 'r_20260729', date: '2026-07-29', dept: ['腫瘤科', '心臟科'], category: ['專科門診', '重大檢查'], companion: '潔', title: '血液腫瘤科回診 + 看肺部斷層報告 + 心臟科回診', detail: '血液腫瘤科回診+看肺部斷層報告+心臟科回診(已掛149號(有心臟科加號單)。' },
             {
                 id: 'r_20261116_ct',
                 date: '2026-11-16',
-                dept: '放射科',
-                category: '重大檢查',
+                dept: ['放射科'],
+                category: ['重大檢查'],
                 companion: '待定',
                 title: '胸部電腦斷層 (下午 3:30)',
                 detail: '檢查時間：下午 3:30\n地點：放射科造影室\n陪診人：待定（協調中）\n項目：胸部電腦斷層 (CT) 掃描追蹤\n⚠️ 注意事項：請依放射科檢查通知單規定提早報到，並留意空腹禁食規範。'
@@ -1052,8 +1093,8 @@
             {
                 id: 'r_20261008_pet',
                 date: '2026-10-08',
-                dept: '放射科',
-                category: '重大檢查',
+                dept: ['放射科'],
+                category: ['重大檢查'],
                 companion: '潔',
                 title: '正子檢查 (PET-CT 早上 9:00)',
                 detail: '檢查時間：早上 9:00\n地點：核子醫學科 / 正子造影中心\n陪診人：潔\n⚠️ 關鍵注意事項：【前一天晚上 12:00 起嚴格禁食、禁水】！檢查當日依醫囑準時報到施打顯影劑。'
@@ -1061,8 +1102,8 @@
             {
                 id: 'r_20261006_onco',
                 date: '2026-10-06',
-                dept: '腫瘤科',
-                category: '專科門診',
+                dept: ['腫瘤科'],
+                category: ['專科門診'],
                 companion: '待定',
                 title: '血液腫瘤科回診',
                 detail: '看診科別：血液腫瘤科門診\n陪診人：待定（協調中）\n重點事項：回診追蹤常規抽血指數、各器官功能與評估後續抗癌用藥療程。'
@@ -1070,8 +1111,8 @@
             {
                 id: 'r_20260921_dent',
                 date: '2026-09-21',
-                dept: '牙科',
-                category: '專科門診',
+                dept: ['牙科'],
+                category: ['專科門診'],
                 companion: '樺',
                 title: '三和牙醫看診 (下午 5:30)',
                 detail: '預約時間：下午 5:30\n地點：三和牙醫\n陪診人：樺\n重點事項：牙科接續治療、洗牙/口腔定期清潔評估，配合整體黏膜防護與放療後口腔護理。'
@@ -1079,8 +1120,8 @@
             {
                 id: 'r_20260915_dent',
                 date: '2026-09-15',
-                dept: '牙科',
-                category: '專科門診',
+                dept: ['牙科'],
+                category: ['專科門診'],
                 companion: '樺',
                 title: '三和牙醫看診 (下午 3:45)',
                 detail: '預約時間：下午 3:45\n地點：三和牙醫\n陪診人：樺\n重點事項：口腔與牙齒檢查評估，檢查黏膜與牙齦狀況。'
@@ -1088,8 +1129,8 @@
             {
                 id: 'r_20260910_joint',
                 date: '2026-09-10',
-                dept: '專科聯合',
-                category: '專科門診',
+                dept: ['放射科', '心臟科', '皮膚科', '專科聯合'],
+                category: ['專科門診'],
                 companion: '樺',
                 title: '放射 + 心臟 + 皮膚科回診',
                 detail: '同日三科聯合門診追蹤：\n1. 放射科：評估放射治療後續黏膜與病況復原狀況\n2. 心臟科：追蹤心血管與常規用藥評估\n3. 皮膚科：追蹤皮膚發炎紅癢與藥膏擦拭保養 (先擦保濕乳液隔5分鐘再擦藥膏)'
@@ -1097,8 +1138,8 @@
             {
                 id: 'r_20260908_onco',
                 date: '2026-09-08',
-                dept: '腫瘤科',
-                category: '專科門診',
+                dept: ['腫瘤科'],
+                category: ['專科門診'],
                 companion: '映',
                 title: '血液腫瘤科現場掛號 (持住院計劃書掛號)',
                 detail: '備註：持住院計劃書現場掛號血液腫瘤科門診。\n重點事項：評估出院後後續抗癌用藥療程與銜接門診追蹤。'
@@ -1106,8 +1147,8 @@
             {
                 id: 'r_20260907_infect',
                 date: '2026-09-07',
-                dept: '感染科',
-                category: '專科門診',
+                dept: ['感染科'],
+                category: ['專科門診'],
                 companion: '潔',
                 title: '感染科回診 (持住院計劃書回診) - 肺部出院回診',
                 detail: '備註：持住院計劃書回診。\n1. 隱球菌感染要吃6-12個月，每12小時一次，三個月照一次X光。\n2. 目前排定先吃到二月再檢查狀況，其他兩個病毒(梅毒及肺囊蟲肺炎)殺光了。\n3. 詢問之後有打免疫治療要請陳醫師開預防藥(肺囊蟲預防藥)。\n4. 藥物：拿掉8小時抗生素、類固醇、小鳥藥粉(咳嗽藥)，僅留下12小時抗生素。\n5. 注意事項：慢慢吃及不能發燒。'
@@ -1115,8 +1156,8 @@
             {
                 id: 'r_20260817_diet',
                 date: '2026-08-17',
-                dept: '營養照護',
-                category: '專科門診',
+                dept: ['營養照護'],
+                category: ['專科門診'],
                 companion: '映',
                 title: '腸胃恢復與飲食微調',
                 detail: '媽媽食慾好轉。今日嘗試無渣蒸蛋與去油苦瓜清湯。茶葉蛋黃偏乾易嗆咳，已改為蒸蛋；苦瓜湯已撈去浮油打泥。繼續增加優質蛋白質(去骨鱸魚泥)把體重養上來。'
@@ -1124,8 +1165,8 @@
             {
                 id: 'r_20260816_penic',
                 date: '2026-08-16',
-                dept: '感染科',
-                category: '專科門診',
+                dept: ['感染科'],
+                category: ['專科門診'],
                 companion: '潔',
                 title: '肺部抗生素療程啟動',
                 detail: '開始施打抗生素。密切注意「賈克-赫斯麥反應」(發燒/寒顫)，觀察腸胃是否腹瀉，搭配速養遼保護食道黏膜。'
@@ -1133,8 +1174,8 @@
             {
                 id: 'r_20260730_derm',
                 date: '2026-07-30',
-                dept: '皮膚科',
-                category: '專科門診',
+                dept: ['皮膚科'],
+                category: ['專科門診'],
                 companion: '映',
                 title: '皮膚發炎過敏看診',
                 detail: '醫囑：先擦保濕乳液，隔 5 分鐘再擦紅癢藥膏。禁忌食物：嚴禁燥熱、補品(紅蔘)、花生堅果、芋頭竹筍芒果、帶殼海鮮。這與電療食道防護完全一致。'
@@ -1142,8 +1183,8 @@
             {
                 id: 'r_20260422_imm19',
                 date: '2026-04-22',
-                dept: '腫瘤科',
-                category: '免疫治療',
+                dept: ['腫瘤科'],
+                category: ['免疫治療', '專科門診'],
                 companion: '潔',
                 title: '免疫#19 + 回診',
                 detail: '免疫治療第 19 次施打與門診追蹤。'
@@ -1151,8 +1192,8 @@
             {
                 id: 'r_20260414_mri',
                 date: '2026-04-14',
-                dept: '放射科',
-                category: '重大檢查',
+                dept: ['放射科'],
+                category: ['重大檢查'],
                 companion: '樺',
                 title: '照核磁腦部 (MRI 晚上 7:00)',
                 detail: '晚上 19:00 進行腦部核磁共振 (MRI) 造影檢查。'
@@ -1160,8 +1201,8 @@
             {
                 id: 'r_20260408_imm18',
                 date: '2026-04-08',
-                dept: '腫瘤科',
-                category: '免疫治療',
+                dept: ['腫瘤科'],
+                category: ['免疫治療', '專科門診'],
                 companion: '映',
                 title: '免疫回診#18 + 心臟回診',
                 detail: '免疫治療第 18 次回診，聯合心臟科門診檢查心血管狀況。'
@@ -1169,8 +1210,8 @@
             {
                 id: 'r_20260325_imm17',
                 date: '2026-03-25',
-                dept: '腫瘤科',
-                category: '免疫治療',
+                dept: ['腫瘤科', '腎臟科'],
+                category: ['免疫治療', '專科門診'],
                 companion: '潔',
                 title: '免疫回診#17 + 腎臟科定期追蹤',
                 detail: '免疫治療第 17 次回診，會診腎臟科定期追蹤腎功能各項指標。'
@@ -1178,8 +1219,8 @@
             {
                 id: 'r_20260317_rad_chk',
                 date: '2026-03-17',
-                dept: '放射科',
-                category: '專科門診',
+                dept: ['放射科'],
+                category: ['專科門診'],
                 companion: '映',
                 title: '放射科回診',
                 detail: '放射治療療程結束後續追蹤與黏膜恢復觀察。'
@@ -1187,8 +1228,8 @@
             {
                 id: 'r_20260311_imm16',
                 date: '2026-03-11',
-                dept: '腫瘤科',
-                category: '免疫治療',
+                dept: ['腫瘤科'],
+                category: ['免疫治療', '專科門診'],
                 companion: '樺',
                 title: '免疫#16回診 + 抽血',
                 detail: '免疫第 16 次回診，配合抽血檢驗白血球、肝腎指標與發炎指數。'
@@ -1196,8 +1237,8 @@
             {
                 id: 'r_20260225_imm15',
                 date: '2026-02-25',
-                dept: '腫瘤科',
-                category: '免疫治療',
+                dept: ['腫瘤科'],
+                category: ['免疫治療', '專科門診'],
                 companion: '映',
                 title: '免疫#15 + 回診',
                 detail: '免疫治療第 15 次施打與門診追蹤。'
@@ -1205,8 +1246,8 @@
             {
                 id: 'r_20260211_imm14',
                 date: '2026-02-11',
-                dept: '腫瘤科',
-                category: '免疫治療',
+                dept: ['腫瘤科'],
+                category: ['免疫治療', '專科門診'],
                 companion: '映',
                 title: '免疫#14 + 回診',
                 detail: '免疫治療第 14 次施打與門診追蹤。'
@@ -1214,8 +1255,8 @@
             {
                 id: 'r_20260205_rad10',
                 date: '2026-02-05',
-                dept: '放射科',
-                category: '放射治療',
+                dept: ['放射科'],
+                category: ['放射治療'],
                 companion: '潔',
                 title: '放射#10 (第十次放療完成)',
                 detail: '第 10 次放射治療施打，本階段放療圓滿完成！後續持續速養遼護喉。'
@@ -1223,8 +1264,8 @@
             {
                 id: 'r_20260204_rad9',
                 date: '2026-02-04',
-                dept: '放射科',
-                category: '放射治療',
+                dept: ['放射科'],
+                category: ['放射治療'],
                 companion: '映',
                 title: '放射#9',
                 detail: '放射治療第 9 次施打。'
@@ -1232,8 +1273,8 @@
             {
                 id: 'r_20260203_rad8',
                 date: '2026-02-03',
-                dept: '放射科',
-                category: '放射治療',
+                dept: ['放射科'],
+                category: ['放射治療'],
                 companion: '樺',
                 title: '放射#8',
                 detail: '放射治療第 8 次施打。'
@@ -1241,8 +1282,8 @@
             {
                 id: 'r_20260202_rad7',
                 date: '2026-02-02',
-                dept: '放射科',
-                category: '放射治療',
+                dept: ['放射科'],
+                category: ['放射治療'],
                 companion: '潔',
                 title: '放射#7',
                 detail: '放射治療第 7 次施打。'
@@ -1250,8 +1291,8 @@
             {
                 id: 'r_20260130_rad6',
                 date: '2026-01-30',
-                dept: '放射科',
-                category: '放射治療',
+                dept: ['放射科'],
+                category: ['放射治療'],
                 companion: '樺',
                 title: '放射#6',
                 detail: '放射治療第 6 次施打。'
@@ -1259,8 +1300,8 @@
             {
                 id: 'r_20260129_rad5',
                 date: '2026-01-29',
-                dept: '放射科',
-                category: '放射治療',
+                dept: ['放射科'],
+                category: ['放射治療'],
                 companion: '映',
                 title: '放射#5',
                 detail: '放射治療第 5 次施打。'
@@ -1268,8 +1309,8 @@
             {
                 id: 'r_20260128_imm13',
                 date: '2026-01-28',
-                dept: '腫瘤科',
-                category: '免疫治療',
+                dept: ['腫瘤科', '放射科'],
+                category: ['免疫治療', '放射治療', '專科門診'],
                 companion: '潔',
                 title: '免疫#13 + 回診 + 放射#4',
                 detail: '同日施打免疫治療第 13 次，並進行第 4 次放射治療。'
@@ -1277,8 +1318,8 @@
             {
                 id: 'r_20260127_rad3',
                 date: '2026-01-27',
-                dept: '放射科',
-                category: '放射治療',
+                dept: ['放射科'],
+                category: ['放射治療'],
                 companion: '潔',
                 title: '放射#3',
                 detail: '放射治療第 3 次施打。'
@@ -1286,8 +1327,8 @@
             {
                 id: 'r_20260126_rad2',
                 date: '2026-01-26',
-                dept: '放射科',
-                category: '放射治療',
+                dept: ['放射科'],
+                category: ['放射治療'],
                 companion: '潔',
                 title: '放射#2',
                 detail: '放射治療第 2 次施打。'
@@ -1295,8 +1336,8 @@
             {
                 id: 'r_20260123_rad1',
                 date: '2026-01-23',
-                dept: '放射科',
-                category: '放射治療',
+                dept: ['放射科'],
+                category: ['放射治療'],
                 companion: '映',
                 title: '放射#1',
                 detail: '第 1 次放射治療正式展開。'
@@ -1304,8 +1345,8 @@
             {
                 id: 'r_20260122_rad_loc',
                 date: '2026-01-22',
-                dept: '放射科',
-                category: '放射治療',
+                dept: ['放射科'],
+                category: ['放射治療'],
                 companion: '樺',
                 title: '放射#定位',
                 detail: '放射治療前置電腦斷層模擬定位與製作固定模具。'
@@ -1313,8 +1354,8 @@
             {
                 id: 'r_20260119_ct',
                 date: '2026-01-19',
-                dept: '放射科',
-                category: '重大檢查',
+                dept: ['放射科'],
+                category: ['重大檢查'],
                 companion: '潔',
                 title: '肺部電腦斷層 (早上禁食)',
                 detail: '早上進行肺部電腦斷層掃描，遵照醫囑當天早上嚴格禁食。'
@@ -1322,8 +1363,8 @@
             {
                 id: 'r_20260114_imm12',
                 date: '2026-01-14',
-                dept: '腫瘤科',
-                category: '免疫治療',
+                dept: ['腫瘤科', '心臟科'],
+                category: ['免疫治療', '專科門診'],
                 companion: '樺',
                 title: '上午 8:30 免疫#12 + 回診 + 心臟回診 33號',
                 detail: '上午 8:30 免疫第 12 次治療，腫瘤科回診，並前往心臟科 33 號看診。'
@@ -1331,8 +1372,8 @@
             {
                 id: 'r_20260106_rad',
                 date: '2026-01-06',
-                dept: '放射科',
-                category: '專科門診',
+                dept: ['放射科'],
+                category: ['專科門診'],
                 companion: '映',
                 title: '放射腫瘤回診 56號',
                 detail: '放射腫瘤科門診回診 56 號看診。'
@@ -1340,8 +1381,8 @@
             {
                 id: 'r_20260105_ns',
                 date: '2026-01-05',
-                dept: '神經外科',
-                category: '專科門診',
+                dept: ['神經外科'],
+                category: ['專科門診'],
                 companion: '潔',
                 title: '神經外科回診 54號',
                 detail: '神經外科定期門診 54 號看診追蹤。'
@@ -1362,7 +1403,8 @@
         const PET_SCAN_RECORD = {
             id: 'r_20260815_pet_draft',
             date: '2026-08-15',
-            dept: '腫瘤科',
+            dept: ['腫瘤科'],
+            category: ['重大檢查'],
             companion: '樺',
             title: '免疫審查退件-等待正子攝影 (暫存回收桶)',
             detail: '健保免疫藥物申請需補件，等待安排 PET-CT 正子攝影。此空窗期全力養體重與白血球，將百合銀耳露與純蓮藕粉作為重點資產。',
@@ -1375,7 +1417,7 @@
         let notes = [...SEED_NOTES];
         let hospitalViewMode = 'calendar';
         let calYear = 2026;
-        let calMonth = 5; // 預設跳到 5 月查看新加入的排班
+        let calMonth = 5;
         let recordToEditId = null;
         let currentConfirmAction = null;
         let currentActiveTab = 'records';
@@ -1397,11 +1439,11 @@
         
         let currentRecordCategoryFilter = 'all';
 
-        const STORAGE_KEY_HOSP = `care_stays_${appId}_v6`;
-        const STORAGE_KEY_REC = `care_records_${appId}_v6`;
-        const STORAGE_KEY_DEL = `care_trash_${appId}_v6`;
-        const STORAGE_KEY_NOTES = `care_notes_${appId}_v6`;
-        const STORAGE_KEY_NOTE_HEADER = `care_notes_global_header_${appId}_v6`;
+        const STORAGE_KEY_HOSP = `mom_stays_${appId}_v9`;
+        const STORAGE_KEY_REC = `mom_records_${appId}_v9`;
+        const STORAGE_KEY_DEL = `mom_trash_${appId}_v9`;
+        const STORAGE_KEY_NOTES = `mom_notes_${appId}_v9`;
+        const STORAGE_KEY_NOTE_HEADER = `mom_header_${appId}_v9`;
 
         function saveToLocal() {
             try {
@@ -1430,13 +1472,25 @@
                 const rawRec = localStorage.getItem(STORAGE_KEY_REC);
                 if (rawRec) {
                     const parsed = JSON.parse(rawRec);
-                    if (Array.isArray(parsed) && parsed.length > 0) records = parsed;
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        records = parsed.map(r => ({
+                            ...r,
+                            dept: Array.isArray(r.dept) ? r.dept : (r.dept ? [r.dept] : ['腫瘤科']),
+                            category: Array.isArray(r.category) ? r.category : (r.category ? [r.category] : ['專科門診'])
+                        }));
+                    }
                 }
 
                 const rawDel = localStorage.getItem(STORAGE_KEY_DEL);
                 if (rawDel) {
                     const parsed = JSON.parse(rawDel);
-                    if (Array.isArray(parsed)) deletedRecords = parsed;
+                    if (Array.isArray(parsed)) {
+                        deletedRecords = parsed.map(r => ({
+                            ...r,
+                            dept: Array.isArray(r.dept) ? r.dept : (r.dept ? [r.dept] : ['腫瘤科']),
+                            category: Array.isArray(r.category) ? r.category : (r.category ? [r.category] : ['專科門診'])
+                        }));
+                    }
                 }
                 
                 const rawNotes = localStorage.getItem(STORAGE_KEY_NOTES);
@@ -1510,7 +1564,7 @@
         async function ensureCloudSeededOnce() {
             if (!db || !currentUser) return;
             try {
-                const initDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'app_metadata', 'seed_lock_v2');
+                const initDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'app_metadata', 'seed_lock_v9');
                 const initSnap = await getDoc(initDocRef);
 
                 if (!initSnap.exists()) {
@@ -1538,7 +1592,12 @@
 
             onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'clinic_records'), (snap) => {
                 const list = [];
-                snap.forEach(d => list.push(d.data()));
+                snap.forEach(d => {
+                    const data = d.data();
+                    data.dept = Array.isArray(data.dept) ? data.dept : (data.dept ? [data.dept] : ['腫瘤科']);
+                    data.category = Array.isArray(data.category) ? data.category : (data.category ? [data.category] : ['專科門診']);
+                    list.push(data);
+                });
                 if (list.length > 0) {
                     records = list.sort((a, b) => b.date.localeCompare(a.date));
                     saveToLocal();
@@ -1562,7 +1621,12 @@
 
             onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'deleted_records'), (snap) => {
                 const list = [];
-                snap.forEach(d => list.push(d.data()));
+                snap.forEach(d => {
+                    const data = d.data();
+                    data.dept = Array.isArray(data.dept) ? data.dept : (data.dept ? [data.dept] : ['腫瘤科']);
+                    data.category = Array.isArray(data.category) ? data.category : (data.category ? [data.category] : ['專科門診']);
+                    list.push(data);
+                });
                 deletedRecords = list.sort((a, b) => (b.deletedAt || '').localeCompare(a.deletedAt || ''));
                 saveToLocal();
                 renderHistoryList();
@@ -1617,6 +1681,37 @@
             }
         }
 
+        function toggleDropdown(prefix) {
+            const menu = document.getElementById(`${prefix}-menu`);
+            if (!menu) return;
+            menu.classList.toggle('hidden');
+        }
+
+        document.addEventListener('click', (e) => {
+            ['record-dept', 'record-cat', 'edit-rec-dept', 'edit-rec-cat'].forEach(prefix => {
+                const dropdown = document.getElementById(`${prefix}-dropdown`);
+                const menu = document.getElementById(`${prefix}-menu`);
+                if (dropdown && menu && !dropdown.contains(e.target) && !menu.contains(e.target)) {
+                    menu.classList.add('hidden');
+                }
+            });
+        });
+
+        function updateDropdownLabel(prefix) {
+            const checkboxes = document.querySelectorAll(`input[name="${prefix.replace('-dept', '-dept').replace('-cat', '-cat')}"]`);
+            const checked = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value);
+            const labelEl = document.getElementById(`${prefix}-label`);
+            if (!labelEl) return;
+
+            if (checked.length === 0) {
+                labelEl.textContent = prefix.includes('dept') ? '請選擇科別' : '請選擇分類';
+            } else if (checked.length === 1) {
+                labelEl.textContent = checked[0];
+            } else {
+                labelEl.textContent = `已選擇 ${checked.length} 項`;
+            }
+        }
+
         function updateDashboardStats() {
             const totalRecEl = document.getElementById('stat-total-records');
             const totalStaysEl = document.getElementById('stat-total-stays');
@@ -1645,8 +1740,12 @@
                 }
 
                 if (targetDateStr && targetRecords.length > 0) {
-                    const depts = [...new Set(targetRecords.map(r => r.dept))];
-                    const deptsStr = depts.join('、');
+                    const allDepts = [];
+                    targetRecords.forEach(r => {
+                        const dArr = Array.isArray(r.dept) ? r.dept : [r.dept];
+                        dArr.forEach(d => { if (d && !allDepts.includes(d)) allDepts.push(d); });
+                    });
+                    const deptsStr = allDepts.join('、');
 
                     latestDateEl.innerHTML = `${targetDateStr} ${deptsStr}`;
                     latestDateEl.className = `text-xs sm:text-sm font-bold text-amber-900 mt-1 block whitespace-normal break-words leading-tight`;
@@ -1678,29 +1777,33 @@
             const compFilter = document.getElementById('filter-companion-select')?.value || '';
             
             let filtered = records.filter(r => {
+                const rDepts = Array.isArray(r.dept) ? r.dept : [r.dept];
+                const rCats = Array.isArray(r.category) ? r.category : [r.category];
+                
                 if (currentRecordCategoryFilter !== 'all') {
                     const t = (r.title || '').toLowerCase();
                     const d = (r.detail || '').toLowerCase();
-                    const cat = (r.category || '').toLowerCase();
-                    const dept = (r.dept || '').toLowerCase();
                     
                     if (currentRecordCategoryFilter === '放射治療') {
-                        if (!t.includes('放射') && !d.includes('放射') && !cat.includes('放射') && !dept.includes('放射')) return false;
+                        if (!t.includes('放射') && !d.includes('放射') && !rCats.includes('放射治療') && !rDepts.includes('放射科')) return false;
                     } else if (currentRecordCategoryFilter === '免疫治療') {
-                        if (!t.includes('免疫') && !d.includes('免疫') && !cat.includes('免疫') && !dept.includes('免疫')) return false;
+                        if (!t.includes('免疫') && !d.includes('免疫') && !rCats.includes('免疫治療') && !rDepts.includes('腫瘤科')) return false;
                     } else if (currentRecordCategoryFilter === '重大檢查') {
-                        if (r.category !== '重大檢查' && !t.includes('斷層') && !t.includes('造影') && !t.includes('磁振') && !t.includes('掃描') && !t.includes('檢查')) return false;
+                        if (!rCats.includes('重大檢查') && !t.includes('斷層') && !t.includes('造影') && !t.includes('磁振') && !t.includes('掃描') && !t.includes('檢查')) return false;
                     } else if (currentRecordCategoryFilter === '專科門診') {
-                        if (r.category !== '專科門診' && !t.includes('回診') && !t.includes('門診') && !t.includes('牙醫')) return false;
+                        if (!rCats.includes('專科門診') && !t.includes('回診') && !t.includes('門診') && !t.includes('牙醫')) return false;
                     }
                 }
-                if (deptFilter && r.dept !== deptFilter && r.category !== deptFilter) return false;
+                
+                if (deptFilter && !rDepts.includes(deptFilter)) return false;
                 if (compFilter && r.companion !== compFilter) return false;
+                
                 if (searchKey) {
                     const matchTitle = (r.title || '').toLowerCase().includes(searchKey);
                     const matchDetail = (r.detail || '').toLowerCase().includes(searchKey);
-                    const matchDept = (r.dept || '').toLowerCase().includes(searchKey);
-                    if (!matchTitle && !matchDetail && !matchDept) return false;
+                    const matchDept = rDepts.some(dep => dep.toLowerCase().includes(searchKey));
+                    const matchCat = rCats.some(cat => cat.toLowerCase().includes(searchKey));
+                    if (!matchTitle && !matchDetail && !matchDept && !matchCat) return false;
                 }
                 return true;
             });
@@ -1711,22 +1814,30 @@
             }
 
             listEl.innerHTML = filtered.map(r => {
-                let deptColor = 'bg-amber-100 text-amber-900 border border-amber-300';
-                if (r.dept === '腫瘤科') deptColor = 'bg-blue-100 text-blue-900 border border-blue-300';
-                else if (r.dept === '放射科') deptColor = 'bg-indigo-100 text-indigo-900 border border-indigo-300';
-                else if (r.dept === '感染科') deptColor = 'bg-purple-100 text-purple-900 border border-purple-300';
-                else if (r.dept === '牙科') deptColor = 'bg-teal-100 text-teal-900 border border-teal-300';
-                else if (r.dept === '皮膚科') deptColor = 'bg-pink-100 text-pink-900 border border-pink-300';
-                else if (r.dept === '專科聯合') deptColor = 'bg-amber-100 text-amber-900 border border-amber-300';
+                const rDepts = Array.isArray(r.dept) ? r.dept : [r.dept];
+                const rCats = Array.isArray(r.category) ? r.category : [r.category];
+                
+                const deptBadges = rDepts.map(dep => {
+                    let deptColor = 'bg-amber-100 text-amber-900 border border-amber-300';
+                    if (dep === '腫瘤科') deptColor = 'bg-blue-100 text-blue-900 border border-blue-300';
+                    else if (dep === '放射科') deptColor = 'bg-indigo-100 text-indigo-900 border border-indigo-300';
+                    else if (dep === '感染科') deptColor = 'bg-purple-100 text-purple-900 border border-purple-300';
+                    else if (dep === '牙科') deptColor = 'bg-teal-100 text-teal-900 border border-teal-300';
+                    else if (dep === '皮膚科') deptColor = 'bg-pink-100 text-pink-900 border border-pink-300';
+                    else if (dep === '專科聯合') deptColor = 'bg-amber-100 text-amber-900 border border-amber-300';
+                    return `<span class="px-3 py-1 rounded-xl text-xs font-black ${deptColor}">${dep}</span>`;
+                }).join(' ');
+
+                const catBadges = rCats.map(cat => `<span class="px-2.5 py-1 bg-amber-100 text-amber-900 text-xs font-bold rounded-lg">${cat}</span>`).join(' ');
 
                 return `
                     <div class="sunny-card p-5 sm:p-6 rounded-3xl relative">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-amber-100">
                             <div class="flex items-center gap-2 flex-wrap">
-                                <span class="px-3 py-1 rounded-xl text-xs font-black ${deptColor}">${r.dept}</span>
+                                ${deptBadges}
                                 <span class="text-sm sm:text-base font-bold text-amber-900">🗓️ ${r.date}</span>
                                 <span class="px-3 py-1 rounded-xl text-xs font-bold border bg-amber-50 text-amber-900 border-amber-300">👥 陪同：${r.companion || '未定'}</span>
-                                ${r.category ? `<span class="px-2.5 py-1 bg-amber-100 text-amber-900 text-xs font-bold rounded-lg">${r.category}</span>` : ''}
+                                ${catBadges}
                             </div>
                             <div class="flex items-center gap-1.5 ml-auto">
                                 <button onclick="copyLineReport('${r.id}')" class="px-3 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold rounded-xl transition border border-amber-300">💬 LINE 回報</button>
@@ -1745,7 +1856,8 @@
 
         async function addRecord() {
             const date = document.getElementById('record-date')?.value?.trim();
-            const dept = document.getElementById('record-dept')?.value;
+            const checkedDepts = Array.from(document.querySelectorAll('input[name="rec-dept"]:checked')).map(cb => cb.value);
+            const checkedCats = Array.from(document.querySelectorAll('input[name="rec-cat"]:checked')).map(cb => cb.value);
             const companion = document.getElementById('record-companion')?.value;
             const title = document.getElementById('record-title')?.value?.trim();
             const detail = document.getElementById('record-detail')?.value?.trim();
@@ -1757,9 +1869,12 @@
 
             const newRec = {
                 id: 'r_' + Date.now(),
-                date, dept, companion, title,
-                detail: detail || '',
-                category: dept === '放射科' && title.includes('斷層') ? '重大檢查' : '專科門診'
+                date,
+                dept: checkedDepts.length > 0 ? checkedDepts : ['腫瘤科'],
+                category: checkedCats.length > 0 ? checkedCats : ['專科門診'],
+                companion,
+                title,
+                detail: detail || ''
             };
 
             records.unshift(newRec);
@@ -1770,6 +1885,10 @@
 
             document.getElementById('record-title').value = '';
             document.getElementById('record-detail').value = '';
+            document.querySelectorAll('input[name="rec-dept"]').forEach(cb => cb.checked = false);
+            document.querySelectorAll('input[name="rec-cat"]').forEach(cb => cb.checked = false);
+            updateDropdownLabel('record-dept');
+            updateDropdownLabel('record-cat');
             showToast('✅ 紀錄已成功新增並推播至雲端！');
 
             if (isCloudActive && db && currentUser) {
@@ -2081,7 +2200,19 @@
             if (!rec) return;
             recordToEditId = recId;
             document.getElementById('edit-rec-date').value = rec.date;
-            document.getElementById('edit-rec-dept').value = rec.dept;
+            
+            const rDepts = Array.isArray(rec.dept) ? rec.dept : [rec.dept];
+            document.querySelectorAll('input[name="edit-rec-dept"]').forEach(cb => {
+                cb.checked = rDepts.includes(cb.value);
+            });
+            updateDropdownLabel('edit-rec-dept');
+
+            const rCats = Array.isArray(rec.category) ? rec.category : [rec.category];
+            document.querySelectorAll('input[name="edit-rec-cat"]').forEach(cb => {
+                cb.checked = rCats.includes(cb.value);
+            });
+            updateDropdownLabel('edit-rec-cat');
+
             document.getElementById('edit-rec-companion').value = rec.companion || '映';
             document.getElementById('edit-rec-title').value = rec.title;
             document.getElementById('edit-rec-detail').value = rec.detail || '';
@@ -2096,7 +2227,12 @@
             if (!rec) return;
 
             rec.date = document.getElementById('edit-rec-date')?.value?.trim();
-            rec.dept = document.getElementById('edit-rec-dept')?.value;
+            rec.dept = Array.from(document.querySelectorAll('input[name="edit-rec-dept"]:checked')).map(cb => cb.value);
+            if (rec.dept.length === 0) rec.dept = ['腫瘤科'];
+            
+            rec.category = Array.from(document.querySelectorAll('input[name="edit-rec-cat"]:checked')).map(cb => cb.value);
+            if (rec.category.length === 0) rec.category = ['專科門診'];
+
             rec.companion = document.getElementById('edit-rec-companion')?.value;
             rec.title = document.getElementById('edit-rec-title')?.value?.trim();
             rec.detail = document.getElementById('edit-rec-detail')?.value?.trim();
@@ -2116,12 +2252,14 @@
         function copyLineReport(recId) {
             const rec = records.find(r => String(r.id) === String(recId));
             if (!rec) return;
-            copyTextToClipboard(`【媽媽護理與就醫回報】\n🗓️ 日期：${rec.date}\n🏥 科別：${rec.dept}\n👥 陪診人：${rec.companion}\n📌 重點：${rec.title}\n📋 醫囑：\n${rec.detail || '無'}`);
+            const rDepts = Array.isArray(rec.dept) ? rec.dept.join('、') : rec.dept;
+            const rCats = Array.isArray(rec.category) ? rec.category.join('、') : rec.category;
+            copyTextToClipboard(`【MoM護理與就醫回報】\n🗓️ 日期：${rec.date}\n🏥 科別：${rDepts}\n🏷️ 分類：${rCats}\n👥 陪診人：${rec.companion}\n📌 重點：${rec.title}\n📋 醫囑：\n${rec.detail || '無'}`);
             showToast('💬 已複製 LINE 格式摘要！');
         }
         
         function copyHospitalListForLine() {
-            let out = `🏥【媽媽住院與陪伴輪值清單】\n`;
+            let out = `🏥【MoM住院與陪伴輪值清單】\n`;
             hospitalStays.forEach(s => out += `${s.date} (${s.weekday}) - ${s.companion} 陪同 | ${s.title}\n`);
             copyTextToClipboard(out);
             showToast('💬 已複製住院清單！');
@@ -2138,10 +2276,12 @@
             const listEl = document.getElementById('history-list');
             if (!listEl) return;
             if (deletedRecords.length === 0) { listEl.innerHTML = `<div class="p-10 text-center text-amber-800 font-bold bg-white/80 rounded-3xl border border-amber-200">回收桶目前沒有紀錄</div>`; return; }
-            listEl.innerHTML = deletedRecords.map(r => `
+            listEl.innerHTML = deletedRecords.map(r => {
+                const rDepts = Array.isArray(r.dept) ? r.dept.join('、') : (r.dept || '');
+                return `
                 <div class="bg-white p-5 rounded-3xl border border-amber-200 flex items-center justify-between gap-3 shadow-sm">
                     <div>
-                        <div class="flex items-center gap-2 text-xs text-amber-700 font-bold"><span>${r.dept}</span><span>${r.date}</span></div>
+                        <div class="flex items-center gap-2 text-xs text-amber-700 font-bold"><span>${rDepts}</span><span>${r.date}</span></div>
                         <h4 class="text-base font-black text-amber-950 mt-1">${r.title}</h4>
                     </div>
                     <div class="flex gap-2">
@@ -2149,7 +2289,8 @@
                         <button onclick="promptPermanentDelete('${r.id}')" class="px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold rounded-xl transition border border-rose-300">永久刪除</button>
                     </div>
                 </div>
-            `).join('');
+            `;
+            }).join('');
         }
 
         async function restoreRecord(id) {
@@ -2464,6 +2605,8 @@
         window.closeEditNoteModal = closeEditNoteModal;
         window.handleEditNoteImagesSelect = handleEditNoteImagesSelect;
         window.saveEditNoteModal = saveEditNoteModal;
+        window.toggleDropdown = toggleDropdown;
+        window.updateDropdownLabel = updateDropdownLabel;
         window.openLightbox = (src) => { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox-modal')?.classList.remove('hidden'); };
         window.closeLightbox = closeLightbox;
 
@@ -2473,6 +2616,8 @@
             loadFromLocalFallback();
             initCloudSync();
             switchTab('records');
+            updateDropdownLabel('record-dept');
+            updateDropdownLabel('record-cat');
         });
     </script>
 </body>
