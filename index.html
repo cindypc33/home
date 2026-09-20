@@ -157,11 +157,11 @@
 
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5 pt-4 border-t border-amber-200/60 text-left">
                 <div class="bg-white/90 p-3.5 rounded-2xl border border-amber-200 shadow-sm">
-                    <span class="text-xs text-amber-800/80 block font-bold">就醫歷程累積</span>
+                    <span class="text-xs text-amber-800/80 block font-bold">就醫歷程</span>
                     <span id="stat-total-records" class="text-lg sm:text-xl font-black text-amber-600 mt-0.5 block">載入中...</span>
                 </div>
                 <div class="bg-white/90 p-3.5 rounded-2xl border border-amber-200 shadow-sm">
-                    <span class="text-xs text-amber-800/80 block font-bold">全期住院排班</span>
+                    <span class="text-xs text-amber-800/80 block font-bold">住院排班</span>
                     <span id="stat-total-stays" class="text-lg sm:text-xl font-black text-orange-600 mt-0.5 block">38 天</span>
                 </div>
                 <div class="bg-white/90 p-3.5 rounded-2xl border border-amber-200 shadow-sm">
@@ -280,12 +280,23 @@
                     </div>
                 </div>
 
-                <div class="bg-white/90 p-4 rounded-2xl mb-6 border border-amber-200 shadow-sm flex flex-col md:flex-row gap-3 items-center justify-between">
-                    <div class="flex items-center gap-2 w-full md:w-auto flex-1">
-                        <span class="text-amber-700 text-lg">🔍</span>
-                        <input type="text" id="filter-search-input" oninput="renderRecords()" placeholder="搜尋醫囑、檢查項目、用藥或科別關鍵字..." class="sunny-input-box p-2.5 rounded-xl w-full text-amber-950 text-sm focus:ring-2 focus:ring-amber-500 outline-none">
+                <div class="bg-white/90 p-4 rounded-2xl mb-6 border border-amber-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-3">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <div class="inline-flex bg-amber-50 p-1 rounded-2xl border border-amber-300">
+                            <button onclick="switchRecordView('list')" id="btn-rec-list" class="px-4 py-2 rounded-xl text-sm font-extrabold bg-amber-600 text-white shadow transition flex items-center gap-1.5">
+                                <span>📋</span> 清單式
+                            </button>
+                            <button onclick="switchRecordView('calendar')" id="btn-rec-calendar" class="px-4 py-2 rounded-xl text-sm font-extrabold text-amber-800 hover:text-amber-950 transition flex items-center gap-1.5">
+                                <span>📅</span> 月曆式
+                            </button>
+                        </div>
                     </div>
+
                     <div class="flex items-center gap-2 w-full md:w-auto flex-wrap justify-end">
+                        <div class="flex items-center gap-2 flex-1 min-w-[200px]">
+                            <span class="text-amber-700 text-lg">🔍</span>
+                            <input type="text" id="filter-search-input" oninput="renderRecords()" placeholder="搜尋醫囑、檢查項目、用藥或科別..." class="sunny-input-box p-2.5 rounded-xl w-full text-amber-950 text-sm focus:ring-2 focus:ring-amber-500 outline-none">
+                        </div>
                         <select id="filter-dept-select" onchange="renderRecords()" class="sunny-input-box p-2.5 rounded-xl text-sm text-amber-950 font-bold outline-none">
                             <option value="">全部科別</option>
                             <option value="腫瘤科">腫瘤科</option>
@@ -318,9 +329,43 @@
                     <button id="quick-filter-專科門診" onclick="quickFilterRecordCategory('專科門診')" class="quick-filter-btn px-4 py-2 rounded-xl bg-white text-amber-900 hover:bg-amber-50 font-bold text-xs whitespace-nowrap border border-amber-300 shadow-sm">🩺 專科門診追蹤</button>
                 </div>
 
-                <div id="records-list" class="space-y-4">
-                    <div class="flex items-center justify-center py-16 text-amber-800 gap-3">
-                        <div class="spinner"></div> 正在連線並載入最新就醫紀錄...
+                <div id="records-list-container" class="block">
+                    <div id="records-list" class="space-y-4">
+                        <div class="flex items-center justify-center py-16 text-amber-800 gap-3">
+                            <div class="spinner"></div> 正在連線並載入最新就醫紀錄...
+                        </div>
+                    </div>
+                </div>
+
+                <div id="records-calendar-container" class="hidden">
+                    <div class="bg-white/90 p-4 rounded-3xl border border-amber-200 mb-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm">
+                        <div class="flex items-center gap-3">
+                            <button onclick="changeRecCalMonth(-1)" class="p-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-xl transition font-bold px-3">◀ 上個月</button>
+                            <h2 id="rec-calendar-current-month-label" class="text-xl font-black text-amber-700 min-w-[140px] text-center font-serif-tc">2026 年 5 月</h2>
+                            <button onclick="changeRecCalMonth(1)" class="p-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-xl transition font-bold px-3">下個月 ▶</button>
+                        </div>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="text-xs text-amber-800 font-bold">快速跳轉：</span>
+                            <button onclick="jumpRecCalMonth(2026, 5)" class="px-3 py-1 bg-amber-600 text-white text-xs font-bold rounded-lg transition shadow-sm">2026/05</button>
+                            <button onclick="jumpRecCalMonth(2026, 6)" class="px-3 py-1 bg-white hover:bg-amber-50 text-amber-900 text-xs font-bold rounded-lg transition border border-amber-300">2026/06</button>
+                            <button onclick="jumpRecCalMonth(2026, 7)" class="px-3 py-1 bg-white hover:bg-amber-50 text-amber-900 text-xs font-bold rounded-lg transition border border-amber-300">2026/07</button>
+                            <button onclick="jumpRecCalMonth(2026, 8)" class="px-3 py-1 bg-white hover:bg-amber-50 text-amber-900 text-xs font-bold rounded-lg transition border border-amber-300">2026/08</button>
+                            <button onclick="jumpRecCalMonth(2026, 9)" class="px-3 py-1 bg-white hover:bg-amber-50 text-amber-900 text-xs font-bold rounded-lg transition border border-amber-300">2026/09</button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-7 gap-1.5 sm:gap-2 text-center text-xs sm:text-sm font-extrabold text-amber-800 mb-1.5">
+                        <div class="py-1 text-rose-600">週日</div>
+                        <div class="py-1">週一</div>
+                        <div class="py-1">週二</div>
+                        <div class="py-1">週三</div>
+                        <div class="py-1">週四</div>
+                        <div class="py-1">週五</div>
+                        <div class="py-1 text-teal-700">週六</div>
+                    </div>
+
+                    <div id="records-calendar-grid" class="grid grid-cols-7 gap-1.5 sm:gap-2">
+                        <!-- 動態填充就醫月曆 -->
                     </div>
                 </div>
             </section>
@@ -1118,6 +1163,15 @@
                 detail: '預約時間：下午 5:30\n地點：三和牙醫\n陪診人：樺\n重點事項：牙科接續治療、洗牙/口腔定期清潔評估，配合整體黏膜防護與放療後口腔護理。'
             },
             {
+                id: 'r_20260921_derm_chen',
+                date: '2026-09-21',
+                dept: ['皮膚科'],
+                category: ['專科門診'],
+                companion: '待定',
+                title: '皮膚科門診（陳怡穎醫師）',
+                detail: '預約時間：皮膚科門診\n陪診人：待定（協調中）\n重點事項：陳怡穎醫師看診追蹤皮膚發炎紅癢與藥膏擦拭保養（先擦保濕乳液隔5分鐘再擦藥膏）。'
+            },
+            {
                 id: 'r_20260915_dent',
                 date: '2026-09-15',
                 dept: ['牙科'],
@@ -1416,8 +1470,11 @@
         let deletedRecords = [PET_SCAN_RECORD];
         let notes = [...SEED_NOTES];
         let hospitalViewMode = 'calendar';
+        let recordViewMode = 'list';
         let calYear = 2026;
         let calMonth = 5;
+        let recCalYear = 2026;
+        let recCalMonth = 5;
         let recordToEditId = null;
         let currentConfirmAction = null;
         let currentActiveTab = 'records';
@@ -1511,6 +1568,7 @@
 
             updateDashboardStats();
             renderRecords();
+            renderRecordsCalendar();
             renderHospitalCalendar();
             renderHospitalTable();
             renderHistoryList();
@@ -1603,6 +1661,7 @@
                     saveToLocal();
                     updateDashboardStats();
                     renderRecords();
+                    if (recordViewMode === 'calendar') renderRecordsCalendar();
                 }
                 updateCloudStatusBadge('synced', `🟢 雲端同步中`);
             }, (err) => console.error(err));
@@ -1766,26 +1825,22 @@
             }
 
             if (companionSumEl) {
-                let ying = 0, hua = 0, jie = 0, juan = 0;
+                let ying = 0, hua = 0, jie = 0;
                 hospitalStays.forEach(s => {
                     if (s.companion === '映') ying++;
                     else if (s.companion === '樺') hua++;
                     else if (s.companion === '潔') jie++;
-                    else if (s.companion === '娟') juan++;
                 });
-                companionSumEl.textContent = `映: ${ying} / 樺: ${hua} / 潔: ${jie} / 娟: ${juan}`;
+                companionSumEl.textContent = `映: ${ying} / 樺: ${hua} / 潔: ${jie}`;
             }
         }
         
-        function renderRecords() {
-            const listEl = document.getElementById('records-list');
-            if (!listEl) return;
-
+        function getFilteredRecords() {
             const searchKey = (document.getElementById('filter-search-input')?.value || '').trim().toLowerCase();
             const deptFilter = document.getElementById('filter-dept-select')?.value || '';
             const compFilter = document.getElementById('filter-companion-select')?.value || '';
             
-            let filtered = records.filter(r => {
+            return records.filter(r => {
                 const rDepts = Array.isArray(r.dept) ? r.dept : [r.dept];
                 const rCats = Array.isArray(r.category) ? r.category : [r.category];
                 
@@ -1816,6 +1871,13 @@
                 }
                 return true;
             });
+        }
+
+        function renderRecords() {
+            const listEl = document.getElementById('records-list');
+            if (!listEl) return;
+
+            const filtered = getFilteredRecords();
 
             if (filtered.length === 0) {
                 listEl.innerHTML = `<div class="bg-white p-10 rounded-3xl border border-amber-200 text-center text-amber-800 font-bold shadow-sm">沒有符合條件的就醫紀錄</div>`;
@@ -1864,6 +1926,92 @@
             }).join('');
         }
 
+        function switchRecordView(mode) {
+            recordViewMode = mode;
+            document.getElementById('records-list-container')?.classList.toggle('hidden', mode !== 'list');
+            document.getElementById('records-calendar-container')?.classList.toggle('hidden', mode !== 'calendar');
+            const btnList = document.getElementById('btn-rec-list');
+            const btnCal = document.getElementById('btn-rec-calendar');
+            if (mode === 'list') {
+                btnList.className = 'px-4 py-2 rounded-xl text-sm font-extrabold bg-amber-600 text-white shadow transition flex items-center gap-1.5';
+                btnCal.className = 'px-4 py-2 rounded-xl text-sm font-extrabold text-amber-800 hover:text-amber-950 transition flex items-center gap-1.5';
+                renderRecords();
+            } else {
+                btnCal.className = 'px-4 py-2 rounded-xl text-sm font-extrabold bg-amber-600 text-white shadow transition flex items-center gap-1.5';
+                btnList.className = 'px-4 py-2 rounded-xl text-sm font-extrabold text-amber-800 hover:text-amber-950 transition flex items-center gap-1.5';
+                renderRecordsCalendar();
+            }
+        }
+
+        function changeRecCalMonth(delta) {
+            recCalMonth += delta;
+            if (recCalMonth > 12) { recCalMonth = 1; recCalYear++; }
+            if (recCalMonth < 1) { recCalMonth = 12; recCalYear--; }
+            renderRecordsCalendar();
+        }
+
+        function jumpRecCalMonth(year, month) {
+            recCalYear = year; recCalMonth = month;
+            renderRecordsCalendar();
+        }
+
+        function renderRecordsCalendar() {
+            const gridEl = document.getElementById('records-calendar-grid');
+            const monthLabel = document.getElementById('rec-calendar-current-month-label');
+            if (!gridEl || !monthLabel) return;
+
+            monthLabel.textContent = `${recCalYear} 年 ${recCalMonth} 月`;
+            gridEl.innerHTML = '';
+
+            const firstDay = new Date(recCalYear, recCalMonth - 1, 1).getDay();
+            const totalDays = new Date(recCalYear, recCalMonth, 0).getDate();
+            const prevMonthDays = new Date(recCalYear, recCalMonth - 1, 0).getDate();
+
+            const filtered = getFilteredRecords();
+            const recMap = {};
+            filtered.forEach(r => {
+                const key = r.date.replace(/-/g, '/');
+                if (!recMap[key]) recMap[key] = [];
+                recMap[key].push(r);
+            });
+
+            for (let i = firstDay - 1; i >= 0; i--) {
+                gridEl.innerHTML += `<div class="bg-white/40 p-2 rounded-2xl min-h-[90px] border border-amber-200/50 opacity-40 text-xs font-bold text-amber-900">${prevMonthDays - i}</div>`;
+            }
+
+            for (let d = 1; d <= totalDays; d++) {
+                const dateKey = `${recCalYear}/${String(recCalMonth).padStart(2, '0')}/${String(d).padStart(2, '0')}`;
+                const dayRecs = recMap[dateKey] || [];
+
+                if (dayRecs.length > 0) {
+                    gridEl.innerHTML += `
+                        <div class="bg-white p-2.5 sm:p-3 rounded-2xl min-h-[100px] sm:min-h-[120px] border border-amber-500 shadow-md transition flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm sm:text-base font-black text-amber-950">${d}</span>
+                                    <span class="px-2 py-0.5 rounded-lg text-[10px] font-black bg-amber-600 text-white">${dayRecs.length} 筆</span>
+                                </div>
+                                <div class="mt-1 space-y-1 max-h-[70px] overflow-y-auto custom-scrollbar">
+                                    ${dayRecs.map(r => `
+                                        <div onclick="openEditRecordModal('${r.id}')" class="text-[11px] bg-amber-50 hover:bg-amber-100 text-amber-950 font-bold p-1 rounded cursor-pointer truncate" title="${r.title}">
+                                            ${r.title}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            <div class="text-[10px] text-amber-700 font-semibold pt-1 border-t border-amber-100 text-right">點擊項目編輯</div>
+                        </div>
+                    `;
+                } else {
+                    gridEl.innerHTML += `
+                        <div class="bg-white/60 p-2.5 sm:p-3 rounded-2xl min-h-[100px] sm:min-h-[120px] border border-amber-200 transition flex flex-col justify-between shadow-sm">
+                            <span class="text-xs sm:text-sm font-extrabold text-amber-900/60">${d}</span>
+                        </div>
+                    `;
+                }
+            }
+        }
+
         async function addRecord() {
             const date = document.getElementById('record-date')?.value?.trim();
             const checkedDepts = Array.from(document.querySelectorAll('input[name="rec-dept"]:checked')).map(cb => cb.value);
@@ -1892,6 +2040,7 @@
             saveToLocal();
             updateDashboardStats();
             renderRecords();
+            if (recordViewMode === 'calendar') renderRecordsCalendar();
 
             document.getElementById('record-title').value = '';
             document.getElementById('record-detail').value = '';
@@ -1920,6 +2069,7 @@
                 saveToLocal();
                 updateDashboardStats();
                 renderRecords();
+                if (recordViewMode === 'calendar') renderRecordsCalendar();
                 renderHistoryList();
                 closeConfirmModal();
                 showToast('🗑️ 紀錄已移至資源回收桶');
@@ -2251,6 +2401,7 @@
             saveToLocal();
             updateDashboardStats();
             renderRecords();
+            if (recordViewMode === 'calendar') renderRecordsCalendar();
             closeEditRecordModal();
             showToast('✏️ 修改成功！');
 
@@ -2311,7 +2462,7 @@
             const [restored] = deletedRecords.splice(idx, 1);
             delete restored.deletedAt;
             records.unshift(restored);
-            saveToLocal(); updateDashboardStats(); renderRecords(); renderHistoryList();
+            saveToLocal(); updateDashboardStats(); renderRecords(); if (recordViewMode === 'calendar') renderRecordsCalendar(); renderHistoryList();
             showToast('↩️ 已還原！');
             if (isCloudActive && db && currentUser) {
                 await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'deleted_records', String(id)));
@@ -2376,6 +2527,7 @@
             });
 
             renderRecords();
+            if (recordViewMode === 'calendar') renderRecordsCalendar();
         }
 
         async function resizeImageBase64(file, maxDim = 800) {
@@ -2587,6 +2739,9 @@
         window.copyLineReport = copyLineReport;
         window.copyHospitalListForLine = copyHospitalListForLine;
         window.switchHospitalView = switchHospitalView;
+        window.switchRecordView = switchRecordView;
+        window.changeRecCalMonth = changeRecCalMonth;
+        window.jumpRecCalMonth = jumpRecCalMonth;
         window.changeCalMonth = changeCalMonth;
         window.jumpCalMonth = jumpCalMonth;
         window.filterHospitalStays = filterHospitalStays;
